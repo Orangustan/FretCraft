@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FRETCRAFT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/fretcraft.css">
+</head>
+<body>
+
+<!-- ── ARCHETYPE ONBOARDING — shown before tree ── -->
+<div id="archetype-screen">
+  <div class="arch-hero">
+    <div class="arch-hero-title">FRETCRAFT</div>
+    <div class="arch-hero-sub">Choose Your Path</div>
+    <div class="arch-hero-desc">
+      Your archetype shapes which skills are highlighted as your primary path,
+      what songs appear as goals, and how the constellation is lit for your journey.
+      You can change it later — this is a starting point, not a cage.
+    </div>
+  </div>
+  <div class="arch-grid" id="arch-grid"></div>
+  <button class="arch-start-btn" id="arch-start" onclick="startWithArchetype()">
+    BEGIN YOUR JOURNEY →
+  </button>
+  <div class="arch-skip" onclick="startWithArchetype('skip_to_tree')">
+    Skip — show me everything (All-Rounder path)
+  </div>
+</div>
+
+<!-- ── PRE-TEST OVERLAY — shown between archetype selection and tree ── -->
+<div id="pretest-screen">
+  <div class="pt-container">
+    <div id="pt-content"></div>
+  </div>
+</div>
+
+<!-- ── MAIN APP — hidden until archetype selected ── -->
+<div id="app" style="display:none;height:100%;display:none;flex-direction:column">
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <div class="logo">FRETCRAFT</div>
+      <div class="logo-sub">Constellation Skill Tree</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="stat-ico">✦</span><span class="stat-val" id="h-xp">0</span><span class="stat-lbl">XP</span></div>
+      <div class="stat"><span class="stat-ico">⭐</span><span class="stat-val" id="h-sk">0</span><span class="stat-lbl">MASTERED</span></div>
+      <div class="stat"><span class="stat-ico">🔥</span><span class="stat-val" id="h-streak">1</span><span class="stat-lbl">STREAK</span></div>
+      <div class="stat"><span class="stat-ico">🏅</span><span class="stat-val" id="h-rank">Initiate</span><span class="stat-lbl">RANK</span></div>
+      <div class="stat"><span class="stat-ico">📊</span><span class="stat-val" id="h-level">Foundation</span><span class="stat-lbl">LEVEL</span></div>
+    </div>
+  </header>
+
+  <!-- TAB NAV -->
+  <nav class="tab-nav">
+    <button class="tnav on"  id="tnav-tree"     onclick="switchTab('tree')">⭐ Skill Tree</button>
+    <button class="tnav"     id="tnav-practice"  onclick="switchTab('practice')">📋 Practice</button>
+    <button class="tnav"     id="tnav-analyze"   onclick="switchTab('analyze')">📄 Analyze</button>
+    <button class="tnav"     id="tnav-wiki"      onclick="switchTab('wiki')">📖 Wiki</button>
+  </nav>
+
+  <!-- BODY -->
+  <div class="app-body">
+
+    <!-- ── TAB: SKILL TREE ── -->
+    <div class="tab-view on" id="view-tree">
+      <div class="tree-layout">
+
+        <!-- Left sidebar: archetype HUD + branch filters -->
+        <div class="tree-sidebar">
+          <div id="arch-hud-slot"></div>
+          <div class="panel-sec">
+            <div class="sec-label">Branches</div>
+            <div id="branch-list"></div>
+          </div>
+          <div class="panel-sec">
+            <div class="sec-label">Next Up</div>
+            <div id="next-list"></div>
+            <button class="log-btn" onclick="openModal()">✦ Log Practice</button>
+          </div>
+          <div id="song-goals-sec"></div>
+        </div>
+
+        <!-- Center: constellation viewport -->
+        <div class="tree-center">
+          <div class="tree-bar">
+            <div>
+              <div class="tree-title">⭐ Guitar Mastery Constellation</div>
+              <div class="tree-hint">DRAG · SCROLL TO ZOOM · CLICK ANY STAR</div>
+            </div>
+            <div class="legend">
+              <div class="leg"><div class="leg-node" style="width:8px;height:8px"></div>Foundation</div>
+              <div class="leg"><div class="leg-node" style="width:11px;height:11px"></div>Early</div>
+              <div class="leg"><div class="leg-node" style="width:14px;height:14px"></div>Intermediate</div>
+              <div class="leg"><div class="leg-node" style="width:17px;height:17px"></div>Advanced</div>
+              <div class="leg"><div class="leg-node" style="width:20px;height:20px"></div>Professional</div>
+              <div class="leg"><div class="ld" style="width:9px;height:9px;border-radius:50%;background:var(--gold2);box-shadow:0 0 5px var(--gold2)"></div>Mastered</div>
+            </div>
+          </div>
+          <div class="vp" id="vp">
+            <div class="zoom-btns">
+              <button class="zb" onclick="zoom(1.25)">+</button>
+              <button class="zb" onclick="zoom(0.8)">−</button>
+              <button class="zb" onclick="fitView()" style="font-size:.5rem">⌂</button>
+            </div>
+            <div class="vp-hint">Drag · Scroll to zoom · Click stars</div>
+            <svg id="tree-svg" xmlns="http://www.w3.org/2000/svg">
+              <g id="bg-g"></g>
+              <g id="cam-g">
+                <g id="edges-g"></g>
+                <g id="nodes-g"></g>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right sidebar: node detail -->
+        <div class="tree-sidebar tree-sidebar-right">
+          <div id="node-card">
+            <div class="nc-empty">
+              <div class="nc-empty-ico">🌌</div>
+              <div style="font-family:'Cinzel',Georgia,serif;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase">Select a star</div>
+              <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:.6rem;color:rgba(200,118,42,.35);margin-top:.42rem;line-height:1.8;font-style:italic;font-weight:300">
+                Each skill is a star.<br>Larger = higher difficulty.<br>Color marks the branch.
+              </div>
+            </div>
+          </div>
+          <div class="panel-sec" style="padding:.58rem .85rem .46rem">
+            <div class="sec-label">Research</div>
+            <div class="research" id="research-box">
+              <strong>📚 Berklee-Aligned Framework</strong>
+              Click any star to see its pedagogical research basis.
+            </div>
+          </div>
+          <div class="panel-sec" style="padding:.58rem .85rem .46rem">
+            <div class="sec-label">Achievements</div>
+            <div class="achs" id="achs-list" style="padding:0"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── TAB: PRACTICE ── -->
+    <div class="tab-view" id="view-practice">
+      <div class="tab-content-center">
+        <div class="sa-heading">📋 Practice Log</div>
+        <div class="sa-sub">Your session history, streak calendar, and practice analytics will appear here.</div>
+        <div style="margin-top:1.5rem">
+          <button class="log-btn" style="width:200px;margin:0" onclick="openModal()">✦ Log a Session Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: ANALYZE ── -->
+    <div class="tab-view" id="view-analyze">
+      <div class="tab-content-center" style="max-width:640px">
+        <div class="sa-heading">📄 Song Analyzer</div>
+        <div class="sa-sub">Upload a PDF of sheet music, lead sheet, or guitar tab. Claude will identify the techniques used, estimate the difficulty level, and map required skills to your constellation.</div>
+        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('pdf-input').click()" style="margin-top:1.2rem">
+          <div class="drop-ico">📄</div>
+          <div class="drop-txt">Drop a PDF here, or click to browse</div>
+          <div class="drop-sub">Sheet music · Lead sheets · Guitar tab · Chord charts</div>
+        </div>
+        <input type="file" id="pdf-input" accept=".pdf" style="display:none">
+        <div id="sa-result" style="margin-top:1rem"></div>
+      </div>
+    </div>
+
+    <!-- ── TAB: WIKI ── -->
+    <div class="tab-view" id="view-wiki">
+      <div class="tab-content-center">
+        <div class="sa-heading">📖 Music Theory Wiki</div>
+        <div class="sa-sub">Definitions for concepts in your mastered skills. Unlock more entries by mastering skill tree nodes.</div>
+        <div id="wiki-content" style="margin-top:1rem"></div>
+      </div>
+    </div>
+
+  </div><!-- /app-body -->
+
+</div><!-- /app -->
+
+<!-- PRACTICE MODAL -->
+<div class="ovl" id="modal-ovl">
+  <div class="modal">
+    <div class="m-title">Log Practice Session</div>
+    <div class="m-sub" id="modal-skill-name">No skill selected</div>
+    <div class="prereq-warn" id="prereq-warn"></div>
+    <div class="slider-grid">
+      <div class="slg">
+        <div class="sll"><span>⏱ Duration</span><span id="l-dur">15 min</span></div>
+        <input type="range" min="5" max="120" value="15" step="5" id="s-dur" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>🎯 Focus</span><span id="l-foc">Deliberate ×2</span></div>
+        <input type="range" min="1" max="3" value="2" step="1" id="s-foc" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>🔄 Type</span><span id="l-typ">Interleaved ×1.3</span></div>
+        <input type="range" min="1" max="2" value="2" step="1" id="s-typ" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>🎵 Accuracy</span><span id="l-acc">Good ~80%</span></div>
+        <input type="range" min="1" max="4" value="2" step="1" id="s-acc" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>🏁 BPM Target</span><span id="l-bpm">Partial</span></div>
+        <input type="range" min="1" max="3" value="2" step="1" id="s-bpm" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>✍ Reflection</span><span id="l-ref">Logged ×1.2</span></div>
+        <input type="range" min="1" max="2" value="2" step="1" id="s-ref" oninput="updModal()">
+      </div>
+    </div>
+    <div class="spacing-note" id="spacing-note">
+      📅 Spaced practice bonus: +<span id="spacing-amt">0</span> XP (Katz &amp; Wiseheart, 2025)
+    </div>
+    <div class="xp-preview">
+      <div class="xpp-left">
+        <div class="xpp-lbl">XP This Session</div>
+        <div class="xpp-val" id="xp-val">+0</div>
+        <div class="xpp-formula" id="xp-formula"></div>
+      </div>
+      <div class="xpp-right">
+        <div class="xpp-lbl">Prerequisites</div>
+        <div class="gate-info" id="gate-info"></div>
+      </div>
+    </div>
+    <div class="m-btns">
+      <button class="m-cancel" onclick="closeModal()">Cancel</button>
+      <button class="m-submit" onclick="submitSession()">✦ Earn XP</button>
+    </div>
+  </div>
+</div>
+
+<script src="data/branches.js"></script>
+<script src="data/nodes.js"></script>
+<script src="data/archetypes.js"></script>
+<script src="engine/state.js"></script>
+<script src="engine/progression.js"></script>
+<script src="engine/xp.js"></script>
+<script src="render/background.js"></script>
+<script src="ui/camera.js"></script>
+<script src="render/tree.js"></script>
+<script src="render/panels.js"></script>
+<script src="features/archetype.js"></script>
+<script src="features/pretest.js"></script>
+<script>
+buildBG();
+renderArchGrid();
+window.addEventListener('resize', function() {
+  clearTimeout(window._rt);
+  window._rt = setTimeout(fitView, 200);
+});
+</script>
+</body>
+</html>
