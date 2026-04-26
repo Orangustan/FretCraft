@@ -573,6 +573,201 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer;height:3px}
 .role-useful{background:rgba(200,118,42,.06);border-color:rgba(200,118,42,.2);color:var(--t2)}
 .role-optional{background:rgba(100,80,60,.05);border-color:rgba(120,100,70,.15);color:var(--t3)}
 
+/* ── PRE-TEST OVERLAY ── */
+#pretest-screen{
+  position:fixed;inset:0;z-index:400;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 80%,rgba(120,50,10,.3) 0%,transparent 60%),
+    radial-gradient(ellipse 100% 80% at 50% 100%,rgba(80,30,5,.4) 0%,transparent 50%),
+    #090502;
+  display:none;align-items:center;justify-content:center;overflow-y:auto;
+}
+#pretest-screen.active{ display:flex; }
+#pretest-screen::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(94deg,transparent 0px,rgba(120,60,10,.025) 1px,transparent 2px,rgba(120,60,10,.015) 4px,transparent 6px);
+}
+.pt-container{
+  max-width:680px;width:92%;padding:2.5rem 0;
+  position:relative;z-index:1;
+}
+.pt-intro,.pt-question-screen,.pt-results{
+  animation:ptFadeIn .38s ease both;
+}
+@keyframes ptFadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.pt-logo{
+  font-family:var(--fd);font-size:1.4rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase;
+  background:linear-gradient(160deg,var(--gold4) 0%,var(--gold) 30%,var(--gold3) 55%,var(--gold2) 75%,var(--gold4) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.55rem;text-align:center;
+  filter:drop-shadow(0 0 16px rgba(200,118,42,.3));
+}
+.pt-heading{
+  font-family:var(--fd);font-size:1.1rem;font-weight:700;
+  color:var(--t1);text-align:center;margin-bottom:.7rem;letter-spacing:.06em;
+}
+.pt-body{
+  font-family:var(--fu);font-size:.78rem;color:var(--t2);
+  line-height:1.85;text-align:center;font-weight:300;margin-bottom:1.8rem;
+}
+.pt-body strong{ color:var(--gold2);font-weight:600; }
+
+.pt-actions{display:flex;flex-direction:column;align-items:center;gap:.65rem;}
+.pt-btn-primary{
+  background:linear-gradient(160deg,var(--gold5) 0%,var(--gold4) 50%,rgba(200,118,42,.4) 100%);
+  border:1px solid var(--border2);border-radius:.1rem;
+  padding:.62rem 2.4rem;font-family:var(--fd);font-size:.78rem;font-weight:900;
+  color:var(--gold3);cursor:pointer;letter-spacing:.16em;text-transform:uppercase;
+  box-shadow:0 0 20px rgba(200,118,42,.1);transition:all .2s;
+  position:relative;overflow:hidden;
+}
+.pt-btn-primary::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold3),transparent);
+}
+.pt-btn-primary:hover{
+  box-shadow:0 0 32px rgba(200,118,42,.3);transform:translateY(-2px);
+  background:linear-gradient(160deg,var(--gold4) 0%,rgba(200,118,42,.6) 100%);
+}
+.pt-btn-secondary{
+  background:transparent;border:1px solid var(--border);border-radius:.1rem;
+  padding:.46rem 1.4rem;font-family:var(--fs);font-size:.5rem;color:var(--t3);
+  cursor:pointer;transition:all .14s;letter-spacing:.14em;text-transform:uppercase;
+}
+.pt-btn-secondary:hover{border-color:var(--border2);color:var(--t2);}
+
+.pt-progress{
+  font-family:var(--fs);font-size:.44rem;color:var(--t3);letter-spacing:.24em;
+  text-transform:uppercase;text-align:center;margin-bottom:1.6rem;
+}
+.pt-branch-header{
+  display:flex;align-items:flex-start;gap:.75rem;
+  background:linear-gradient(135deg,var(--bg4),var(--bg3));
+  border:1px solid var(--border);border-radius:.1rem;
+  padding:.78rem .9rem;margin-bottom:1.2rem;
+  position:relative;overflow:hidden;
+}
+.pt-branch-header::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border2),transparent);
+}
+.pt-branch-ico{ font-size:1.6rem;flex-shrink:0;line-height:1.2; }
+.pt-branch-name{
+  font-family:var(--fd);font-size:.78rem;font-weight:700;
+  color:var(--t1);margin-bottom:.18rem;
+}
+.pt-branch-desc{
+  font-family:var(--fu);font-size:.66rem;color:var(--t3);
+  line-height:1.6;font-weight:300;font-style:italic;
+}
+
+.pt-challenge{
+  background:linear-gradient(135deg,var(--bg5),var(--bg4));
+  border:1px solid var(--border2);border-radius:.1rem;
+  padding:1.1rem 1.2rem;margin-bottom:1rem;
+  position:relative;overflow:hidden;
+}
+.pt-challenge::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold3),transparent);opacity:.35;
+}
+.pt-challenge-text{
+  font-family:var(--fu);font-size:.84rem;color:var(--t1);
+  line-height:1.82;font-weight:300;margin-bottom:.7rem;
+}
+.pt-rubric{
+  font-family:var(--fu);font-size:.64rem;color:var(--t3);
+  line-height:1.62;font-style:italic;font-weight:300;
+  border-top:1px solid var(--border3);padding-top:.52rem;
+}
+.pt-rubric-ico{color:var(--gold4);margin-right:.28rem;}
+
+.pt-responses{display:flex;flex-direction:column;gap:.38rem;margin-bottom:.9rem;}
+.pt-response{
+  display:flex;align-items:center;gap:.75rem;
+  background:linear-gradient(135deg,var(--bg4),var(--bg3));
+  border:1px solid var(--border);border-radius:.1rem;
+  padding:.6rem .85rem;cursor:pointer;transition:all .16s;
+  text-align:left;width:100%;
+  opacity:0;animation:ptRespIn .25s ease both;
+}
+.pt-response:nth-child(1){animation-delay:.04s}
+.pt-response:nth-child(2){animation-delay:.08s}
+.pt-response:nth-child(3){animation-delay:.12s}
+.pt-response:nth-child(4){animation-delay:.16s}
+.pt-response:nth-child(5){animation-delay:.20s}
+@keyframes ptRespIn{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.pt-response:hover{
+  border-color:var(--gold);background:var(--bg5);
+  transform:translateX(3px);
+}
+.pt-response-num{
+  font-family:var(--fm);font-size:.88rem;color:var(--gold);
+  flex-shrink:0;width:1.4rem;text-align:center;
+}
+.pt-response-label{
+  font-family:var(--fu);font-size:.72rem;color:var(--t2);
+  font-weight:300;
+}
+.pt-skip-branch{
+  font-family:var(--fs);font-size:.46rem;color:var(--t3);
+  text-align:center;cursor:pointer;letter-spacing:.12em;
+  text-transform:uppercase;text-decoration:underline;
+  transition:color .14s;
+}
+.pt-skip-branch:hover{color:var(--t2);}
+
+.pt-results-grid{
+  display:flex;flex-direction:column;gap:.48rem;margin-bottom:1.2rem;
+}
+.pt-results-row{
+  display:flex;align-items:center;gap:.75rem;
+  background:linear-gradient(135deg,var(--bg4),var(--bg3));
+  border:1px solid var(--border);border-radius:.1rem;
+  padding:.55rem .8rem;
+  opacity:0;animation:ptRespIn .3s ease both;
+}
+.pt-results-row:nth-child(1){animation-delay:.05s}
+.pt-results-row:nth-child(2){animation-delay:.10s}
+.pt-results-row:nth-child(3){animation-delay:.15s}
+.pt-results-row:nth-child(4){animation-delay:.20s}
+.pt-results-row:nth-child(5){animation-delay:.25s}
+.pt-results-row:nth-child(6){animation-delay:.30s}
+.pt-results-row:nth-child(7){animation-delay:.35s}
+.pt-r-ico{ font-size:1.1rem;flex-shrink:0; }
+.pt-r-name{
+  font-family:var(--fs);font-size:.52rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--t2);width:120px;flex-shrink:0;
+}
+.pt-r-bar{
+  flex:1;height:6px;background:rgba(200,118,42,.1);
+  border-radius:3px;overflow:hidden;
+}
+.pt-r-fill{
+  height:100%;border-radius:3px;
+  transition:width .6s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;
+}
+.pt-r-fill::after{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(245,192,96,.4),transparent);
+  animation:shim 2.2s ease infinite;
+}
+.pt-r-level{
+  font-family:var(--fs);font-size:.44rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--t3);width:76px;text-align:right;flex-shrink:0;
+}
+.pt-results-summary{
+  font-family:var(--fu);font-size:.72rem;color:var(--t3);
+  text-align:center;line-height:1.75;font-style:italic;font-weight:300;
+  margin-bottom:1.5rem;
+  background:linear-gradient(135deg,var(--bg4),var(--bg3));
+  border:1px solid var(--border3);border-radius:.1rem;
+  padding:.65rem .9rem;
+}
+.pt-results-summary strong{ color:var(--gold2);font-weight:600; }
+
 /* ── NEW LAYOUT ADDITIONS ── */
 html, body { height: 100%; overflow: hidden; }
 body { display: flex; flex-direction: column; }
@@ -690,8 +885,15 @@ body { display: flex; flex-direction: column; }
   <button class="arch-start-btn" id="arch-start" onclick="startWithArchetype()">
     BEGIN YOUR JOURNEY →
   </button>
-  <div class="arch-skip" onclick="startWithArchetype('all_rounder')">
+  <div class="arch-skip" onclick="startWithArchetype('skip_to_tree')">
     Skip — show me everything (All-Rounder path)
+  </div>
+</div>
+
+<!-- ── PRE-TEST OVERLAY — shown between archetype selection and tree ── -->
+<div id="pretest-screen">
+  <div class="pt-container">
+    <div id="pt-content"></div>
   </div>
 </div>
 
@@ -914,6 +1116,14 @@ var BR = [
 ,
   {id:'theory',      name:'Music Theory',          ico:'📖', color:'#94a3b8' },
   {id:'eartraining', name:'Ear Training',           ico:'👂', color:'#e879f9', subtitle:'Aural Skills' }];
+
+var LV = [
+  { name:'Foundation',   meta:'Berklee L1–2', nodeR:11 },
+  { name:'Early',        meta:'Berklee L2–3', nodeR:14 },
+  { name:'Intermediate', meta:'Berklee L4–5', nodeR:17 },
+  { name:'Advanced',     meta:'Berklee L6–7', nodeR:20 },
+  { name:'Professional', meta:'Berklee L8+',  nodeR:23 },
+];
 
 // FRETCRAFT — All 88 node definitions
 // id, x, y, l, br, ico, verb, name, max, parents[], desc, tips[], ref
@@ -1676,6 +1886,8 @@ var S = {
   songHighlight: null,
   archetype: null,
   archSongs: [],
+  testedOut: {},
+  inPreTest: false,
 };
 
 // Seed some demo progress so tree looks alive
@@ -2426,9 +2638,21 @@ function selectArchetype(id){
 function startWithArchetype(forceId){
   var id = forceId || _selectedArch;
   if (!id) return;
+  var skipDirect = (id === 'skip_to_tree');
+  if (skipDirect) { id = 'all_rounder'; }
   S.archetype = id;
-  S.archSongs = ARCHETYPES.find(function(a){ return a.id===id; }).songs;
+  var arch = ARCHETYPES.find(function(a){ return a.id===id; });
+  S.archSongs = arch ? arch.songs : [];
   document.getElementById('archetype-screen').style.display = 'none';
+  if (skipDirect) {
+    enterTree();
+  } else {
+    startPreTest(id);
+  }
+}
+
+function enterTree(){
+  document.getElementById('pretest-screen').classList.remove('active');
   var app = document.getElementById('app');
   app.style.display = 'flex';
   app.style.height = '100%';
@@ -2478,6 +2702,373 @@ function archOpacity(nodeId){
 function processPDF(file) {
   var el = document.getElementById('sa-result');
   el.innerHTML = '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:.7rem;color:var(--t3);padding:.8rem;font-style:italic">Song analyzer coming in the next build session.</div>';
+}
+
+// ── PRE-TEST ──────────────────────────────────────────────
+
+var PRETEST_BRANCH_ORDER = [
+  { key:'rhythm',      ico:'🥁', name:'Rhythm & Timing',
+    desc:'Tests your sense of pulse, subdivision, and rhythmic feel.' },
+  { key:'technique',   ico:'⚡', name:'Technique',
+    desc:'Tests physical guitar technique: fretting, picking, and articulation.' },
+  { key:'fretboard',   ico:'🗺', name:'Fretboard Knowledge',
+    desc:'Tests your knowledge of where notes and scales live on the neck.' },
+  { key:'theory',      ico:'📖', name:'Music Theory',
+    desc:'Tests conceptual understanding: intervals, scales, chord construction.' },
+  { key:'eartraining', ico:'👂', name:'Ear Training',
+    desc:'Tests your ability to identify sounds by ear, without looking.' },
+  { key:'harmony',     ico:'🎶', name:'Harmony & Chords',
+    desc:'Tests chord knowledge, voicings, and harmonic progressions.' },
+  { key:'lead',        ico:'⭐', name:'Lead & Improvisation',
+    desc:'Tests single-note playing, scale application, and musical expression.' }
+];
+
+var PRETEST_QUESTIONS = {
+  rhythm: [
+    { level:0,
+      question:"Pick up your guitar and strum any chord you know to a metronome at 60 BPM for 8 beats. Does your strumming feel even — each beat the same distance apart?",
+      rubric:"Even means a listener could not tell which beat you started on.",
+      nodeIds:['q_strum','e_strum','whole_half'] },
+    { level:1,
+      question:"Play a down-up eighth-note strumming pattern on any chord for 8 beats at 60 BPM. Each down-up pair should feel equal. Does it stay locked to the beat?",
+      rubric:"The upstroke should land exactly halfway between downstrokes.",
+      nodeIds:['16th_r','syncop','strum_st'] },
+    { level:2,
+      question:"Play a shuffle feel — a long-short pattern (like a heartbeat: DUM-da, DUM-da) — over a 12-bar blues. Does it feel like a real blues groove?",
+      rubric:"The short note should feel like it belongs to the next beat, not the previous one.",
+      nodeIds:['triplets','subdiv_int','funk'] },
+    { level:3,
+      question:"Count and play in 7/8 time — group the beats as 3+2+2 — for at least 16 beats without losing your place or stopping.",
+      rubric:"You should be able to do this without counting aloud after the first few bars.",
+      nodeIds:['odd_time','poly_r'] }
+  ],
+  technique: [
+    { level:0,
+      question:"On the high E string (thinnest), press your finger just behind the 5th fret and pick the string once firmly. Does the note ring out clearly with no buzz and no muting from your other fingers?",
+      rubric:"Clean means it rings for at least 2 full seconds without dying or buzzing.",
+      nodeIds:['pick_hold','fret_bas'] },
+    { level:1,
+      question:"On the G string, hammer on from the 5th fret to the 7th fret using only your fretting hand, then pull off back to the 5th. Do both notes ring clearly — without picking either one?",
+      rubric:"The pull-off must ring, not just go silent. You should hear a clear pitch, not a thud.",
+      nodeIds:['alt_pick','h_po','slides'] },
+    { level:2,
+      question:"Bend the G string at the 7th fret upward until it matches the pitch of the 9th fret (a whole step). Pick the 9th fret first so you know your target, then bend to match it. Do you reach the pitch accurately?",
+      rubric:"Accurate means a tuner or your ear confirms the bend reached the target note.",
+      nodeIds:['bends','vibrato','legato','trill'] },
+    { level:3,
+      question:"Play a 3-string descending sweep arpeggio on strings 1-3 using an E-shape major chord at the 7th fret, at any slow tempo. Is it clean — one fluid motion with no noise between strings?",
+      rubric:"Each note should sound individually, not blurred together or muted.",
+      nodeIds:['alt_spd','economy','sweep','tech_int'] }
+  ],
+  fretboard: [
+    { level:0,
+      question:"Without looking anything up: what is the note at the 5th fret of the A string? Say it aloud, then find two other places on the neck where that same note appears.",
+      rubric:"Answer: D. The same note appears at the 7th fret of the G string and open D string.",
+      nodeIds:['open_str','first_pos','tab_read'] },
+    { level:1,
+      question:"Play the minor pentatonic scale starting at the 5th fret of the low E string, ascending through all 5 strings and back down, from memory. Do you know the shape without hesitating?",
+      rubric:"No hesitation means you do not pause to remember the next note. The shape is automatic.",
+      nodeIds:['pent_b1','full_fr','pent_5p'] },
+    { level:2,
+      question:"Play a C major chord in 3 different positions on the neck — not just open position. Each voicing should ring cleanly with no muted strings.",
+      rubric:"Examples: open C, CAGED A-shape at 3rd fret, CAGED G-shape at 8th fret.",
+      nodeIds:['caged','maj_sc','notation'] },
+    { level:3,
+      question:"Play a Dorian scale starting from the 5th fret of the low E string. Name the one note that makes Dorian sound different from the natural minor scale you already know.",
+      rubric:"The characteristic note is the natural 6th (raised 6th compared to natural minor). In A Dorian: F# instead of F.",
+      nodeIds:['modes_a','transcr','fret_pro'] }
+  ],
+  theory: [
+    { level:0,
+      question:"What note is a whole step (2 frets) above the open A string? Find it on the guitar and play it. Now — what is a half step? Play a half step above the note you just found.",
+      rubric:"Whole step above A = B (2nd fret A string). Half step above B = C (3rd fret A string).",
+      nodeIds:['chromatic','intervals'] },
+    { level:1,
+      question:"Build a G major scale from scratch using the formula W-W-H-W-W-W-H. Name all 7 notes in order, then play them on the guitar starting from the 3rd fret of the low E string.",
+      rubric:"G A B C D E F# G. If you had to count frets rather than recall the pattern, that is level 3 of mastery.",
+      nodeIds:['major_sc_th','scale_degrees','minor_scales'] },
+    { level:2,
+      question:"In the key of G major, what chord is built on the 2nd scale degree? What quality is it — major, minor, or diminished? Play it.",
+      rubric:"Answer: A minor (ii chord). Every major key has a minor chord on the 2nd degree.",
+      nodeIds:['triad_theory','chord_function'] },
+    { level:3,
+      question:"Play a G7 chord, then resolve it to C major. Now explain: which two notes inside G7 create the tension that makes it want to resolve? Name them and describe why.",
+      rubric:"The tritone between B (3rd) and F (7th). B wants to rise to C. F wants to fall to E. This is the engine of Western harmony.",
+      nodeIds:['diatonic_harm','voice_leading','extended_harm'] }
+  ],
+  eartraining: [
+    { level:0,
+      question:"Hum or sing the pitch of the open A string before you play it. Then play it. Did your hum match the pitch? Now try with the open D string — hum first, then play.",
+      rubric:"Matching means your hum and the guitar note sound like the same pitch, not similar.",
+      nodeIds:['pitch_match','interval_rec_p'] },
+    { level:1,
+      question:"Have someone play a chord (or play one yourself and immediately look away from the fretboard). Before checking — is it major or minor? Test yourself with at least 3 different chords.",
+      rubric:"You should be right at least 2 out of 3 times without guessing.",
+      nodeIds:['maj_min_qual','interval_rec_d'] },
+    { level:2,
+      question:"Play a recording of a song you know well. Listen to the first chord. Without looking up the key — find the root note of that chord on your guitar by ear alone. Does it feel stable when you play it against the recording?",
+      rubric:"Stable means the note you found creates no tension against the chord — it sits in it.",
+      nodeIds:['chord_qual_rec','melodic_dict'] },
+    { level:3,
+      question:"Listen to any ii-V-I progression (search for an ii-V-I backing track on YouTube). Can you identify the moment the dominant chord (V) resolves to the tonic (I)? Can you hear the tension release?",
+      rubric:"You should be able to predict the resolution a beat before it happens — that pull is the V chord.",
+      nodeIds:['harmonic_dict','modal_rec','relative_pitch'] }
+  ],
+  harmony: [
+    { level:0,
+      question:"Play an open G major chord, then open C major, then open D major, then back to G — in time, no stopping. Do all transitions happen without a gap in the sound?",
+      rubric:"No gap means the next chord rings before the previous one fully dies. Smooth, not stuttering.",
+      nodeIds:['open_chd','chord_tr','pw_chord'] },
+    { level:1,
+      question:"Play an F major barre chord using the E shape at the 1st fret. All 6 strings must ring clearly — no buzzes, no muted strings. Hold it for 4 beats.",
+      rubric:"This is the classic beginner-to-intermediate dividing line. Buzzing on any string = level 3 or below.",
+      nodeIds:['barre','chd_prog','7th_chd'] },
+    { level:2,
+      question:"Play this chord sequence using any voicings you know: Gmaj7, Em7, Am7, D7, Gmaj7. Do all four chord qualities sound correct — major 7, minor 7, minor 7, dominant 7?",
+      rubric:"If you had to look up any of these voicings or are unsure of the chord quality, that is level 3 of mastery.",
+      nodeIds:['inversions','chd_mel','reharm'] },
+    { level:3,
+      question:"Play the same Gmaj7, Em7, Am7, D7 progression using only the top 4 strings (strings 1-4). Each chord change should move each voice by the smallest possible interval.",
+      rubric:"Voice leading: the notes in your chords should move like singers — each part moving smoothly, not leaping.",
+      nodeIds:['adv_harm','solo_arr','harm_pro'] }
+  ],
+  lead: [
+    { level:0,
+      question:"On the high E string at the 5th fret, press firmly just behind the fret and pick the string with a firm downstroke. Does the note ring clearly — no fret buzz, no string noise, sustaining for at least 2 seconds?",
+      rubric:"This tests basic note production — the foundation of all single-note playing.",
+      nodeIds:['first_mel'] },
+    { level:1,
+      question:"Play the opening riff of Smoke on the Water — or any melody you know — on a single string, entirely by ear. No tab, no looking it up. Does it sound recognizable?",
+      rubric:"Recognizable means someone hearing it would identify the song within 4 bars.",
+      nodeIds:['blues_sc','blues_voc','phrasing'] },
+    { level:2,
+      question:"Using the minor pentatonic scale starting at the 5th fret of the low E, create a 4-note phrase that feels like it has a beginning and an end. Play it exactly the same way 3 times in a row.",
+      rubric:"Repeating it identically 3 times proves it was intentional, not accidental.",
+      nodeIds:['lead_chg','modal_i','style_v','arpeg'] },
+    { level:3,
+      question:"Find an A minor backing track (search for an A minor blues backing track, slow tempo, on YouTube). Play over it for 30 seconds using the pentatonic scale. Do your notes feel like they belong in the music — musically responsive, not just technically correct?",
+      rubric:"Musically responsive means you are listening and reacting to the track, not just running scales.",
+      nodeIds:['adv_imp','composit','sig_style'] }
+  ]
+};
+
+var RESPONSE_MULTIPLIERS = [0, 0.20, 0.50, 0.85, 1.0];
+var _ptArch = null;
+var _ptBranchIdx = 0;
+var _ptQuestionIdx = 0;
+var _ptBranchHighest = {};
+
+function applyPretestResponse(nodeIds, responseIndex){
+  var mult = RESPONSE_MULTIPLIERS[responseIndex];
+  nodeIds.forEach(function(nodeId){
+    var node = nById(nodeId);
+    if (!node) return;
+    var pts = Math.floor(node.max * mult);
+    S.pts[nodeId] = Math.max(S.pts[nodeId] || 0, pts);
+    if (responseIndex === 4){ S.testedOut[nodeId] = true; }
+  });
+}
+
+function applyBranchResults(branchKey, highestCleanLevel){
+  var questions = PRETEST_QUESTIONS[branchKey];
+  questions.forEach(function(q, idx){
+    if (idx <= highestCleanLevel){ applyPretestResponse(q.nodeIds, 4); }
+  });
+}
+
+function startPreTest(archetypeId){
+  _ptArch = archetypeId;
+  _ptBranchIdx = 0;
+  _ptQuestionIdx = 0;
+  _ptBranchHighest = {};
+  S.testedOut = {};
+  S.inPreTest = true;
+  document.getElementById('pretest-screen').classList.add('active');
+  showPtIntro();
+}
+
+function showPtIntro(){
+  document.getElementById('pt-content').innerHTML =
+    '<div class="pt-intro">'+
+    '<div class="pt-logo">FRETCRAFT</div>'+
+    '<div class="pt-heading">Find Your Starting Point</div>'+
+    '<div class="pt-body">'+
+      'Before we light your constellation, let us find where you are.<br>'+
+      'This takes about 10&ndash;15 minutes. <strong>You will need your guitar.</strong><br><br>'+
+      'Answer honestly &mdash; the goal is to start at your real level,<br>'+
+      'not to impress anyone. You can retake this anytime.'+
+    '</div>'+
+    '<div class="pt-actions">'+
+      '<button class="pt-btn-primary" onclick="runPreTest()">Begin Assessment &rarr;</button>'+
+      '<button class="pt-btn-secondary" onclick="skipPreTestBeginner()">I am a complete beginner</button>'+
+      '<button class="pt-btn-secondary" onclick="skipPreTestAdvanced()">I am advanced &mdash; trust me</button>'+
+    '</div>'+
+    '</div>';
+}
+
+function runPreTest(){
+  _ptBranchIdx = 0;
+  _ptQuestionIdx = 0;
+  _ptBranchHighest = {};
+  showPtQuestion();
+}
+
+function showPtQuestion(){
+  var branch = PRETEST_BRANCH_ORDER[_ptBranchIdx];
+  var question = PRETEST_QUESTIONS[branch.key][_ptQuestionIdx];
+  var branchNum = _ptBranchIdx + 1;
+  document.getElementById('pt-content').innerHTML =
+    '<div class="pt-question-screen">'+
+    '<div class="pt-progress">Branch '+branchNum+' of 7 &mdash; '+branch.name+'</div>'+
+    '<div class="pt-branch-header">'+
+      '<div class="pt-branch-ico">'+branch.ico+'</div>'+
+      '<div>'+
+        '<div class="pt-branch-name">'+branch.name+'</div>'+
+        '<div class="pt-branch-desc">'+branch.desc+'</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="pt-challenge">'+
+      '<div class="pt-challenge-text">'+question.question+'</div>'+
+      '<div class="pt-rubric"><span class="pt-rubric-ico">&#10003;</span>'+question.rubric+'</div>'+
+    '</div>'+
+    '<div class="pt-responses">'+
+      '<button class="pt-response" onclick="handlePtResponse(0)">'+
+        '<span class="pt-response-num">&#9312;</span>'+
+        '<span class="pt-response-label">I could not do this</span></button>'+
+      '<button class="pt-response" onclick="handlePtResponse(1)">'+
+        '<span class="pt-response-num">&#9313;</span>'+
+        '<span class="pt-response-label">I struggled through it</span></button>'+
+      '<button class="pt-response" onclick="handlePtResponse(2)">'+
+        '<span class="pt-response-num">&#9314;</span>'+
+        '<span class="pt-response-label">I did it but not cleanly</span></button>'+
+      '<button class="pt-response" onclick="handlePtResponse(3)">'+
+        '<span class="pt-response-num">&#9315;</span>'+
+        '<span class="pt-response-label">I did it cleanly</span></button>'+
+      '<button class="pt-response" onclick="handlePtResponse(4)">'+
+        '<span class="pt-response-num">&#9316;</span>'+
+        '<span class="pt-response-label">I could do this in my sleep</span></button>'+
+    '</div>'+
+    '<div class="pt-skip-branch" onclick="skipPtBranch()">Skip this branch &rarr;</div>'+
+    '</div>';
+}
+
+function handlePtResponse(responseIndex){
+  var branch = PRETEST_BRANCH_ORDER[_ptBranchIdx];
+  var branchKey = branch.key;
+  var questions = PRETEST_QUESTIONS[branchKey];
+  var currentQ = questions[_ptQuestionIdx];
+
+  applyPretestResponse(currentQ.nodeIds, responseIndex);
+
+  if (responseIndex >= 3){ _ptBranchHighest[branchKey] = _ptQuestionIdx; }
+
+  var isLastQuestion = _ptQuestionIdx >= questions.length - 1;
+  var shouldStop = responseIndex <= 1;
+
+  if (!shouldStop && !isLastQuestion){
+    _ptQuestionIdx++;
+    showPtQuestion();
+    return;
+  }
+
+  var highestClean = _ptBranchHighest[branchKey];
+  if (highestClean !== undefined){ applyBranchResults(branchKey, highestClean); }
+  advancePtBranch();
+}
+
+function skipPtBranch(){ advancePtBranch(); }
+
+function advancePtBranch(){
+  _ptBranchIdx++;
+  _ptQuestionIdx = 0;
+  if (_ptBranchIdx >= PRETEST_BRANCH_ORDER.length){
+    checkGates();
+    showPtResults();
+  } else {
+    showPtQuestion();
+  }
+}
+
+function showPtResults(){
+  var levelLabels = ['Foundation','Early','Intermediate','Advanced'];
+  var branchColors = {
+    rhythm:'#60a5fa',technique:'#34d399',fretboard:'#fbbf24',
+    theory:'#94a3b8',eartraining:'#e879f9',harmony:'#f87171',lead:'#c084fc'
+  };
+  var rowsHtml = PRETEST_BRANCH_ORDER.map(function(branch){
+    var questions = PRETEST_QUESTIONS[branch.key];
+    var allIds = [];
+    questions.forEach(function(q){ allIds = allIds.concat(q.nodeIds); });
+    var unique = allIds.filter(function(id,i){ return allIds.indexOf(id)===i; });
+    var total = 0; var counted = 0;
+    unique.forEach(function(id){
+      var node = nById(id); if (!node) return;
+      total += Math.min(1, (S.pts[id]||0)/node.max);
+      counted++;
+    });
+    var avgPct = counted ? Math.round(total/counted*100) : 0;
+    var highestClean = _ptBranchHighest[branch.key];
+    var levelLabel = highestClean !== undefined ? (levelLabels[highestClean]||'Advanced') : 'Discovering';
+    var bColor = branchColors[branch.key]||'var(--gold)';
+    return '<div class="pt-results-row">'+
+      '<div class="pt-r-ico">'+branch.ico+'</div>'+
+      '<div class="pt-r-name">'+branch.name+'</div>'+
+      '<div class="pt-r-bar"><div class="pt-r-fill" style="width:'+avgPct+'%;background:'+bColor+';box-shadow:0 0 6px '+bColor+'66"></div></div>'+
+      '<div class="pt-r-level" style="color:'+bColor+'">'+levelLabel+'</div>'+
+    '</div>';
+  }).join('');
+
+  var mastered = NODES.filter(function(n){ return !n.gate && nState(n.id)==='done'; }).length;
+  var inProg   = NODES.filter(function(n){ return !n.gate && nState(n.id)==='prog'; }).length;
+  var locked   = NODES.filter(function(n){ return !n.gate && nState(n.id)==='locked'; }).length;
+
+  document.getElementById('pt-content').innerHTML =
+    '<div class="pt-results">'+
+    '<div class="pt-heading">Your Constellation Is Ready</div>'+
+    '<div class="pt-results-grid">'+rowsHtml+'</div>'+
+    '<div class="pt-results-summary">'+
+      '<strong>'+mastered+'</strong> skills marked as mastered &nbsp;&middot;&nbsp; '+
+      '<strong>'+inProg+'</strong> in progress &nbsp;&middot;&nbsp; '+
+      '<strong>'+locked+'</strong> ready to unlock'+
+    '</div>'+
+    '<div style="text-align:center">'+
+      '<button class="pt-btn-primary" onclick="finishPreTest()">Enter Your Constellation &rarr;</button>'+
+    '</div>'+
+    '</div>';
+}
+
+function finishPreTest(){
+  S.inPreTest = false;
+  document.getElementById('pretest-screen').classList.remove('active');
+  checkGates();
+  enterTree();
+}
+
+function skipPreTestBeginner(){
+  S.inPreTest = false;
+  document.getElementById('pretest-screen').classList.remove('active');
+  enterTree();
+}
+
+function skipPreTestAdvanced(){
+  var arch = ARCHETYPES.find(function(a){ return a.id===_ptArch; });
+  if (arch){
+    PRETEST_BRANCH_ORDER.forEach(function(branch){
+      PRETEST_QUESTIONS[branch.key].forEach(function(q){
+        if (q.level <= 1){
+          q.nodeIds.forEach(function(nodeId){
+            if (arch.core.length===0 || arch.core.indexOf(nodeId)>=0){
+              applyPretestResponse([nodeId], 3);
+            }
+          });
+        }
+      });
+    });
+  }
+  S.inPreTest = false;
+  document.getElementById('pretest-screen').classList.remove('active');
+  checkGates();
+  enterTree();
 }
 
 // ── BOOT ──────────────────────────────────────────────────
