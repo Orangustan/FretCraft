@@ -2236,9 +2236,13 @@ function renderTree(){
       var pSt = nState(p.id), nSt = nState(node.id);
       var hot = pSt==='done' && (nSt==='done'||nSt==='prog');
       var active = pSt==='done';
-      var col = hot ? 'rgba(200,168,75,.55)' : active ? 'rgba(200,168,75,.15)' : 'rgba(100,80,140,.13)';
-      var sw = hot ? 1.8 : active ? 0.8 : 0.5;
-      var opacity = hot ? 0.85 : active ? 0.45 : 0.22;
+      var isChildAvail = nSt==='locked' && !node.gate &&
+        (node.parents||[]).every(function(pp){ return nState(pp)==='done'; });
+      var readyEdge = pSt==='done' && isChildAvail;
+      var nodeColor = branchColor(node.br);
+      var col = hot ? 'rgba(200,168,75,.55)' : readyEdge ? nodeColor : active ? 'rgba(200,168,75,.15)' : 'rgba(100,80,140,.13)';
+      var sw = hot ? 1.8 : readyEdge ? 1.5 : active ? 0.8 : 0.5;
+      var opacity = hot ? 0.85 : readyEdge ? 0.55 : active ? 0.45 : 0.22;
       // Gentle cubic bezier — control points pull toward midpoint vertically
       var my = (p.y+node.y)/2;
       var path = 'M'+p.x+','+p.y+' C'+p.x+','+my+' '+node.x+','+my+' '+node.x+','+node.y;
@@ -2268,15 +2272,16 @@ function renderTree(){
     var ri = R - 4;
 
     var isDone = ns==='done', isProg = ns==='prog';
+    var isAvailable = ns==='locked' && !node.gate && prereqsDone(node);
 
     // Archetype-based opacity layered on top of state opacity
-    var baseOpacity = isDone ? 1 : isProg ? 0.82 : 0.35;
+    var baseOpacity = isDone ? 1 : isProg ? 0.82 : isAvailable ? 0.60 : 0.35;
     var archMult = archOpacity(node.id);
     var nodeOpacity = (baseOpacity * archMult).toFixed(2);
-    var fillOpacity = isDone ? 0.85 : isProg ? 0.45 : 0.12;
-    var strokeColor = isDone ? bColor : isProg ? bColor : 'rgba(150,130,170,.4)';
-    var strokeW = isDone ? 2.2 : isProg ? 1.5 : 1;
-    var flt = (isDone||isSel||isGate) ? ' filter="url(#'+filterMap[node.br]+')"' : '';
+    var fillOpacity = isDone ? 0.85 : isProg ? 0.45 : isAvailable ? 0.28 : 0.12;
+    var strokeColor = isDone ? bColor : isProg ? bColor : isAvailable ? bColor : 'rgba(150,130,170,.4)';
+    var strokeW = isDone ? 2.2 : isProg ? 1.5 : isAvailable ? 1.8 : 1;
+    var flt = (isDone||isSel||isGate||isAvailable) ? ' filter="url(#'+filterMap[node.br]+')"' : '';
 
     // Corona rings for mastered nodes
     var corona = '';
@@ -2293,6 +2298,12 @@ function renderTree(){
       corona = '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+14)+'" fill="none" stroke="var(--gold2)" stroke-width="1.8" opacity="'+(isDone?.4:.15)+'">'+
                '<animate attributeName="r" values="'+(R+10)+';'+(R+26)+';'+(R+10)+'" dur="2.5s" repeatCount="indefinite"/>'+
                '<animate attributeName="opacity" values=".4;.04;.4" dur="2.5s" repeatCount="indefinite"/></circle>';
+    }
+    if (isAvailable && !isSel){
+      corona += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+6)+'" fill="none" stroke="'+bColor+'" stroke-width="1.2" opacity=".12">'+
+        '<animate attributeName="r" values="'+(R+4)+';'+(R+11)+';'+(R+4)+'" dur="2.8s" repeatCount="indefinite"/>'+
+        '<animate attributeName="opacity" values=".12;.32;.12" dur="2.8s" repeatCount="indefinite"/>'+
+        '</circle>';
     }
 
     // Song highlight ring (temporary, from clicking a song goal)
@@ -2327,7 +2338,7 @@ function renderTree(){
     var starOverlay = isDone ? '<path d="'+starPts(node.x,node.y,R+2,R*0.45,4)+'" fill="'+bColor+'" opacity=".32"/>' : '';
 
     // Text colors
-    var nameColor = isDone ? bColor : isProg ? bColor : 'rgba(140,120,155,.55)';
+    var nameColor = isDone ? bColor : isProg ? bColor : isAvailable ? bColor : 'rgba(140,120,155,.55)';
     var verbColor = isDone ? 'rgba(240,192,96,.85)' : isProg ? bColor : 'rgba(100,80,120,.4)';
     var ptsColor  = isDone ? bColor+'99' : 'rgba(200,168,75,.4)';
 
@@ -2338,11 +2349,11 @@ function renderTree(){
     nHtml += '<g class="nd" data-id="'+node.id+'" onclick="selNode(\''+node.id+'\')" style="cursor:pointer;opacity:'+nodeOpacity+'"'+flt+'>';
     nHtml += selPulse + corona + songRing;
     // Soft glow halo
-    nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+4)+'" fill="'+bColor+'" opacity="'+(isDone?.14:isProg?.06:.02)+'"/>';
+    nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+4)+'" fill="'+bColor+'" opacity="'+(isDone?.14:isProg?.06:isAvailable?.08:.02)+'"/>';
     // Main body
     nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+R+'" fill="'+bColor+'" opacity="'+fillOpacity+'" stroke="'+strokeColor+'" stroke-width="'+strokeW+'"/>';
     // Inner highlight
-    nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R-6)+'" fill="white" opacity="'+(isDone?.1:isProg?.04:.02)+'"/>';
+    nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R-6)+'" fill="white" opacity="'+(isDone?.1:isProg?.04:isAvailable?.04:.02)+'"/>';
     nHtml += arc + starOverlay;
     // Icon
     nHtml += '<text x="'+node.x+'" y="'+(node.y-(isGate||isRoot?2:4))+'" text-anchor="middle" dominant-baseline="middle" font-size="'+ico_fs+'">'+node.ico+'</text>';
