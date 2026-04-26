@@ -10,7 +10,6 @@ var BR = [
   { id:'fretboard', name:'Fretboard & Theory',   ico:'🗺', color:'#fbbf24' },
   { id:'harmony',   name:'Harmony & Chords',     ico:'🎶', color:'#f87171' },
   { id:'lead',      name:'Lead & Improvisation', ico:'⭐', color:'#c084fc' },
-,
   {id:'theory',      name:'Music Theory',          ico:'📖', color:'#94a3b8' },
   {id:'eartraining', name:'Ear Training',           ico:'👂', color:'#e879f9', subtitle:'Aural Skills' }];
 
