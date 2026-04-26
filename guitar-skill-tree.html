@@ -1,0 +1,2578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FRETCRAFT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* FRETCRAFT — Main stylesheet
+   Fonts: Cinzel Decorative · Cormorant Garamond · JetBrains Mono */
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+:root{
+  /* ── TYPOGRAPHY ── */
+  --fd:'Cinzel Decorative','Cinzel',Georgia,serif;   /* display: titles, logo, node names  */
+  --fs:'Cinzel','Trajan Pro',Georgia,serif;          /* sub-display: section headers, badges */
+  --fu:'Cormorant Garamond','Garamond',Georgia,serif;/* body: descriptions, tips, panel text */
+  --fm:'JetBrains Mono','Fira Code',monospace;       /* mono: XP values, stats, numbers     */
+
+  /* ── BASE PALETTE — luthier's workshop ── */
+  --bg:    #0b0704;   /* deep walnut void        */
+  --bg2:   #100c08;   /* slightly lifted surface */
+  --bg3:   #160f0a;   /* panel background        */
+  --bg4:   #1e1510;   /* card / elevated surface */
+  --bg5:   #261a12;   /* active / hover state    */
+
+  /* ── GOLD — aged brass, not chrome ── */
+  --gold:  #c8762a;   /* primary amber            */
+  --gold2: #e8943a;   /* bright amber accent      */
+  --gold3: #f5c060;   /* highlight / mastered     */
+  --gold4: #6b3d12;   /* deep amber shadow        */
+  --gold5: #3d2208;   /* darkest amber            */
+
+  /* ── VERDIGRIS — sharp accent, replaces cyan ── */
+  --verd:  #4a9e8e;   /* verdigris green          */
+  --verd2: #5dbdaa;   /* bright verdigris         */
+  --verd3: #2a5e54;   /* deep verdigris           */
+
+  /* ── PARCHMENT TEXT ── */
+  --t1:    #f2e8d5;   /* aged ivory — headings    */
+  --t2:    #c9b898;   /* warm parchment — body    */
+  --t3:    #7a6648;   /* faded ink — secondary    */
+  --t4:    #3d2e1c;   /* near-invisible — ghost   */
+
+  /* ── BORDERS ── */
+  --border:  rgba(200,118,42,.18);   /* gold-tinted border     */
+  --border2: rgba(200,118,42,.35);   /* active/hover border    */
+  --border3: rgba(200,118,42,.06);   /* very subtle divider    */
+
+  /* ── BRANCH COLORS — unchanged, they're SVG-native ── */
+  --br:  #60a5fa;  /* Rhythm    */
+  --bt:  #34d399;  /* Technique */
+  --bf:  #fbbf24;  /* Fretboard */
+  --bh:  #f87171;  /* Harmony   */
+  --bl:  #c084fc;  /* Lead      */
+  --gate:#f0c060;  /* Gates     */
+}
+body{background:var(--bg);color:var(--t2);font-family:var(--fu);
+  font-size:16px;   /* Cormorant reads well larger than system fonts */
+  display:flex;flex-direction:column}
+
+/* ── HEADER ── */
+header{
+  flex:0 0 auto;
+  background:linear-gradient(180deg,#0d0905 0%,rgba(11,7,4,.97) 100%);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.5rem 1.4rem;gap:.8rem;
+  position:relative;z-index:30;
+}
+/* Engraved line under header */
+header::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent 0%,var(--gold4) 20%,var(--gold) 50%,var(--gold4) 80%,transparent 100%);
+}
+/* Woodgrain texture overlay on header */
+header::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(
+    92deg,
+    transparent 0px, rgba(200,118,42,.012) 1px,
+    transparent 2px, rgba(200,118,42,.008) 3px,
+    transparent 5px
+  );
+}
+.logo{
+  font-family:var(--fd);font-size:1.35rem;font-weight:900;
+  letter-spacing:.18em;text-transform:uppercase;
+  background:linear-gradient(160deg,var(--gold4) 0%,var(--gold) 35%,var(--gold3) 55%,var(--gold2) 75%,var(--gold4) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:ember 4s ease-in-out infinite;
+  position:relative;
+}
+@keyframes ember{
+  0%,100%{filter:drop-shadow(0 0 4px rgba(200,118,42,.3))}
+  50%{filter:drop-shadow(0 0 12px rgba(245,192,96,.5)) drop-shadow(0 0 24px rgba(200,118,42,.2))}
+}
+.logo-sub{
+  font-family:var(--fs);font-size:.42rem;letter-spacing:.32em;
+  color:var(--t3);text-transform:uppercase;margin-top:.05rem;
+}
+.stats{display:flex;gap:.35rem;flex-wrap:wrap}
+.stat{
+  display:flex;align-items:center;gap:.22rem;
+  background:linear-gradient(135deg,var(--bg5),var(--bg4));
+  border:1px solid var(--border);border-radius:.15rem;
+  padding:.22rem .55rem;position:relative;overflow:hidden;
+}
+.stat::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(200,118,42,.3),transparent);
+}
+.stat-ico{font-size:.72rem}
+.stat-val{
+  color:var(--gold3);font-weight:600;font-size:.76rem;
+  font-family:var(--fm);letter-spacing:.04em;
+}
+.stat-lbl{color:var(--t3);font-size:.42rem;letter-spacing:.1em;margin-left:.04rem;font-family:var(--fs);text-transform:uppercase}
+
+/* ── LAYOUT ── */
+.layout{flex:1 1 0;display:flex;min-height:0;overflow:hidden}
+
+/* ── LEFT PANEL ── */
+.lp{
+  flex:0 0 192px;
+  background:linear-gradient(180deg,#120d08 0%,#0e0905 100%);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;
+}
+.lp::-webkit-scrollbar{width:3px}
+.lp::-webkit-scrollbar-thumb{background:var(--gold4);border-radius:1px}
+
+.panel-sec{padding:.72rem .85rem .62rem;border-bottom:1px solid var(--border3)}
+
+.sec-label{
+  font-family:var(--fs);font-size:.44rem;letter-spacing:.3em;
+  color:var(--gold);text-transform:uppercase;
+  margin-bottom:.52rem;display:flex;align-items:center;gap:.28rem;
+}
+.sec-label::before{content:'◆';font-size:.3rem;color:var(--gold4);flex-shrink:0}
+.sec-label::after{content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,var(--border2) 0%,transparent 100%)}
+
+.branch-item{
+  display:flex;align-items:center;gap:.42rem;padding:.3rem .4rem;
+  border-radius:.1rem;cursor:pointer;transition:background .13s,border-color .13s;
+  margin-bottom:.1rem;border:1px solid transparent;
+}
+.branch-item:hover{background:var(--bg5);border-color:var(--border)}
+.branch-item.active{background:var(--bg4);border-color:var(--border)}
+.b-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;box-shadow:0 0 5px currentColor}
+.b-name{font-size:.6rem;color:var(--t1);font-weight:500;flex:1;
+  font-family:var(--fu);letter-spacing:.02em;font-style:italic}
+.b-prog{font-size:.46rem;color:var(--t3);font-family:var(--fm)}
+.b-bar{height:2px;background:rgba(200,118,42,.1);border-radius:1px;margin-top:.18rem;overflow:hidden}
+.b-fill{height:100%;border-radius:1px;transition:width .5s}
+
+.next-item{
+  display:flex;align-items:center;gap:.38rem;padding:.28rem .36rem;
+  border-radius:.1rem;margin-bottom:.1rem;cursor:pointer;
+  border:1px solid var(--border3);transition:all .14s;
+  background:rgba(200,118,42,.03);
+}
+.next-item:hover{background:var(--bg5);border-color:var(--border)}
+.ni-ico{font-size:.9rem;flex-shrink:0}
+.ni-text{flex:1;min-width:0}
+.ni-verb{
+  font-family:var(--fs);font-size:.4rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;opacity:.75;
+}
+.ni-name{font-size:.6rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  margin-top:.04rem;color:var(--t1);font-family:var(--fu);font-style:italic}
+.ni-branch{font-size:.42rem;color:var(--t3);font-family:var(--fs);letter-spacing:.08em}
+
+/* ── CENTER TREE ── */
+.center{flex:1 1 0;display:flex;flex-direction:column;min-width:0}
+
+.tree-bar{
+  flex:0 0 auto;
+  background:linear-gradient(180deg,rgba(11,7,4,.92) 0%,rgba(14,9,5,.7) 100%);
+  border-bottom:1px solid var(--border);
+  padding:.46rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+}
+.tree-title{
+  font-family:var(--fs);font-size:.78rem;color:var(--gold2);
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.tree-hint{
+  font-family:var(--fs);font-size:.38rem;color:var(--t3);
+  letter-spacing:.14em;margin-top:.06rem;text-transform:uppercase;
+}
+
+.legend{display:flex;gap:.52rem;flex-wrap:wrap;align-items:center}
+.leg{display:flex;align-items:center;gap:.22rem;
+  font-size:.46rem;color:var(--t3);font-family:var(--fs);letter-spacing:.06em}
+.leg-node{border-radius:50%;background:rgba(200,118,42,.18);
+  border:1px solid rgba(200,118,42,.4);flex-shrink:0}
+
+/* ── VIEWPORT ── */
+.vp{flex:1 1 0;overflow:hidden;position:relative;cursor:grab}
+.vp:active{cursor:grabbing}
+.zoom-btns{position:absolute;top:10px;right:10px;z-index:10;display:flex;flex-direction:column;gap:.24rem}
+.zb{
+  width:28px;height:28px;
+  background:linear-gradient(135deg,var(--bg5),var(--bg4));
+  border:1px solid var(--border);border-radius:.1rem;
+  font-size:1rem;color:var(--gold2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .14s;font-family:var(--fs);
+}
+.zb:hover{border-color:var(--gold2);box-shadow:0 0 10px rgba(200,118,42,.3)}
+.vp-hint{
+  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
+  font-family:var(--fs);font-size:.38rem;color:var(--t3);
+  background:rgba(11,7,4,.82);border:1px solid var(--border3);
+  border-radius:.08rem;padding:.2rem .5rem;
+  pointer-events:none;white-space:nowrap;letter-spacing:.12em;z-index:5;
+  text-transform:uppercase;
+}
+#tree-svg{display:block;width:100%;height:100%}
+
+/* ── RIGHT PANEL ── */
+.rp{
+  flex:0 0 228px;
+  background:linear-gradient(180deg,#120d08 0%,#0e0905 100%);
+  border-left:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;
+}
+.rp::-webkit-scrollbar{width:3px}
+.rp::-webkit-scrollbar-thumb{background:var(--gold4);border-radius:1px}
+
+.node-card{padding:.85rem}
+.nc-empty{text-align:center;padding:2.4rem .5rem;color:var(--t3)}
+.nc-empty-ico{font-size:2rem;margin-bottom:.42rem;opacity:.35;filter:sepia(1) hue-rotate(-20deg)}
+
+.nc-top{display:flex;align-items:flex-start;gap:.5rem;margin-bottom:.52rem}
+.nc-ico{font-size:1.75rem;flex-shrink:0;line-height:1}
+.nc-verb{
+  font-family:var(--fs);font-size:.42rem;font-weight:700;
+  letter-spacing:.22em;text-transform:uppercase;margin-bottom:.07rem;opacity:.75;
+}
+.nc-name{font-family:var(--fd);font-size:.88rem;color:var(--t1);font-weight:700;line-height:1.2}
+.nc-meta{font-family:var(--fs);font-size:.44rem;color:var(--t3);margin-top:.1rem;letter-spacing:.06em}
+.nc-branch-badge{
+  display:inline-flex;align-items:center;gap:.24rem;border-radius:.08rem;
+  padding:.12rem .4rem;font-size:.44rem;font-weight:700;border:1px solid;
+  margin-bottom:.42rem;font-family:var(--fs);letter-spacing:.08em;text-transform:uppercase;
+}
+
+.nc-desc{font-family:var(--fu);font-size:.72rem;color:var(--t2);line-height:1.75;margin-bottom:.56rem;font-weight:300}
+
+.pts-block{
+  background:linear-gradient(135deg,var(--bg5),var(--bg4));
+  border:1px solid var(--border);border-radius:.1rem;
+  padding:.5rem;margin-bottom:.52rem;position:relative;overflow:hidden;
+}
+.pts-block::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border2),transparent);
+}
+.pts-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:.28rem}
+.pts-lbl{font-family:var(--fs);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3)}
+.pts-val{font-family:var(--fm);font-size:.82rem;font-weight:600;letter-spacing:.04em}
+.pts-track{height:4px;background:rgba(200,118,42,.1);border-radius:1px;overflow:hidden;margin-bottom:.2rem}
+.pts-fill{height:100%;border-radius:1px;transition:width .6s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden}
+.pts-fill::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(245,192,96,.35),transparent);animation:shim 2.4s ease infinite}
+@keyframes shim{to{left:100%}}
+.pts-sub{font-family:var(--fs);font-size:.44rem;color:var(--t3);letter-spacing:.06em}
+
+.gate-status{text-align:center;padding:.4rem;border-radius:.1rem;margin-bottom:.52rem;
+  font-family:var(--fs);font-size:.52rem;letter-spacing:.06em}
+
+.tips-label{font-family:var(--fs);font-size:.42rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem}
+.tips{display:flex;flex-direction:column;gap:.24rem}
+.tip{display:flex;gap:.28rem;font-family:var(--fu);font-size:.68rem;color:var(--t2);line-height:1.62;font-weight:300}
+.tip-arrow{color:var(--gold4);flex-shrink:0;font-family:var(--fs)}
+
+.research{margin:.1rem .85rem .85rem;
+  background:linear-gradient(135deg,rgba(10,22,20,.95),rgba(8,18,16,.95));
+  border:1px solid rgba(74,158,142,.22);border-radius:.1rem;
+  padding:.55rem;font-family:var(--fu);font-size:.62rem;
+  color:rgba(93,189,170,.85);line-height:1.7;font-style:italic;font-weight:300}
+.research strong{display:block;font-family:var(--fs);font-size:.4rem;
+  letter-spacing:.14em;opacity:.65;margin-bottom:.2rem;text-transform:uppercase;font-style:normal}
+
+.achs{padding:0 .85rem .85rem;display:flex;flex-direction:column;gap:.2rem}
+.ach-empty{font-family:var(--fu);font-size:.62rem;color:var(--t3);font-style:italic;padding:.2rem 0;font-weight:300}
+.ach{display:flex;align-items:center;gap:.35rem;
+  background:linear-gradient(135deg,var(--bg5),var(--bg4));
+  border:1px solid var(--border);border-radius:.1rem;
+  padding:.35rem .5rem;font-family:var(--fu);font-size:.6rem;animation:slideIn .25s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
+.ach-ico{font-size:.8rem;flex-shrink:0}
+.ach-txt{font-family:var(--fu);color:var(--t2);flex:1;font-weight:300}
+.ach-xp{font-family:var(--fm);color:var(--gold2);font-weight:600;font-size:.58rem;white-space:nowrap;letter-spacing:.04em}
+
+.log-btn{
+  width:calc(100% - 1.7rem);margin:.5rem .85rem;
+  background:linear-gradient(160deg,var(--gold5) 0%,var(--gold4) 60%,rgba(200,118,42,.25) 100%);
+  border:1px solid var(--border2);border-radius:.1rem;
+  padding:.44rem;font-family:var(--fs);font-size:.52rem;color:var(--gold3);
+  cursor:pointer;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  transition:all .16s;position:relative;overflow:hidden;
+}
+.log-btn::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold3),transparent);
+}
+.log-btn:hover{
+  background:linear-gradient(160deg,var(--gold4) 0%,rgba(200,118,42,.5) 100%);
+  box-shadow:0 0 14px rgba(200,118,42,.22);transform:translateY(-1px);
+}
+
+/* ── MODAL ── */
+.ovl{display:none;position:fixed;inset:0;
+  background:radial-gradient(ellipse at 50% 40%,rgba(30,15,5,.92) 0%,rgba(5,3,2,.96) 100%);
+  z-index:100;backdrop-filter:blur(6px);align-items:center;justify-content:center}
+.ovl.open{display:flex}
+.modal{
+  background:linear-gradient(160deg,#1a1007 0%,#110c06 60%,#0e0905 100%);
+  border:1px solid var(--border2);border-radius:.12rem;
+  padding:1.35rem;max-width:440px;width:92%;
+  box-shadow:0 0 60px rgba(200,118,42,.1),inset 0 1px 0 rgba(200,118,42,.12);
+  animation:mopen .22s ease;position:relative;
+}
+.modal::before{
+  content:'';position:absolute;inset:0;border-radius:.12rem;pointer-events:none;
+  background:repeating-linear-gradient(
+    90deg,transparent 0px,rgba(200,118,42,.008) 1px,transparent 2px,transparent 4px
+  );
+}
+@keyframes mopen{from{opacity:0;transform:scale(.95) translateY(14px)}to{opacity:1;transform:none}}
+.m-title{font-family:var(--fd);font-size:.95rem;color:var(--gold2);margin-bottom:.1rem;font-weight:700}
+.m-sub{font-family:var(--fu);font-size:.64rem;color:var(--t3);font-style:italic;margin-bottom:.85rem}
+
+/* Prereq warning */
+.prereq-warn{
+  display:none;background:rgba(200,60,50,.06);border:1px solid rgba(200,60,50,.28);
+  border-radius:.08rem;padding:.4rem .52rem;margin-bottom:.58rem;
+  font-family:var(--fu);font-size:.62rem;color:#e07060;line-height:1.65;font-weight:300;
+}
+
+.slider-grid{display:grid;grid-template-columns:1fr 1fr;gap:.48rem .85rem;margin-bottom:.58rem}
+.slg{display:flex;flex-direction:column;gap:.2rem}
+.sll{display:flex;justify-content:space-between;
+  font-family:var(--fs);font-size:.46rem;color:var(--t2);letter-spacing:.04em}
+.sll span:last-child{color:var(--gold2);font-weight:700}
+input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer;height:3px}
+
+.spacing-note{
+  display:none;font-family:var(--fu);font-size:.6rem;font-style:italic;
+  color:var(--verd2);margin-bottom:.48rem;
+}
+
+.xp-preview{
+  background:linear-gradient(135deg,var(--bg5),var(--bg4));
+  border:1px solid var(--border);border-radius:.1rem;
+  padding:.5rem;margin-bottom:.78rem;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;
+  position:relative;overflow:hidden;
+}
+.xp-preview::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border2),transparent);
+}
+.xpp-left .xpp-lbl{font-family:var(--fs);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:.1rem}
+.xpp-val{font-family:var(--fm);font-size:1.28rem;color:var(--gold3);font-weight:600;line-height:1;letter-spacing:.02em}
+.xpp-formula{font-family:var(--fs);font-size:.44rem;color:var(--t3);margin-top:.12rem;line-height:1.55;letter-spacing:.04em}
+.xpp-right{text-align:right;flex-shrink:0}
+.xpp-right .xpp-lbl{font-family:var(--fs);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:.1rem}
+.gate-info{font-family:var(--fs);font-size:.52rem;line-height:1.5;letter-spacing:.04em}
+
+.m-btns{display:flex;gap:.48rem}
+.m-cancel{
+  background:transparent;border:1px solid var(--border);border-radius:.08rem;
+  padding:.48rem .78rem;font-family:var(--fs);font-size:.5rem;color:var(--t3);
+  cursor:pointer;transition:all .14s;letter-spacing:.1em;text-transform:uppercase;
+}
+.m-cancel:hover{border-color:var(--border2);color:var(--t2)}
+.m-submit{
+  flex:1;
+  background:linear-gradient(160deg,var(--gold5) 0%,var(--gold4) 50%,rgba(200,118,42,.4) 100%);
+  border:1px solid var(--border2);border-radius:.08rem;
+  padding:.48rem;font-family:var(--fs);font-size:.54rem;
+  color:var(--gold3);cursor:pointer;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;transition:all .14s;
+}
+.m-submit:hover{box-shadow:0 0 14px rgba(200,118,42,.28);transform:translateY(-1px)}
+
+/* Popups */
+.xp-pop{
+  position:fixed;pointer-events:none;z-index:200;
+  font-family:var(--fm);font-size:1.2rem;font-weight:600;
+  color:var(--gold3);letter-spacing:.06em;
+  text-shadow:0 0 16px rgba(200,118,42,.8),0 0 32px rgba(200,118,42,.4);
+  animation:xpfloat 1.6s ease forwards;
+}
+@keyframes xpfloat{
+  0%{opacity:1;transform:translateY(0) scale(1)}
+  20%{opacity:1;transform:translateY(-8px) scale(1.08)}
+  100%{opacity:0;transform:translateY(-60px) scale(1.18)}
+}
+.toast-msg{
+  position:fixed;bottom:18px;right:18px;z-index:300;
+  background:linear-gradient(160deg,#1a1007,#110c06);
+  border:1px solid var(--border2);border-radius:.1rem;
+  padding:.46rem .75rem;font-family:var(--fs);font-size:.52rem;letter-spacing:.08em;
+  color:var(--t1);box-shadow:0 0 20px rgba(200,118,42,.15),inset 0 1px 0 rgba(200,118,42,.12);
+  animation:tin .22s ease;max-width:260px;
+}
+.toast-msg.out{animation:tout .2s ease forwards}
+@keyframes tin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes tout{to{opacity:0;transform:translateY(8px)}}
+
+/* ── ARCHETYPE ONBOARDING SCREEN ── */
+#archetype-screen{
+  position:fixed;inset:0;z-index:500;
+  /* Deep forge atmosphere — hot embers in a dark workshop */
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 80%,rgba(120,50,10,.3) 0%,transparent 60%),
+    radial-gradient(ellipse 100% 80% at 50% 100%,rgba(80,30,5,.4) 0%,transparent 50%),
+    #090502;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:1.5rem;overflow-y:auto;
+}
+/* Subtle woodgrain overlay on onboarding screen */
+#archetype-screen::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:repeating-linear-gradient(
+    94deg,
+    transparent 0px,rgba(120,60,10,.025) 1px,
+    transparent 2px,rgba(120,60,10,.015) 4px,
+    transparent 6px
+  );
+}
+.arch-hero{text-align:center;margin-bottom:1.6rem;position:relative;z-index:1;
+  animation:archHeroIn .6s ease both}
+@keyframes archHeroIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+.arch-hero-title{
+  font-family:var(--fd);font-size:2.2rem;font-weight:900;letter-spacing:.2em;
+  background:linear-gradient(160deg,var(--gold4) 0%,var(--gold) 30%,var(--gold3) 55%,var(--gold2) 75%,var(--gold4) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  text-transform:uppercase;margin-bottom:.35rem;
+  filter:drop-shadow(0 0 20px rgba(200,118,42,.35));
+}
+.arch-hero-sub{
+  font-family:var(--fs);font-size:.62rem;color:var(--t3);
+  letter-spacing:.32em;text-transform:uppercase;margin-bottom:.65rem;
+}
+.arch-hero-desc{
+  font-family:var(--fu);font-size:.76rem;color:var(--t2);
+  line-height:1.75;max-width:500px;margin:0 auto;font-weight:300;font-style:italic;
+}
+
+.arch-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.65rem;
+  max-width:880px;width:100%;margin-bottom:1.4rem;position:relative;z-index:1;
+}
+@media(max-width:700px){.arch-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* Cards stagger in */
+.arch-card{
+  background:linear-gradient(160deg,#1c1108 0%,#130d06 100%);
+  border:1px solid var(--border);
+  border-radius:.1rem;padding:.88rem .78rem;cursor:pointer;transition:all .22s;text-align:center;
+  position:relative;overflow:hidden;
+  /* staggered animation — set via JS or nth-child */
+  opacity:0;animation:cardIn .4s ease both;
+}
+.arch-card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,currentColor,transparent);opacity:.2;
+  transition:opacity .22s;
+}
+.arch-card:nth-child(1){animation-delay:.05s}
+.arch-card:nth-child(2){animation-delay:.1s}
+.arch-card:nth-child(3){animation-delay:.15s}
+.arch-card:nth-child(4){animation-delay:.2s}
+.arch-card:nth-child(5){animation-delay:.25s}
+.arch-card:nth-child(6){animation-delay:.3s}
+.arch-card:nth-child(7){animation-delay:.35s}
+.arch-card:nth-child(8){animation-delay:.4s}
+@keyframes cardIn{
+  from{opacity:0;transform:translateY(16px) scale(.97)}
+  to{opacity:1;transform:none}
+}
+.arch-card:hover{border-color:currentColor;transform:translateY(-3px);
+  background:linear-gradient(160deg,#241508 0%,#1a1008 100%)}
+.arch-card:hover::after{opacity:.45}
+.arch-card.selected{
+  border-color:currentColor;border-width:2px;
+  box-shadow:0 0 24px currentColor,inset 0 0 24px rgba(0,0,0,.5);
+  transform:translateY(-3px);
+}
+
+.ac-ico{font-size:2.2rem;margin-bottom:.48rem;filter:drop-shadow(0 0 8px currentColor)}
+.ac-name{
+  font-family:var(--fd);font-size:.82rem;font-weight:700;margin-bottom:.18rem;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.ac-tagline{
+  font-family:var(--fu);font-size:.56rem;color:var(--t3);
+  line-height:1.55;margin-bottom:.48rem;font-style:italic;font-weight:300;white-space:pre-line;
+}
+.ac-branches{display:flex;justify-content:center;gap:.22rem;flex-wrap:wrap;margin-bottom:.42rem}
+.ac-dot{width:7px;height:7px;border-radius:50%}
+.ac-core-label{
+  font-family:var(--fs);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;opacity:.55;
+}
+
+.ac-songs{
+  font-family:var(--fu);font-size:.54rem;color:var(--t3);line-height:1.65;
+  margin-top:.3rem;border-top:1px solid rgba(200,118,42,.1);
+  padding-top:.35rem;font-style:italic;font-weight:300;
+}
+.ac-song-item{display:flex;align-items:center;gap:.26rem}
+.ac-song-dot{width:3px;height:3px;border-radius:50%;flex-shrink:0;background:currentColor;opacity:.55}
+
+.arch-start-btn{
+  position:relative;z-index:1;
+  background:linear-gradient(160deg,var(--gold5) 0%,var(--gold4) 50%,rgba(200,118,42,.3) 100%);
+  border:1px solid var(--border2);border-radius:.1rem;
+  padding:.68rem 2.8rem;font-family:var(--fd);font-size:.82rem;font-weight:900;
+  color:var(--gold3);cursor:pointer;letter-spacing:.18em;text-transform:uppercase;
+  box-shadow:0 0 20px rgba(200,118,42,.1);transition:all .22s;
+  opacity:.35;pointer-events:none;
+}
+.arch-start-btn::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold3),transparent);
+}
+.arch-start-btn.ready{opacity:1;pointer-events:all}
+.arch-start-btn.ready:hover{
+  box-shadow:0 0 32px rgba(200,118,42,.3);transform:translateY(-2px);
+  background:linear-gradient(160deg,var(--gold4) 0%,rgba(200,118,42,.6) 100%);
+}
+
+.arch-skip{
+  position:relative;z-index:1;
+  font-family:var(--fs);font-size:.5rem;color:var(--t3);
+  text-decoration:underline;cursor:pointer;margin-top:.6rem;
+  transition:color .15s;letter-spacing:.08em;text-transform:uppercase;
+}
+.arch-skip:hover{color:var(--t2)}
+
+/* ── ARCHETYPE HUD (shown after selection, top of left panel) ── */
+.arch-hud{
+  padding:.62rem .85rem;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background .15s;
+  background:rgba(200,118,42,.03);
+}
+.arch-hud:hover{background:var(--bg5)}
+.ah-row{display:flex;align-items:center;gap:.48rem}
+.ah-ico{font-size:1.25rem;flex-shrink:0}
+.ah-name{font-family:var(--fd);font-size:.64rem;font-weight:700;color:var(--t1)}
+.ah-tagline{font-family:var(--fu);font-size:.54rem;color:var(--t3);margin-top:.04rem;font-style:italic}
+.ah-change{
+  font-family:var(--fs);font-size:.4rem;color:var(--t3);margin-top:.22rem;
+  letter-spacing:.14em;text-transform:uppercase;opacity:.75;
+}
+
+/* Node role badges in node card */
+.role-badge{
+  display:inline-flex;align-items:center;gap:.2rem;padding:.1rem .36rem;
+  border-radius:.06rem;font-family:var(--fs);font-size:.42rem;font-weight:700;
+  border:1px solid;margin-left:.3rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.role-core{background:rgba(200,118,42,.15);border-color:rgba(200,118,42,.5);color:var(--gold2)}
+.role-useful{background:rgba(200,118,42,.06);border-color:rgba(200,118,42,.2);color:var(--t2)}
+.role-optional{background:rgba(100,80,60,.05);border-color:rgba(120,100,70,.15);color:var(--t3)}
+
+/* ── NEW LAYOUT ADDITIONS ── */
+html, body { height: 100%; overflow: hidden; }
+body { display: flex; flex-direction: column; }
+
+#app { flex: 1 1 0; min-height: 0; display: flex; flex-direction: column; }
+#app.visible { display: flex; }
+
+.tab-nav {
+  flex: 0 0 auto;
+  display: flex;
+  background: rgba(2,1,9,.9);
+  border-bottom: 1px solid var(--border);
+}
+.tnav {
+  padding: .42rem .95rem;
+  font-family: var(--fs);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--t3);
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  transition: all .14s;
+  white-space: nowrap;
+}
+.tnav:hover { color: var(--t2); background: rgba(200,118,42,.04); }
+.tnav.on { color: var(--gold); border-bottom-color: var(--gold); background: rgba(200,118,42,.05); }
+
+.app-body { flex: 1 1 0; min-height: 0; position: relative; overflow: hidden; }
+
+.tab-view { display: none; height: 100%; }
+.tab-view.on { display: flex; }
+
+/* Tree tab: sidebar + center + sidebar */
+.tree-layout {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+.tree-sidebar {
+  flex: 0 0 190px;
+  background: linear-gradient(180deg,#120d08 0%,#0e0905 100%);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.tree-sidebar::-webkit-scrollbar { width: 3px; }
+.tree-sidebar::-webkit-scrollbar-thumb { background: var(--gold4); border-radius: 1px; }
+.tree-sidebar-right {
+  border-right: none;
+  border-left: 1px solid var(--border);
+}
+.tree-center { flex: 1 1 0; display: flex; flex-direction: column; min-width: 0; }
+
+/* Non-tree tabs: centered content */
+.tab-content-center {
+  padding: 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100%;
+}
+.sa-heading {
+  font-family: var(--fd);
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin-bottom: .35rem;
+}
+.sa-sub {
+  font-family: var(--fu);
+  font-size: .72rem;
+  color: var(--t3);
+  line-height: 1.7;
+  font-weight: 300;
+  font-style: italic;
+  margin-bottom: .8rem;
+}
+.drop-zone {
+  border: 2px dashed rgba(200,118,42,.28);
+  border-radius: .4rem;
+  padding: 2rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all .2s;
+  background: rgba(200,118,42,.02);
+}
+.drop-zone:hover, .drop-zone.drag {
+  border-color: var(--gold);
+  background: rgba(200,118,42,.06);
+}
+.drop-ico { font-size: 2.2rem; margin-bottom: .5rem; }
+.drop-txt { font-family: var(--fu); font-size: .75rem; color: var(--t2); margin-bottom: .2rem; }
+.drop-sub { font-family: var(--fs); font-size: .55rem; color: var(--t3); letter-spacing: .06em; }
+
+</style>
+</head>
+<body>
+
+<!-- ── ARCHETYPE ONBOARDING — shown before tree ── -->
+<div id="archetype-screen">
+  <div class="arch-hero">
+    <div class="arch-hero-title">FRETCRAFT</div>
+    <div class="arch-hero-sub">Choose Your Path</div>
+    <div class="arch-hero-desc">
+      Your archetype shapes which skills are highlighted as your primary path,
+      what songs appear as goals, and how the constellation is lit for your journey.
+      You can change it later — this is a starting point, not a cage.
+    </div>
+  </div>
+  <div class="arch-grid" id="arch-grid"></div>
+  <button class="arch-start-btn" id="arch-start" onclick="startWithArchetype()">
+    BEGIN YOUR JOURNEY →
+  </button>
+  <div class="arch-skip" onclick="startWithArchetype('all_rounder')">
+    Skip — show me everything (All-Rounder path)
+  </div>
+</div>
+
+<!-- ── MAIN APP — hidden until archetype selected ── -->
+<div id="app" style="display:none;height:100%;display:none;flex-direction:column">
+
+  <!-- HEADER -->
+  <header>
+    <div>
+      <div class="logo">FRETCRAFT</div>
+      <div class="logo-sub">Constellation Skill Tree</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span class="stat-ico">✦</span><span class="stat-val" id="h-xp">0</span><span class="stat-lbl">XP</span></div>
+      <div class="stat"><span class="stat-ico">⭐</span><span class="stat-val" id="h-sk">0</span><span class="stat-lbl">MASTERED</span></div>
+      <div class="stat"><span class="stat-ico">🔥</span><span class="stat-val" id="h-streak">1</span><span class="stat-lbl">STREAK</span></div>
+      <div class="stat"><span class="stat-ico">🏅</span><span class="stat-val" id="h-rank">Initiate</span><span class="stat-lbl">RANK</span></div>
+      <div class="stat"><span class="stat-ico">📊</span><span class="stat-val" id="h-level">Foundation</span><span class="stat-lbl">LEVEL</span></div>
+    </div>
+  </header>
+
+  <!-- TAB NAV -->
+  <nav class="tab-nav">
+    <button class="tnav on"  id="tnav-tree"     onclick="switchTab('tree')">⭐ Skill Tree</button>
+    <button class="tnav"     id="tnav-practice"  onclick="switchTab('practice')">📋 Practice</button>
+    <button class="tnav"     id="tnav-analyze"   onclick="switchTab('analyze')">📄 Analyze</button>
+    <button class="tnav"     id="tnav-wiki"      onclick="switchTab('wiki')">📖 Wiki</button>
+  </nav>
+
+  <!-- BODY -->
+  <div class="app-body">
+
+    <!-- ── TAB: SKILL TREE ── -->
+    <div class="tab-view on" id="view-tree">
+      <div class="tree-layout">
+
+        <!-- Left sidebar: archetype HUD + branch filters -->
+        <div class="tree-sidebar">
+          <div id="arch-hud-slot"></div>
+          <div class="panel-sec">
+            <div class="sec-label">Branches</div>
+            <div id="branch-list"></div>
+          </div>
+          <div class="panel-sec">
+            <div class="sec-label">Next Up</div>
+            <div id="next-list"></div>
+            <button class="log-btn" onclick="openModal()">✦ Log Practice</button>
+          </div>
+          <div id="song-goals-sec"></div>
+        </div>
+
+        <!-- Center: constellation viewport -->
+        <div class="tree-center">
+          <div class="tree-bar">
+            <div>
+              <div class="tree-title">⭐ Guitar Mastery Constellation</div>
+              <div class="tree-hint">DRAG · SCROLL TO ZOOM · CLICK ANY STAR</div>
+            </div>
+            <div class="legend">
+              <div class="leg"><div class="leg-node" style="width:8px;height:8px"></div>Foundation</div>
+              <div class="leg"><div class="leg-node" style="width:11px;height:11px"></div>Early</div>
+              <div class="leg"><div class="leg-node" style="width:14px;height:14px"></div>Intermediate</div>
+              <div class="leg"><div class="leg-node" style="width:17px;height:17px"></div>Advanced</div>
+              <div class="leg"><div class="leg-node" style="width:20px;height:20px"></div>Professional</div>
+              <div class="leg"><div class="ld" style="width:9px;height:9px;border-radius:50%;background:var(--gold2);box-shadow:0 0 5px var(--gold2)"></div>Mastered</div>
+            </div>
+          </div>
+          <div class="vp" id="vp">
+            <div class="zoom-btns">
+              <button class="zb" onclick="zoom(1.25)">+</button>
+              <button class="zb" onclick="zoom(0.8)">−</button>
+              <button class="zb" onclick="fitView()" style="font-size:.5rem">⌂</button>
+            </div>
+            <div class="vp-hint">Drag · Scroll to zoom · Click stars</div>
+            <svg id="tree-svg" xmlns="http://www.w3.org/2000/svg">
+              <g id="bg-g"></g>
+              <g id="cam-g">
+                <g id="edges-g"></g>
+                <g id="nodes-g"></g>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Right sidebar: node detail -->
+        <div class="tree-sidebar tree-sidebar-right">
+          <div id="node-card">
+            <div class="nc-empty">
+              <div class="nc-empty-ico">🌌</div>
+              <div style="font-family:'Cinzel',Georgia,serif;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase">Select a star</div>
+              <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:.6rem;color:rgba(200,118,42,.35);margin-top:.42rem;line-height:1.8;font-style:italic;font-weight:300">
+                Each skill is a star.<br>Larger = higher difficulty.<br>Color marks the branch.
+              </div>
+            </div>
+          </div>
+          <div class="panel-sec" style="padding:.58rem .85rem .46rem">
+            <div class="sec-label">Research</div>
+            <div class="research" id="research-box">
+              <strong>📚 Berklee-Aligned Framework</strong>
+              Click any star to see its pedagogical research basis.
+            </div>
+          </div>
+          <div class="panel-sec" style="padding:.58rem .85rem .46rem">
+            <div class="sec-label">Achievements</div>
+            <div class="achs" id="achs-list" style="padding:0"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── TAB: PRACTICE ── -->
+    <div class="tab-view" id="view-practice">
+      <div class="tab-content-center">
+        <div class="sa-heading">📋 Practice Log</div>
+        <div class="sa-sub">Your session history, streak calendar, and practice analytics will appear here.</div>
+        <div style="margin-top:1.5rem">
+          <button class="log-btn" style="width:200px;margin:0" onclick="openModal()">✦ Log a Session Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: ANALYZE ── -->
+    <div class="tab-view" id="view-analyze">
+      <div class="tab-content-center" style="max-width:640px">
+        <div class="sa-heading">📄 Song Analyzer</div>
+        <div class="sa-sub">Upload a PDF of sheet music, lead sheet, or guitar tab. Claude will identify the techniques used, estimate the difficulty level, and map required skills to your constellation.</div>
+        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('pdf-input').click()" style="margin-top:1.2rem">
+          <div class="drop-ico">📄</div>
+          <div class="drop-txt">Drop a PDF here, or click to browse</div>
+          <div class="drop-sub">Sheet music · Lead sheets · Guitar tab · Chord charts</div>
+        </div>
+        <input type="file" id="pdf-input" accept=".pdf" style="display:none">
+        <div id="sa-result" style="margin-top:1rem"></div>
+      </div>
+    </div>
+
+    <!-- ── TAB: WIKI ── -->
+    <div class="tab-view" id="view-wiki">
+      <div class="tab-content-center">
+        <div class="sa-heading">📖 Music Theory Wiki</div>
+        <div class="sa-sub">Definitions for concepts in your mastered skills. Unlock more entries by mastering skill tree nodes.</div>
+        <div id="wiki-content" style="margin-top:1rem"></div>
+      </div>
+    </div>
+
+  </div><!-- /app-body -->
+
+</div><!-- /app -->
+
+<!-- PRACTICE MODAL -->
+<div class="ovl" id="modal-ovl">
+  <div class="modal">
+    <div class="m-title">Log Practice Session</div>
+    <div class="m-sub" id="modal-skill-name">No skill selected</div>
+    <div class="prereq-warn" id="prereq-warn"></div>
+    <div class="slider-grid">
+      <div class="slg">
+        <div class="sll"><span>⏱ Duration</span><span id="l-dur">15 min</span></div>
+        <input type="range" min="5" max="120" value="15" step="5" id="s-dur" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>🎯 Focus</span><span id="l-foc">Deliberate ×2</span></div>
+        <input type="range" min="1" max="3" value="2" step="1" id="s-foc" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>🔄 Type</span><span id="l-typ">Interleaved ×1.3</span></div>
+        <input type="range" min="1" max="2" value="2" step="1" id="s-typ" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>🎵 Accuracy</span><span id="l-acc">Good ~80%</span></div>
+        <input type="range" min="1" max="4" value="2" step="1" id="s-acc" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>🏁 BPM Target</span><span id="l-bpm">Partial</span></div>
+        <input type="range" min="1" max="3" value="2" step="1" id="s-bpm" oninput="updModal()">
+      </div>
+      <div class="slg">
+        <div class="sll"><span>✍ Reflection</span><span id="l-ref">Logged ×1.2</span></div>
+        <input type="range" min="1" max="2" value="2" step="1" id="s-ref" oninput="updModal()">
+      </div>
+    </div>
+    <div class="spacing-note" id="spacing-note">
+      📅 Spaced practice bonus: +<span id="spacing-amt">0</span> XP (Katz &amp; Wiseheart, 2025)
+    </div>
+    <div class="xp-preview">
+      <div class="xpp-left">
+        <div class="xpp-lbl">XP This Session</div>
+        <div class="xpp-val" id="xp-val">+0</div>
+        <div class="xpp-formula" id="xp-formula"></div>
+      </div>
+      <div class="xpp-right">
+        <div class="xpp-lbl">Prerequisites</div>
+        <div class="gate-info" id="gate-info"></div>
+      </div>
+    </div>
+    <div class="m-btns">
+      <button class="m-cancel" onclick="closeModal()">Cancel</button>
+      <button class="m-submit" onclick="submitSession()">✦ Earn XP</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCRIPTS: data first, then engine, then render, then ui, then features -->
+<script>
+// ── DATA ──────────────────────────────────────────────────
+
+// FRETCRAFT — Branch and Level definitions
+// Edit here to change branch colors or level metadata
+
+// ═══════════════════════════════════════════════════
+//  BRANCH DEFINITIONS
+// ═══════════════════════════════════════════════════
+var BR = [
+  { id:'rhythm',    name:'Rhythm & Timing',     ico:'🥁', color:'#60a5fa' },
+  { id:'technique', name:'Technique',            ico:'⚡', color:'#34d399' },
+  { id:'fretboard', name:'Fretboard & Theory',   ico:'🗺', color:'#fbbf24' },
+  { id:'harmony',   name:'Harmony & Chords',     ico:'🎶', color:'#f87171' },
+  { id:'lead',      name:'Lead & Improvisation', ico:'⭐', color:'#c084fc' },
+,
+  {id:'theory',      name:'Music Theory',          ico:'📖', color:'#94a3b8' },
+  {id:'eartraining', name:'Ear Training',           ico:'👂', color:'#e879f9', subtitle:'Aural Skills' }];
+
+// FRETCRAFT — All 88 node definitions
+// id, x, y, l, br, ico, verb, name, max, parents[], desc, tips[], ref
+
+// ═══════════════════════════════════════════════════
+//  NODES  — x,y in world-space (root at origin)
+//  Color comes from branch, size from level
+// ═══════════════════════════════════════════════════
+var NODES = [
+  // ROOT
+  { id:'root',      x:0,    y:0,     l:0, br:'fretboard', ico:'🧍', verb:'HOLD',    name:'Posture & Hold',       max:50,
+    parents:[],
+    desc:'Correct posture, pick grip, and hand alignment. Every technique you will ever learn is built on this foundation.',
+    tips:['Use a mirror — your body can\'t feel its own errors','Check fretting thumb position every session','Relax shoulder before you play — tension kills speed'],
+    ref:'Harrison (2010): inconsistencies in guitar\'s structural systems create barriers even at entry. Posture determines everything downstream.' },
+
+  // FOUNDATION (level 0) — fans from root
+  { id:'q_strum',   x:-490, y:-165,  l:0, br:'rhythm',    ico:'♩', verb:'STRIKE',  name:'Quarter Strums',       max:60,
+    parents:['root'],
+    desc:'Consistent downstrokes on beats 1–2–3–4 with a metronome. The foundational rhythmic motor pattern.',
+    tips:['Lock elbow — wrist drives the strum','Count aloud on every beat','80 BPM before increasing'],
+    ref:'Boyle (2015): Year 1 begins with quarter-note strumming in ensemble context.' },
+  { id:'pick_hold', x:-310, y:-255,  l:0, br:'technique', ico:'🔧', verb:'GRIP',   name:'Pick Technique',       max:50,
+    parents:['root'],
+    desc:'Pick grip, 45° angle to strings, and attack point. The mechanical foundation of all picking.',
+    tips:['45° angle to strings','Attack near bridge for brightness','Relax the grip — tension kills speed'],
+    ref:'Zaworski (2016): pick technique is the first technical objective at all pedagogical levels.' },
+  { id:'open_str',  x:-100, y:-295,  l:0, br:'fretboard', ico:'🎵', verb:'KNOW',   name:'Open String Notes',    max:40,
+    parents:['root'],
+    desc:'The 6 open string pitches E A D G B E and their octave relationships. The seed of all fretboard knowledge.',
+    tips:['"Every Ace Does Go Before Everyone"','Tune by ear to a reference','Learn octave shapes immediately'],
+    ref:'Harrison (2010): fretboard logic must be front-loaded — self-taught players who skip this face structural gaps.' },
+  { id:'pw_chord',  x:477,  y:-280,  l:0, br:'harmony',   ico:'⚡', verb:'POWER',  name:'Power Chords',         max:40,
+    parents:['root'],
+    desc:'Root and fifth. Foundational to rock, punk, and metal. First chord teaches that harmony is physical movement on the neck.',
+    tips:['Just below the fret for clarity','Mute unused strings with palm','Parallel movement — one shape, all keys'],
+    ref:'Boyle (2015): power chords are the first harmony objective for many high school guitar programs.' },
+  { id:'first_mel', x:729,  y:-205,  l:0, br:'lead',      ico:'🎵', verb:'SING',   name:'Simple Melodies',      max:40,
+    parents:['root'],
+    desc:'Single-note melodies by ear or tab. The moment music becomes personal and expressive rather than mechanical.',
+    tips:['Learn 3 complete songs, not 10 fragments','Memorize by ear, not only by tab','Play with expression, not just accuracy'],
+    ref:'Boyle (2015): melody playing in first position is the first lead objective.' },
+
+  // Foundation second tier
+  { id:'e_strum',   x:-560, y:-350,  l:0, br:'rhythm',    ico:'♪', verb:'GROOVE',  name:'Eighth Note Patterns', max:80,
+    parents:['q_strum'],
+    desc:'Down-up strumming with subdivisions. The most common popular-music strumming vocabulary.',
+    tips:['Keep wrist moving even through rests','Mute strings on upstroke for rhythm ghost','Practice with a drum loop'],
+    ref:'GCC Level 1: eighth-note patterns before chord changes (Coleman, 2016).' },
+  { id:'fret_bas',  x:-375, y:-395,  l:0, br:'technique', ico:'🖐', verb:'ARCH',   name:'Fretting Hand Basics', max:60,
+    parents:['pick_hold'],
+    desc:'Finger placement, arch, pressure, and 4-finger independence. Clean notes before anything else.',
+    tips:['Just behind the fret — not on it','Arch all fingers to avoid muting','Chromatic 1-2-3-4 exercises daily'],
+    ref:'GCC Level 1: fretting hand fundamentals as first technical objective.' },
+  { id:'first_pos', x:-125, y:-440,  l:0, br:'fretboard', ico:'📍', verb:'LOCATE', name:'First Position Notes', max:60,
+    parents:['open_str'],
+    desc:'All natural notes in frets 1–4 across all 6 strings. Foundation of melodic reading and fretboard navigation.',
+    tips:['One string per day — don\'t rush','Name notes aloud as you play','Visual shapes, not just rote'],
+    ref:'Harrison (2010): notation front-loading is essential. GCC Level 1 core objective.' },
+  { id:'tab_read',  x:75,   y:-460,  l:0, br:'fretboard', ico:'📖', verb:'READ',   name:'Tab Reading',          max:40,
+    parents:['open_str'],
+    desc:'Interpreting guitar tablature — the most accessible notation system and gateway to the world\'s largest library of guitar music.',
+    tips:['Learn rhythm symbols above the tab','Always cross-reference with audio','Tab is approximate — your ear is the judge'],
+    ref:'Russell & Evans (2015): tab-based learning is the entry point for most students.' },
+  { id:'open_chd',  x:647,  y:-420,  l:0, br:'harmony',   ico:'🤙', verb:'VOICE',  name:'Open Chords',          max:80,
+    parents:['pw_chord'],
+    desc:'Em, Am, E, A, D, G, C — the harmonic vocabulary for most popular music. Seven shapes that unlock thousands of songs.',
+    tips:['Transitions matter more than shapes','Arch fingers to avoid muting','One new chord per week — consolidate first'],
+    ref:'GCC Level 1 and Berklee pre-program: open chord mastery is the entry-level harmonic requirement.' },
+  { id:'blues_sc',  x:834,  y:-360,  l:0, br:'lead',      ico:'🎷', verb:'COLOUR', name:'Blues Scale',          max:60,
+    parents:['first_mel','pitch_match'],
+    desc:'Minor pentatonic + flat 5 (the blue note). Instant access to the most expressive 6-note vocabulary in Western music.',
+    tips:['The flat 5 is tension — resolve it','Combine with minor pentatonic freely','One position first, then connect'],
+    ref:'Berklee Levels 2–3: blues scale as first lead vocabulary alongside pentatonic.' },
+  { id:'chord_tr',  x:567,  y:-470,  l:0, br:'harmony',   ico:'🔄', verb:'FLOW',   name:'Chord Transitions',    max:60,
+    parents:['open_chd'],
+    desc:'Moving between chords smoothly and in time. Where most beginners plateau — the gap between knowing chords and playing songs.',
+    tips:['Find the pivot finger shared between chords','20 repetitions in isolation before adding strumming','Slow until perfect, then add tempo'],
+    ref:'Berklee entrance audition: time, intonation, tone, touch, execution, and overall musicality.' },
+
+  // FOUNDATION GATE
+  { id:'g0',        x:0,    y:-610,  l:0, br:'gate',      ico:'🎯', verb:'CROSS',  name:'Foundation Gate',      max:1, gate:true,
+    parents:['e_strum','fret_bas','first_pos','tab_read','chord_tr','blues_sc','chromatic','intervals','pitch_match','interval_rec_p'],
+    desc:'All foundational stars aligned. You can play 3 songs start to finish, tune by ear, and read basic tab. This is Berklee Level 1–2 entry point.',
+    tips:['Perform 3 songs start to finish','Tune by ear to a reference pitch','Read basic tab with timing accuracy'],
+    ref:'Berklee entrance audition: five minutes of prepared music demonstrating time, intonation, tone, and execution (Berklee, 2024).' },
+
+  // EARLY (level 1) — fans from gate
+  { id:'syncop',    x:-570, y:-790,  l:1, br:'rhythm',    ico:'↔', verb:'ACCENT',  name:'Syncopation',          max:100,
+    parents:['g0'],
+    desc:'Accenting the "and" of beats — gateway to funk, reggae, and rock feels.',
+    tips:['Tap foot on quarter notes while strumming the "and"','Chant rhythm before playing','Start at 60 BPM'],
+    ref:'Berklee curriculum: syncopation required for rhythm guitar across blues, rock, funk, jazz, and Latin styles.' },
+  { id:'strum_st',  x:-580, y:-960,  l:1, br:'rhythm',    ico:'🎸', verb:'STYLE',  name:'Style Strum Patterns', max:100,
+    parents:['syncop'],
+    desc:'Genre-specific strumming: rock, blues, folk, reggae, bossa nova. Each style has its own rhythmic grammar.',
+    tips:['One complete song in each style','Record and listen back','Match the feel before matching the notes'],
+    ref:'Berklee Levels 2–3: rhythm guitar across blues, rock, funk, jazz, and Latin styles.' },
+  { id:'16th_r',    x:-560, y:-1120, l:1, br:'rhythm',    ico:'🎵', verb:'DIVIDE', name:'16th Note Rhythms',    max:120,
+    parents:['strum_st'],
+    desc:'Subdividing beats into four equal parts — the rhythmic foundation of funk guitar.',
+    tips:['Count "1-e-and-a" aloud','Ghost-strum 16ths with partial shapes','Funk begins at 16th level'],
+    ref:'Zaworski (2016): 16th note competency expected at intermediate entry level.' },
+  { id:'alt_pick',  x:-365, y:-800,  l:1, br:'technique', ico:'↕', verb:'STRIKE',  name:'Alternate Picking',    max:100,
+    parents:['g0'],
+    desc:'Strict down-up single-note picking. The engine of all lead playing. Speed is an outcome of efficiency, not effort.',
+    tips:['Start at 60 BPM — agonizingly slow','Minimal pick motion','Separate from fretting hand initially'],
+    ref:'Zaworski (2016): single-string alternate picking is the first lead technique at all pedagogical levels.' },
+  { id:'h_po',      x:-390, y:-970,  l:1, br:'technique', ico:'🔨', verb:'SLUR',   name:'Hammer-On / Pull-Off', max:100,
+    parents:['alt_pick'],
+    desc:'Left-hand legato articulation — adding and removing notes without picking. Your first fluid, singing lines.',
+    tips:['Strike with the very tip of finger','Pull off sideways, not straight up','Practice each separately before combining'],
+    ref:'Berklee Levels 2–3: hammer-ons and pull-offs as extended techniques for lead guitar.' },
+  { id:'slides',    x:-250, y:-910,  l:1, br:'technique', ico:'🌊', verb:'GLIDE',  name:'Slides',               max:80,
+    parents:['alt_pick'],
+    desc:'Gliding between frets while sustaining the note. Notes stop being isolated events and become flowing melodic gestures.',
+    tips:['Maintain fretting pressure throughout','Target the destination pitch precisely','Ascending vs. descending feel different'],
+    ref:'Berklee: slides introduced alongside other legato techniques in early-intermediate lead work.' },
+  { id:'bends',     x:-335, y:-1100, l:1, br:'technique', ico:'🏹', verb:'BEND',   name:'String Bending',       max:120,
+    parents:['h_po','slides'],
+    desc:'Pushing or pulling strings laterally to raise pitch. The heart of blues expression — bend and your guitar begins to speak.',
+    tips:['Support bending finger with all fingers behind it','Use your ear — hit the target pitch','Whole-step and half-step bends are different skills'],
+    ref:'Zaworski (2016): string bending with control is a core intermediate competency.' },
+  { id:'pent_b1',   x:-80,  y:-810,  l:1, br:'fretboard', ico:'⭐', verb:'MAP',    name:'Pentatonic Box 1',     max:100,
+    parents:['g0'],
+    desc:'The first position of the minor pentatonic — the single most-used scale shape in guitar music.',
+    tips:['Learn in A minor first (5th fret)','Connect to the root note visually','Improvise immediately — don\'t just drill'],
+    ref:'Berklee Levels 2–3: pentatonic scales in any key as core vocabulary.' },
+  { id:'full_fr',   x:-55,  y:-980,  l:1, br:'fretboard', ico:'🗺', verb:'CHART',  name:'Full Fretboard Notes', max:120,
+    parents:['pent_b1'],
+    desc:'All 12 notes across all 6 strings at any fret. The fretboard becomes a map you can navigate without looking.',
+    tips:['Use octave shapes to navigate','Name notes aloud as you play','Learn all instances of one note before moving on'],
+    ref:'Berklee intermediate: full note location across the fretboard (Zaworski, 2016).' },
+  { id:'pent_5p',   x:-30,  y:-1130, l:1, br:'fretboard', ico:'🌐', verb:'CONNECT','name':'5-Pos Pentatonic',   max:150,
+    parents:['full_fr'],
+    desc:'All 5 positions of the pentatonic scale connected across the full fretboard. You own the whole neck.',
+    tips:['Connect positions via shared notes','One position per week','Improvise in each before moving on'],
+    ref:'Berklee: pentatonic in any key is a Level 2–3 requirement.' },
+  { id:'barre',     x:205,  y:-815,  l:1, br:'harmony',   ico:'🔒', verb:'BARRE',  name:'Barre Chords',         max:150,
+    parents:['g0'],
+    desc:'F and B-shape barre chords — the most important beginner→intermediate transition. The full fretboard becomes your harmonic territory.',
+    tips:['Build index barring strength as a separate exercise','Roll index slightly toward headstock','3-note voicings before full 6-string barre'],
+    ref:'Russell & Evans (2015): barre chords are the most common attrition point. Berklee Levels 2–3 requirement.' },
+  { id:'chd_prog',  x:597,  y:-975,  l:1, br:'harmony',   ico:'🔁', verb:'MOVE',   name:'Chord Progressions',   max:100,
+    parents:['barre'],
+    desc:'I-IV-V, I-V-vi-IV, ii-V-I, 12-bar blues. Pattern recognition is the master skill — most popular music reuses a handful of progressions.',
+    tips:['Learn by Roman numeral, not key','Chart songs you already know','Transpose one progression to all 12 keys weekly'],
+    ref:'Berklee Levels 2–3: reading lead sheets and understanding chord progressions across styles.' },
+  { id:'7th_chd',   x:200,  y:-1115, l:1, br:'harmony',   ico:'7️⃣', verb:'EXTEND', name:'7th Chords',           max:120,
+    parents:['chd_prog'],
+    desc:'Major 7, minor 7, dominant 7, half-diminished. The harmonic language of jazz, blues, and sophisticated pop.',
+    tips:['Learn dominant 7 shapes first (most common)','All 5 CAGED positions for each quality','Voice lead between 7th chords smoothly'],
+    ref:'Berklee Levels 2–3: seventh chords in early curriculum.' },
+  { id:'blues_voc', x:759,  y:-820,  l:1, br:'lead',      ico:'🎺', verb:'CALL',   name:'Blues Vocabulary',     max:100,
+    parents:['g0'],
+    desc:'Call-and-response phrasing, double stops, turnarounds, classic licks. The most widely applicable lead language.',
+    tips:['Transcribe one BB King phrase per week','12-bar blues in A, E, and G','Double stops: thirds on strings 1–2 and 2–3'],
+    ref:'Berklee: blues as a required style context across rhythm and lead curriculum.' },
+  { id:'lead_chg',  x:799,  y:-980,  l:1, br:'lead',      ico:'🎸', verb:'TARGET', name:'Lead Over Changes',    max:120,
+    parents:['blues_voc'],
+    desc:'Targeting chord tones while soloing — making harmony audible in the melody. The difference between playing scales and playing music.',
+    tips:['Identify root, 3rd, and 7th of each chord','Plan target notes before you play','Phrase to the chord change'],
+    ref:'Berklee Levels 2–3: lead guitar over chord changes with harmonic awareness.' },
+  { id:'phrasing',  x:749,  y:-1115, l:1, br:'lead',      ico:'💬', verb:'BREATHE','name':'Melodic Phrasing',   max:100,
+    parents:['lead_chg'],
+    desc:'Organising notes into musical sentences with beginnings, middles, and ends. The most important and most neglected skill.',
+    tips:['Listen to horn players and singers for models','Leave silence — it\'s punctuation, not dead air','Build tension, then resolve it'],
+    ref:'Zaworski (2016): melodic phrasing and musical sentence structure expected at intermediate entry.' },
+
+  // EARLY GATE
+  { id:'g1',        x:0,    y:-1295, l:1, br:'gate',      ico:'⬆️', verb:'ASCEND', name:'Early Gate',           max:1, gate:true,
+    parents:['16th_r','bends','pent_5p','7th_chd','phrasing','major_sc_th','scale_degrees','maj_min_qual','interval_rec_d'],
+    desc:'Early constellation aligned — Berklee Level 2–3 advancement. You play rhythm guitar across styles and solo over chord changes.',
+    tips:['Play comfortably in 3+ styles','Solo over a simple 12-bar blues','Read a lead sheet and play it'],
+    ref:'Berklee Levels 2–3 jury: performance competency across rhythm and lead contexts (Berklee, 2024).' },
+
+  // INTERMEDIATE (level 2)
+  { id:'funk',      x:-600, y:-1460, l:2, br:'rhythm',    ico:'🕺', verb:'LOCK',   name:'Funk & Groove',        max:150,
+    parents:['g1','subdiv_int'],
+    desc:'Muted ghost notes, dead strums, percussive attacks. Rhythm becomes a textural instrument.',
+    tips:['Listen to Nile Rodgers and Curtis Mayfield','Palm mute bass strings for the funk chop','Lock with the kick drum'],
+    ref:'Berklee intermediate: funk, R&B, and groove-based rhythm guitar.' },
+  { id:'odd_time',  x:-610, y:-1620, l:2, br:'rhythm',    ico:'5️⃣', verb:'COUNT',  name:'Complex Meters',       max:150,
+    parents:['funk'],
+    desc:'5/4, 7/8, and asymmetric time signatures. Your internal clock expands beyond the grid.',
+    tips:['Group 7/8 as 3+2+2 or 2+2+3','Brubeck\'s Take Five for 5/4','Internalize before playing — tap it first'],
+    ref:'Berklee Level 4–5: unusual meters in harmonic considerations for improvisation.' },
+  { id:'vibrato',   x:-405, y:-1460, l:2, br:'technique', ico:'〰', verb:'SING',   name:'Vibrato',              max:150,
+    parents:['g1'],
+    desc:'Rhythmic pitch oscillation transforming a held note into a singing voice. Your vibrato is your fingerprint.',
+    tips:['Even oscillation — not random wobble','Control rate and width independently','Wrist-driven for most styles'],
+    ref:'Berklee intermediate: vibrato as personal expression. Zaworski: expected at intermediate with control.' },
+  { id:'legato',    x:-430, y:-1620, l:2, br:'technique', ico:'〜', verb:'FLOW',   name:'Legato Runs',          max:150,
+    parents:['vibrato'],
+    desc:'Extended sequences using hammer-ons and pull-offs with minimal picking. Lines become fluid and inevitable.',
+    tips:['Even volume across all notes is the challenge','Each finger combination practiced separately','Left-hand strength is the limiting factor'],
+    ref:'Berklee: advanced legato technique introduced at Level 4–5 alongside improvisation.' },
+  { id:'alt_spd',   x:-270, y:-1590, l:2, br:'technique', ico:'⚡', verb:'ACCELERATE','name':'Alt Picking Speed',max:200,
+    parents:['vibrato'],
+    desc:'Building alternate picking to performance tempo through incremental metronome work. Speed is an outcome of efficiency.',
+    tips:['Never exceed 80% of your clean max speed','Use a metronome — always','Economy of motion is everything'],
+    ref:'Berklee intermediate: speed and accuracy in single-note playing across styles.' },
+  { id:'caged',     x:-100, y:-1470, l:2, br:'fretboard', ico:'🔗', verb:'MAP',    name:'CAGED System',         max:150,
+    parents:['g1'],
+    desc:'Five chord shapes (C A G E D) that organise the entire fretboard harmonically. The map becomes complete.',
+    tips:['Learn C shape first — friendliest to visualise','Each CAGED shape has an arpeggio twin','Connect chord shapes to scale shapes'],
+    ref:'Zaworski (2016): CAGED system is a core intermediate fretboard organisation tool.' },
+  { id:'maj_sc',    x:-80,  y:-1625, l:2, br:'fretboard', ico:'🎯', verb:'ASCEND', name:'Major Scale Positions',max:200,
+    parents:['caged'],
+    desc:'All 7 positions of the major scale across the fretboard — the parent scale from which all Western harmony derives.',
+    tips:['Connect to CAGED chord shapes','Sing the intervals as you play','Learn in G first'],
+    ref:'Berklee Level 4–5: improvisation using diatonic major scale in all positions.' },
+  { id:'notation',  x:60,   y:-1600, l:2, br:'fretboard', ico:'📄', verb:'READ',   name:'Standard Notation',   max:200,
+    parents:['caged','intervals'],
+    desc:'Reading pitch and rhythm from standard treble clef notation. Required for professional-level chart reading.',
+    tips:['Open strings on staff first (E G B D F)','Read rhythms separately from pitches','5 min of daily sight-reading — slow but cumulative'],
+    ref:'Harrison (2010): notation competency separates formally trained from self-taught. Berklee requires from Level 2.' },
+  { id:'inversions',x:205,  y:-1470, l:2, br:'harmony',   ico:'🔃', verb:'INVERT', name:'Inversions & Voicings',max:150,
+    parents:['g1'],
+    desc:'Using the 3rd, 5th, or 7th in the bass. Drop 2 voicings. Chord colour through voice leading.',
+    tips:['First inversion of each triad in all CAGED shapes','Drop 2 voicings on strings 1–4','Move each voice the shortest distance possible'],
+    ref:'Berklee Level 4–5: "chord melody and inversions" as explicit curriculum entry point (Berklee Online, 2024).' },
+  { id:'chd_mel',   x:255,  y:-1620, l:2, br:'harmony',   ico:'🎼', verb:'ARRANGE','name':'Chord Melody',       max:200,
+    parents:['inversions'],
+    desc:'Playing melody and harmony simultaneously on one guitar — a complete musical world in your hands.',
+    tips:['Start with a simple melody you know cold','Find the chord under each melody note','Inner voices fill the harmony'],
+    ref:'Berklee online: "chord melody" is a named course in the intermediate/advanced sequence.' },
+  { id:'reharm',    x:385,  y:-1600, l:2, br:'harmony',   ico:'✏️', verb:'RECOLOR','name':'Reharmonization',    max:200,
+    parents:['inversions'],
+    desc:'Substituting unexpected chords under a melody — tritone substitution, modal interchange, secondary dominants.',
+    tips:['Tritone sub: replace any dominant 7 with one a tritone away','Modal interchange: borrow from the parallel minor','Check the melody note is an acceptable chord tone'],
+    ref:'Berklee Level 4–5: "Harmony 2, reharmonization" explicitly in curriculum.' },
+  { id:'modal_i',   x:480,  y:-1460, l:2, br:'lead',      ico:'🌀', verb:'COLOUR', name:'Modal Improvisation',  max:200,
+    parents:['g1'],
+    desc:'Applying Dorian, Phrygian, Lydian, Mixolydian over chord progressions. Each mode is an emotional colour.',
+    tips:['Find the characteristic note of each mode','Dorian over minor, Mixolydian over dominant 7ths','One mode per month minimum'],
+    ref:'Berklee Level 4–5: modal theory explicitly listed in improvisation requirements.' },
+  { id:'style_v',   x:510,  y:-1620, l:2, br:'lead',      ico:'🎨', verb:'SPEAK',  name:'Style Vocabulary',     max:200,
+    parents:['modal_i'],
+    desc:'Deep fluency in one genre\'s lead language. You stop sounding like "someone who plays guitar" and start sounding like you.',
+    tips:['Transcribe 10 solos in your chosen style','Identify 5 techniques most characteristic of the style','Learn licks, not just scales'],
+    ref:'Berklee advanced: "Survey of Guitar Styles." Pethel (2016): specialisation at advanced level.' },
+  { id:'arpeg',     x:440,  y:-1620, l:2, br:'lead',      ico:'♦',  verb:'WEAVE',  name:'Arpeggio Integration', max:200,
+    parents:['modal_i'],
+    desc:'Weaving chord tone arpeggios into improvisations. Solos stop sounding random and start sounding intentional.',
+    tips:['Map CAGED arpeggios to chord shapes','Arpeggios before scales in warm-up','Connect arpeggio to scale at top and bottom'],
+    ref:'Berklee intermediate: chord arpeggios as a named intermediate competency (Zaworski, 2016).' },
+
+  // INTERMEDIATE GATE
+  { id:'g2',        x:0,    y:-1785, l:2, br:'gate',      ico:'🔼', verb:'RISE',   name:'Intermediate Gate',    max:1, gate:true,
+    parents:['odd_time','alt_spd','maj_sc','notation','chd_mel','reharm','style_v','arpeg','triad_theory','chord_function','chord_qual_rec','melodic_dict'],
+    desc:'Intermediate constellation aligned — Berklee Level 4–5. Improvisation, modal theory, chord melody, full fretboard.',
+    tips:['Improvise fluently in 3 modes','Arrange a song for solo guitar','Transcribe a lead section by ear'],
+    ref:'Berklee Level 4–5 advancement: improvisation, diatonic theory, harmonic analysis (Berklee, 2024; Zaworski, 2016).' },
+
+  // ADVANCED (level 3)
+  { id:'poly_r',    x:-590, y:-1955, l:3, br:'rhythm',    ico:'🔀', verb:'LAYER',  name:'Polyrhythm',           max:150,
+    parents:['g2'],
+    desc:'Playing 3 against 2 simultaneously. Rhythmic imagination expands beyond the grid.',
+    tips:['Tap foot on quarter notes while hand plays triplets','Start with 3:2 (Son Clave)','Metronome on each layer independently'],
+    ref:'Advanced curriculum: rhythmic independence required for ensemble leadership.' },
+  { id:'ens_rhy',   x:-590, y:-2110, l:3, br:'rhythm',    ico:'👥', verb:'LEAD',   name:'Ensemble Rhythm',      max:200,
+    parents:['poly_r'],
+    desc:'Cuing, comping, and driving a band rhythmically. You are the anchor.',
+    tips:['Play less to serve more','Listen to bass and kick drum first','Lead changes with body language'],
+    ref:'Pethel (2016): ensemble skills are among the least systematically taught in guitar education.' },
+  { id:'economy',   x:-385, y:-1955, l:3, br:'technique', ico:'⚙',  verb:'SWEEP',  name:'Economy Picking',      max:200,
+    parents:['g2'],
+    desc:'Crossing strings with the direction of travel. Eliminates wasted pick motion at speed.',
+    tips:['Sweep only when crossing strings','Mute the string behind the pick direction','Gambale and Guthrie Govan are the masters'],
+    ref:'Berklee advanced: complete picking vocabulary for professional-level technique.' },
+  { id:'tapping',   x:-340, y:-2100, l:3, br:'technique', ico:'👆', verb:'TAP',    name:'Two-Hand Tapping',     max:250,
+    parents:['economy'],
+    desc:'Right-hand fingers tap the fretboard. The neck becomes a keyboard — melodic range expands beyond one hand.',
+    tips:['Start with one tap per lick','Muting unwanted strings is the hardest part','Apply to scales not just patterns'],
+    ref:'Berklee: extended techniques including tapping in advanced curriculum.' },
+  { id:'sweep',     x:-210, y:-2075, l:3, br:'technique', ico:'🌪', verb:'RAKE',   name:'Sweep Picking',        max:300,
+    parents:['economy'],
+    desc:'Fluid raking across strings in one motion while fretting arpeggios. The most mechanically demanding picking technique.',
+    tips:['3-string shapes only at first','Both hands must synchronise perfectly','Muting is equal in importance to picking'],
+    ref:'Berklee advanced: extended techniques including sweep-based arpeggios.' },
+  { id:'modes_a',   x:-85,  y:-1955, l:3, br:'fretboard', ico:'🌐', verb:'INHABIT','name':'Modal Application',  max:250,
+    parents:['g2'],
+    desc:'All 7 modes applied in musical context as emotional colours. You choose the mood of every phrase.',
+    tips:['Each mode has one characteristic note','Dorian: natural 6; Lydian: #4; Phrygian: b2','One mode per month minimum'],
+    ref:'Berklee Level 4–5: modal theory explicitly listed in improvisation requirements.' },
+  { id:'transcr',   x:-60,  y:-2100, l:3, br:'fretboard', ico:'👂', verb:'HEAR',   name:'Ear Transcription',    max:250,
+    parents:['modes_a'],
+    desc:'Figuring out music entirely by ear. The master\'s tool — absorbing vocabulary the way a child learns language.',
+    tips:['Start with single phrases, not whole solos','Use slow-down software','Transcribe in the style you want to play'],
+    ref:'Berklee advanced: "analyze and transcribe music in multiple styles" (Berklee, 2024; Pethel, 2016).' },
+  { id:'adv_harm',  x:487,  y:-1955, l:3, br:'harmony',   ico:'🧮', verb:'RECAST', name:'Advanced Harmony',     max:250,
+    parents:['g2'],
+    desc:'Extended chords (9ths, 11ths, 13ths), polychords, quartal harmony. Harmony becomes an infinite creative resource.',
+    tips:['Learn tensions over each chord quality','Quartal voicings create an "open" sound','Analyse one complex standard per month'],
+    ref:'Berklee advanced: harmonic considerations in improvisation and advanced harmony coursework.' },
+  { id:'solo_arr',  x:487,  y:-2100, l:3, br:'harmony',   ico:'🎻', verb:'ARRANGE','name':'Solo Arrangement',   max:250,
+    parents:['adv_harm'],
+    desc:'Arranging any piece for unaccompanied solo guitar — a complete musical world from one instrument.',
+    tips:['Arrange a song you love deeply','Soprano voice is the melody — protect it','Bass movement creates the harmonic motion'],
+    ref:'Berklee: "solo guitar performance and arranging" as a named advanced course.' },
+  { id:'adv_imp',   x:380,  y:-1950, l:3, br:'lead',      ico:'🔥', verb:'TRANSCEND','name':'Advanced Improvisation',max:300,
+    parents:['g2'],
+    desc:'Outside playing, motivic development, rhythmic displacement, superimposition. The melody makes its own rules.',
+    tips:['Play outside intentionally then resolve — commit','Develop a 2-note motif for an entire chorus','Superimpose a major triad from the 3rd of the chord'],
+    ref:'Berklee advanced: "Harmonic Considerations in Improvisation" (Berklee, 2024).' },
+  { id:'composit',  x:729,  y:-2095, l:3, br:'lead',      ico:'✍',  verb:'CREATE', name:'Composition',          max:300,
+    parents:['adv_imp'],
+    desc:'Writing original music — melodies, structures, harmonic progressions. The moment you become a creator.',
+    tips:['Compose under constraints (4 bars, one chord)','Record voice memos constantly','Study structure: AABA, verse-chorus, through-composed'],
+    ref:'Berklee advanced: composition courses from Level 3 onward. Scarduelli & Fiorini (2013): composition as professional pillar.' },
+
+  // ── NEW RHYTHM NODES ───────────────────────────────────────────
+  // Whole & half notes: the two note values currently absent from
+  // the tree. Most method books start here before quarter notes.
+  // Placed at Level 0 alongside q_strum, positioned left of it.
+  { id:'whole_half', x:-680, y:-165, l:0, br:'rhythm', ico:'𝅝', verb:'SUSTAIN', name:'Whole & Half Notes', max:50,
+    parents:['root'],
+    desc:'Whole notes (4 beats) and half notes (2 beats), plus their corresponding rests. The starting point of music reading — understanding how long a note rings before moving on.',
+    tips:['Count aloud: whole = 1-2-3-4, half = 1-2','Practice with a metronome at 60 BPM','Whole and half rests sit ON and UNDER the middle line of the staff'],
+    ref:'Boyle (2015): note value literacy begins with whole and half notes before quarter notes in any structured curriculum. Harrison (2010): notation front-loading is essential.' },
+
+  // Triplets: eighth-note triplets (3 evenly spaced notes per beat).
+  // Critical for blues shuffle feel — absent from the tree entirely.
+  // Placed at Level 1 as a child of e_strum, sibling of syncop.
+  { id:'triplets',   x:-680, y:-800, l:1, br:'rhythm', ico:'3️⃣', verb:'SHUFFLE', name:'Triplets & Shuffle', max:100,
+    parents:['whole_half','e_strum'],
+    desc:'Eighth-note triplets (three notes per beat) and the shuffle feel they create. The rhythmic foundation of blues, jazz swing, and rock ballads. "Trip-o-let" is the counting word.',
+    tips:['Count "1-trip-let, 2-trip-let" aloud','Shuffle = long-short triplet feel (swing 8ths)','Triplet rests use the same beam with a "3" above'],
+    ref:'Berklee curriculum: shuffle and swing feel introduced alongside blues vocabulary in Levels 2–3. Essential for blues, jazz, and rock ballad contexts.' },
+
+  // Subdivision integration: reading and playing passages that mix
+  // whole, half, quarter, eighth, 16th, and triplet values together.
+  // The "putting it all together" node Philip described for Level 2.
+  { id:'subdiv_int', x:-680, y:-1460, l:2, br:'rhythm', ico:'🔀', verb:'INTEGRATE', name:'Subdivision Integration', max:150,
+    parents:['triplets','16th_r'],
+    desc:'Reading and playing musical passages that mix multiple note values — whole, half, quarter, eighth, 16th, and triplets — within the same exercise. The moment rhythm stops being a category and starts being a language.',
+    tips:['Write out rhythm syllables before playing','Start with two-bar exercises, not full pieces','Record yourself and compare to a click track'],
+    ref:'DPMI (Passarotto et al., 2022): task decomposition then reassembly — learn each subdivision separately, then integrate them. Nielsen (2001): self-monitoring of complex rhythmic passages is an intermediate competency.' },
+
+  // ── NEW TECHNIQUE NODES ─────────────────────────────────────────
+  // Trill: rapid repeated hammer-on/pull-off between two adjacent
+  // notes. Distinct from legato runs — it's ornamental and specific.
+  // Level 2, child of h_po, parent of legato (fixing the dead-end).
+  { id:'trill',      x:-390, y:-1460, l:2, br:'technique', ico:'〰', verb:'TRILL', name:'Trill', max:100,
+    parents:['h_po','legato'],
+    desc:'A rapid, even alternation between two notes using hammer-ons and pull-offs. Used as an ornament in classical, blues, and rock. Distinct from legato runs — a trill is fast, controlled, and rhythmically precise.',
+    tips:['Start slowly — evenness matters more than speed','Use fingers 1-3 or 1-4 for maximum stretch','Classical trills start on the upper note; rock/blues trills are free'],
+    ref:'Zaworski (2016): trill as a specific technique distinct from legato runs, requiring independent development before integration into longer phrases.' },
+
+  // Technical integration exercise: combines alternate picking,
+  // legato, and trill in one coherent phrase. Level 3 for Rocker.
+  // Parents: legato + alt_spd (the two streams merge here).
+  { id:'tech_int',   x:-390, y:-1955, l:3, br:'technique', ico:'⚙', verb:'COMBINE', name:'Technical Integration', max:200,
+    parents:['legato','alt_spd','trill'],
+    desc:'A structured exercise combining alternate picking, legato runs, and trills in a single musical phrase. The moment technique stops being isolated and becomes musical. Phrase design: picked entrance → legato run → trill ornament → picked resolution.',
+    tips:['Design the phrase before drilling it','Alternate which technique leads the phrase each day','Record at 70% speed — listen for seams between techniques'],
+    ref:'DPMI (Passarotto et al., 2022): reassembly of decomposed sub-components into a coherent whole is the defining mark of intermediate-to-advanced deliberate practice. Steadman (2002): integration is the goal, isolation is only a tool.' },
+
+
+  // ── THEORY BRANCH (x center ~130) ─────────────────────────────
+  // Level 0 — Foundation
+  { id:'chromatic',    x: 90,  y:-165,  l:0, br:'theory',      ico:'🎼', verb:'COUNT',    name:'Chromatic Scale',              max:40,
+    parents:['root'],
+    desc:'The 12 notes of Western music arranged by half steps, and how they repeat every 12 frets. The fretboard is a pattern machine — every scale, chord, and key is built from this foundation.',
+    tips:['Half step = 1 fret. Whole step = 2 frets. That is all there is.',
+          'Move any single-finger shape 12 frets up — same note, higher octave',
+          'Learn the note names: A A# B C C# D D# E F F# G G#'],
+    ref:'Harrison (2010): the chromatic scale as the foundational pattern system of the fretboard. Understanding half and whole steps is prerequisite to all scale and interval knowledge.' },
+  { id:'intervals',    x:170,  y:-165,  l:0, br:'theory',      ico:'📏', verb:'MEASURE',  name:'Intervals',                    max:50,
+    parents:['chromatic'],
+    desc:'The distance between two notes, named and categorized. Intervals are the atoms of music — every scale, chord, and melody is built from them. A major 3rd sounds the same regardless of what note it starts on.',
+    tips:['"Happy Birthday" starts with a major 2nd. "Twinkle Twinkle" starts with a perfect 5th.',
+          'Learn intervals by sound before learning their names',
+          'Every interval has a unique emotional quality — learn to feel them, not just name them'],
+    ref:'Gordon (1997): audiation of intervals precedes all harmonic understanding. Rogers (2004): interval mnemonics are a validated learning tool for ear training integration.' },
+
+  // Level 1 — Early
+  { id:'major_sc_th',  x: 80,  y:-800,  l:1, br:'theory',      ico:'🎯', verb:'BUILD',    name:'Major Scale Construction',     max:80,
+    parents:['chromatic'],
+    desc:'How the major scale is built from the interval pattern W-W-H-W-W-W-H. This one pattern applied to any starting note generates the foundational scale of Western music. Do-Re-Mi is not magic — it is this interval sequence.',
+    tips:['W = whole step (2 frets). H = half step (1 fret).',
+          'Build C major on the guitar: C D E F G A B C. Count the frets between each pair.',
+          'Every major scale on the guitar uses this exact pattern of jumps — it never changes'],
+    ref:'Berklee Music Theory (2024): major scale construction as first-semester requirement. The interval pattern W-W-H-W-W-W-H is the foundation of all diatonic harmony.' },
+  { id:'scale_degrees',x:160,  y:-800,  l:1, br:'theory',      ico:'🔢', verb:'NUMBER',   name:'Scale Degrees & Roman Numerals',max:80,
+    parents:['intervals'],
+    desc:'Numbering the notes of a scale (1st through 7th) and using Roman numerals to describe chord relationships. A I-IV-V progression is the same relationship in G as in E — Roman numerals make that portable.',
+    tips:['I=tonic, IV=subdominant, V=dominant — these three cover most popular music',
+          '"La Bamba" and "Twist and Shout" are the same I-IV-V in different keys',
+          'Practice: find I-IV-V in G, then A, then E without stopping to think'],
+    ref:'Berklee harmony curriculum: Roman numeral analysis as prerequisite to chord progression understanding. Directly enables reading the Nashville Number System.' },
+  { id:'minor_scales', x: 80,  y:-960,  l:1, br:'theory',      ico:'🌙', verb:'DARKEN',   name:'Minor Scales & Relative Keys', max:80,
+    parents:['major_sc_th'],
+    desc:'The natural minor scale as a rotation of the major scale starting on the 6th degree. A minor uses the same notes as C major — different tonal center, completely different emotional quality. This is why the pentatonic scale works in two contexts simultaneously.',
+    tips:['A minor = C major starting on A. Same notes, different home base.',
+          'The darker quality of minor comes from the lowered 3rd and 6th degrees',
+          'Every major key has a relative minor — learn them as pairs, not separately'],
+    ref:'Berklee Music Theory: relative major/minor as core Level 1 concept. Directly prerequisite to modal understanding and the emotional vocabulary of lead playing.' },
+
+  // Level 2 — Intermediate
+  { id:'triad_theory', x: 90,  y:-1470, l:2, br:'theory',      ico:'△',  verb:'STACK',    name:'Triad Construction',           max:100,
+    parents:['major_sc_th','scale_degrees'],
+    desc:'How chords are built by stacking thirds from scale degrees. Every major scale produces 3 major triads, 3 minor triads, and 1 diminished triad — always on the same scale degrees. This is why I-IV-V sounds resolved and why vii° sounds tense.',
+    tips:['Stack thirds: 1st + 3rd + 5th of any scale degree = a triad',
+          'Major scale always gives: I=maj, ii=min, iii=min, IV=maj, V=maj, vi=min, vii=dim',
+          'Learn this pattern once — it unlocks every chord in every key instantly'],
+    ref:'Berklee Harmony I: diatonic triads as core second-semester content. Prerequisite to seventh chord construction, Roman numeral analysis, and chord substitution.' },
+  { id:'chord_function',x:170, y:-1470, l:2, br:'theory',      ico:'⚡',  verb:'RESOLVE',  name:'Chord Function & Tension',     max:120,
+    parents:['scale_degrees','triad_theory'],
+    desc:'Why the V chord wants to resolve to I. The leading tone (7th scale degree) is a half step below the tonic and creates magnetic pull. The tritone in a dominant 7th chord creates maximum tension that demands resolution. This is the engine of Western harmony.',
+    tips:['Play G7 then C major — feel the resolution. Now play G then C. Hear the difference?',
+          'The tritone between the 3rd and 7th of any dominant chord is the tension source',
+          'Tonic = home. Dominant = away. Subdominant = leaving. Learn to feel each function.'],
+    ref:'Berklee Harmony II: harmonic function as prerequisite to reharmonization and chord substitution. The tritone and leading tone are the physical basis of harmonic tension (Aldwell & Schachter, 2010).' },
+
+  // Level 3 — Advanced
+  { id:'diatonic_harm', x: 90, y:-1960, l:3, br:'theory',      ico:'🏛',  verb:'ANALYZE',  name:'Diatonic Harmony',             max:150,
+    parents:['triad_theory','chord_function'],
+    desc:'All seven chords built from a major scale — their qualities, Roman numeral names, and typical functions. The complete harmonic vocabulary of any key. A musician who knows this can figure out almost any song by ear.',
+    tips:['In any major key: I=Imaj7, ii=iim7, iii=iiim7, IV=IVmaj7, V=V7, vi=vim7, vii=viim7b5',
+          'Analyze 10 songs you love. Write their progressions in Roman numerals.',
+          'The ii-V-I moves through all three harmonic functions — that is why it is everywhere'],
+    ref:'Berklee Harmony III: complete diatonic harmony analysis. Prerequisite to advanced improvisation, reharmonization, and composition (Levine, 1995; Berklee, 2024).' },
+  { id:'voice_leading', x:170, y:-1960, l:3, br:'theory',      ico:'↗',   verb:'CONNECT',  name:'Voice Leading',                max:150,
+    parents:['chord_function','triad_theory'],
+    desc:'The principle that each voice in a chord should move by the smallest possible interval when the chord changes. Why Bach chorales sound inevitable. Why Drop 2 voicings work. The difference between a chord player and a harmonic thinker.',
+    tips:['When moving C to G: the E can stay (common tone), B moves up a half step',
+          'Practice: voice lead ii-V-I on strings 1-4, each voice moving as little as possible',
+          'Record yourself — voice leading is most audible in slow, sparse passages'],
+    ref:'Aldwell & Schachter (2010): voice leading as the foundational principle of common-practice harmony. Directly prerequisite to chord melody, inversions, and advanced arranging.' },
+
+  // Level 4 — Professional
+  { id:'extended_harm', x: 90, y:-2440, l:4, br:'theory',      ico:'∞',   verb:'EXTEND',   name:'Extended & Altered Harmony',   max:200,
+    parents:['diatonic_harm','voice_leading'],
+    desc:'9ths, 11ths, 13ths as extensions of the tertian stack. Altered dominant chords. The tritone substitution as a voice-leading phenomenon — the 3rd and 7th of G7 are enharmonically identical to the 7th and 3rd of Db7. Reharmonization becomes logical rather than mysterious.',
+    tips:['Extensions add color without changing harmonic function — Cmaj9 is still tonic',
+          'Tritone sub: replace G7 with Db7 — they share the same tritone interval (B and F)',
+          'Altered dominants use b9, #9, #11, or b13 — all creating additional tension'],
+    ref:'Levine (1995): extended and altered harmony in jazz. Berklee Harmony IV: tritone substitution and altered dominants as advanced reharmonization tools.' },
+
+  // ── EAR TRAINING BRANCH (x center ~340) ─────────────────────────
+  // Level 0 — Foundation
+  { id:'pitch_match',  x:300,  y:-165,  l:0, br:'eartraining', ico:'🎵', verb:'MATCH',    name:'Matching Pitch',               max:40,
+    parents:['root'],
+    desc:'Singing or humming a note back after hearing it on the guitar. The absolute foundation of ear training — you cannot hear music in your mind until you can reproduce what you hear. More guitarists lack this than will admit it.',
+    tips:['Hum the open A string. Now play it. Did you match it?',
+          'Start with open strings — try to tune by ear before using a tuner',
+          'This feels strange at first. Do it anyway. It changes everything.'],
+    ref:'Gordon (1997): audiation begins with pitch matching. The ability to reproduce heard pitches is the foundation of all melodic ear development. Berklee aural skills: pitch matching as first-week objective.' },
+  { id:'interval_rec_p',x:380, y:-165,  l:0, br:'eartraining', ico:'👂', verb:'HEAR',     name:'Perfect Interval Recognition', max:50,
+    parents:['pitch_match'],
+    desc:'Recognizing perfect unisons, 4ths, 5ths, and octaves by their sound alone. Perfect intervals have a distinctive open, stable quality. These are the easiest intervals to identify by ear — the natural starting point.',
+    tips:['"Twinkle Twinkle Little Star" — first two notes are a perfect 5th',
+          '"Here Comes the Bride" — first two notes are a perfect 4th',
+          'Perfect intervals sound hollow or open — no major/minor emotional color'],
+    ref:'Rogers (2004): interval recognition mnemonics as validated ear training tool. Perfect intervals as the first recognition category due to their distinctive acoustic stability.' },
+
+  // Level 1 — Early
+  { id:'maj_min_qual',  x:290, y:-800,  l:1, br:'eartraining', ico:'☯',  verb:'FEEL',     name:'Major vs Minor Quality',       max:80,
+    parents:['pitch_match'],
+    desc:'Hearing the difference between major and minor — the single most important ear training skill for a popular music guitarist. You already respond to this emotionally. Now learn to name it and find it on the guitar instantly.',
+    tips:['Play any major chord, then lower the 3rd by one fret. Hear the quality shift.',
+          'The entire difference is the third — major 3rd vs minor 3rd.',
+          'Practice: someone plays a chord while you face away — call major or minor before they tell you'],
+    ref:'Gordon (1997): major/minor tonal center as the foundational harmonic discrimination skill. Berklee aural skills: major/minor chord quality as first-semester listening objective.' },
+  { id:'interval_rec_d',x:380, y:-800,  l:1, br:'eartraining', ico:'🎯', verb:'IDENTIFY', name:'Diatonic Interval Recognition', max:100,
+    parents:['interval_rec_p'],
+    desc:'Recognizing major 2nds, minor 3rds, major 3rds, tritones, major 6ths, and major 7ths by ear. Each interval has a distinctive sound. This is the vocabulary of melodic ear training — the ability to name what you hear.',
+    tips:['"My Bonnie Lies Over the Ocean" = major 6th. "Take On Me" intro = major 3rd.',
+          '"The Simpsons theme" starts with a tritone — the most distinctive interval',
+          'Practice daily: play an interval, name it before looking'],
+    ref:'Rogers (2004): complete diatonic interval recognition as early-intermediate ear training milestone. Interval mnemonics are a validated pedagogical tool across multiple studies.' },
+
+  // Level 2 — Intermediate
+  { id:'chord_qual_rec',x:290, y:-1470, l:2, br:'eartraining', ico:'🔍', verb:'RECOGNIZE',name:'Chord Quality Recognition',     max:120,
+    parents:['maj_min_qual'],
+    desc:'Hearing and identifying major, minor, dominant 7th, major 7th, and minor 7th chords by ear alone. Play any chord — identify it before looking. This is what allows a musician to transcribe songs and play by ear in real time.',
+    tips:['Dominant 7 has a tense quality — it wants to move somewhere',
+          'Major 7 sounds dreamy and soft, unresolved in a gentle way',
+          'Practice: have someone play chords while you face away and call the quality'],
+    ref:'Berklee ear training curriculum: chord quality recognition as core intermediate objective. Prerequisite to harmonic dictation and real-time transcription.' },
+  { id:'melodic_dict',  x:380, y:-1470, l:2, br:'eartraining', ico:'📝', verb:'TRANSCRIBE',name:'Melodic Dictation',            max:150,
+    parents:['interval_rec_d'],
+    desc:'Hearing a melody and reproducing it on guitar by ear — not from tab or notation. The gateway skill to figuring out songs without any printed reference. Start with 4-note phrases, build toward full melodies.',
+    tips:['Hum the melody before picking up the guitar — internalize it first',
+          'Find the first note, then identify each subsequent interval',
+          'Slow the recording down — Amazing Slow Downer or YouTube speed controls'],
+    ref:'Berklee ear training: melodic dictation as intermediate competency. Gordon (1997): melodic audiation as prerequisite to complete musical independence.' },
+
+  // Level 3 — Advanced
+  { id:'harmonic_dict', x:290, y:-1960, l:3, br:'eartraining', ico:'🎶', verb:'ANALYZE',  name:'Harmonic Dictation',           max:200,
+    parents:['chord_qual_rec'],
+    desc:'Hearing a chord progression and identifying the chords, their qualities, and their Roman numeral function. The most challenging ear training skill — what most separates professional musicians from advanced amateurs.',
+    tips:['Start with I-IV-V in major keys — you have heard these thousands of times already',
+          'ii-V-I is the jazz standard — train your ear to hear the dominant pull and resolution',
+          'Record a progression, play it back, analyze it — then verify with an instrument'],
+    ref:'Berklee ear training: harmonic dictation as advanced competency. Directly enables real-time musical communication and advanced transcription.' },
+  { id:'modal_rec',     x:380, y:-1960, l:3, br:'eartraining', ico:'🌈', verb:'SENSE',    name:'Modal Recognition',            max:200,
+    parents:['melodic_dict'],
+    desc:'Hearing the characteristic sound of each mode and identifying it by ear. Dorian is slightly brighter than Aeolian. Lydian floats. Mixolydian has a bluesy warmth. These are real sounds with distinct emotional qualities — not academic categories.',
+    tips:['"Scarborough Fair" = Dorian, Flamenco = Phrygian, "Flying" (J. Williams) = Lydian',
+          'Focus on the characteristic note of each mode — that single note defines the color',
+          'Improvise in one mode for 10 straight minutes until you can hear when you leave it'],
+    ref:'Berklee ear training: modal recognition as advanced aural skills objective. Directly prerequisite to modal improvisation and advanced harmonic analysis.' },
+
+  // Level 4 — Professional
+  { id:'relative_pitch',x:300, y:-2440, l:4, br:'eartraining', ico:'🔮', verb:'MASTER',   name:'Relative Pitch',               max:300,
+    parents:['harmonic_dict','modal_rec'],
+    desc:'Identifying any note, interval, chord, or scale fragment by ear without a reference pitch. Not perfect pitch (partially innate) but relative pitch (entirely learnable with practice). The professional standard for session musicians, composers, and bandleaders.',
+    tips:['Every melody is a series of intervals from a reference — train the reference first',
+          'Start every practice session by humming a pitch then finding it on guitar',
+          'Relative pitch develops over years, not weeks — trust the process and track your progress'],
+    ref:'Lehmann & Ericsson (1997): relative pitch as the culminating ear training skill of professional musicians. Berklee professional: relative pitch mastery as capstone aural skills objective.' },
+
+  // ADVANCED GATE
+  { id:'g3',        x:0,    y:-2265, l:3, br:'gate',      ico:'🔝', verb:'ELEVATE','name':'Advanced Gate',      max:1, gate:true,
+    parents:['ens_rhy','sweep','tapping','transcr','solo_arr','composit','tech_int','diatonic_harm','voice_leading','harmonic_dict','modal_rec'],
+    desc:'Advanced constellation aligned — Berklee Levels 6–7. Extended techniques, advanced harmony, ensemble leadership.',
+    tips:['Perform a 20-minute set from memory','Lead a band through original material','Read a professional chart at sight'],
+    ref:'Berklee Level 6–7 jury + recital preparation. Pethel (2016): only 7.9% reach specialist level.' },
+
+  // PROFESSIONAL (level 4)
+  { id:'sess_rhy',  x:-455, y:-2435, l:4, br:'rhythm',    ico:'💫', verb:'DELIVER','name':'Session Rhythm',     max:300,
+    parents:['g3'],
+    desc:'Chart reading, click-track accuracy, rapid style adaptation. In the studio, you deliver in one take.',
+    tips:['Read Nashville Number Charts fluently','Lock with a click to ±10ms accuracy','Adapt feel within 16 bars'],
+    ref:'Berklee capstone: professional demo reel for sessions, film/TV, and touring.' },
+  { id:'ext_tech',  x:-210, y:-2490, l:4, br:'technique', ico:'🎭', verb:'TRANSCEND','name':'Extended Techniques',max:400,
+    parents:['g3'],
+    desc:'Rasgueado, tremolo, harmonics, percussion on body, electronic effects, nonstandard tunings as compositional tools.',
+    tips:['Rasgueado begins with single-finger rolls','Natural harmonics at frets 5, 7, 12','Let extended techniques serve musical ideas'],
+    ref:'Berklee: "personal touch and technological mastery" in extended techniques (Berklee Online, 2024).' },
+  { id:'fret_pro',  x:0,    y:-2520, l:4, br:'fretboard', ico:'🧠', verb:'KNOW',   name:'Fretboard Mastery',    max:400,
+    parents:['g3'],
+    desc:'Instantaneous access to any note, chord, scale, or arpeggio anywhere. The fretboard is transparent — only music exists.',
+    tips:['Play any scale from any finger on any string','Identify chord tones by ear and find them instantly','Transpose any lick to all 12 keys at will'],
+    ref:'Berklee capstone: complete harmonic and theoretical fluency for professional performance.' },
+  { id:'harm_pro',  x:542,  y:-2490, l:4, br:'harmony',   ico:'🏛',  verb:'BUILD',  name:'Composition & Arr.',  max:400,
+    parents:['g3'],
+    desc:'Original composition, band arrangement, orchestration for guitar in ensemble contexts.',
+    tips:['Compose in a style that intimidates you','Study the scores of music you love','Arrange for ensembles larger than guitar duo'],
+    ref:'Berklee capstone: professional demo reel for recording, film/TV, concerts, and festivals.' },
+  { id:'sig_style', x:799,  y:-2430, l:4, br:'lead',      ico:'🌟', verb:'BECOME', name:'Signature Style',      max:400,
+    parents:['g3'],
+    desc:'An identifiable musical voice — recognisable in four bars. The specific combination of technique, vocabulary, phrasing, and taste.',
+    tips:['Play with musicians better than you always','Your signature is what you choose NOT to play','Teach — it deepens mastery'],
+    ref:'Lehmann & Ericsson (1997): autonomous expertise. Scarduelli & Fiorini (2013): performance as professional pillar.' },
+
+  // MASTERY
+  { id:'mastery',   x:0,    y:-2705, l:4, br:'gate',      ico:'👑', verb:'BE',     name:'Professional Mastery', max:1, gate:true,
+    parents:['sess_rhy','ext_tech','fret_pro','harm_pro','sig_style'],
+    desc:'All constellations aligned. Berklee\'s senior recital (60 min) or professional demo reel. An ongoing orientation toward excellence — never a final destination.',
+    tips:['60-minute concert from memory','Professional demo reel for session/touring/education','Teach, compose, and perform simultaneously'],
+    ref:'Berklee senior recital + demo reel (Berklee Online, 2024). Lehmann & Ericsson (1997): quality can always increase with deliberate practice.' },
+];
+
+// FRETCRAFT — Archetype definitions and CROSS_HINTS
+// 8 archetypes + 31 cross-branch informational connections
+
+// ═══════════════════════════════════════════════════════════════
+//  ARCHETYPE SYSTEM
+//  Each archetype defines:
+//    core[]    — node ids that are PRIMARY (fully lit, prioritised)
+//    useful[]  — node ids that are HELPFUL but not required
+//    songs[]   — goal songs with required node ids
+//    buffs     — which practice dimensions to pre-weight
+//  Nodes not in core or useful are "optional" — dimmed slightly
+//  but still fully earnable. No content is locked or removed.
+// ═══════════════════════════════════════════════════════════════
+
+// ── CROSS-BRANCH INFORMATIONAL CONNECTIONS ─────────────────────
+// Option 1: visual guidance only — drawn as dashed lines on the tree
+// Does NOT affect XP gating or gate prerequisites
+// Format: [fromId, toId]
+var CROSS_HINTS = [
+  // Theory → Fretboard
+  ['chromatic',     'full_fr'],      // chromatic → knowing all notes
+  ['intervals',     'pent_b1'],      // interval understanding → pentatonic relationship
+  ['major_sc_th',   'maj_sc'],       // scale construction → scale positions
+  ['minor_scales',  'pent_5p'],      // minor/relative → 5-position pentatonic
+  // Theory → Harmony
+  ['scale_degrees', 'chd_prog'],     // Roman numerals → chord progressions
+  ['triad_theory',  '7th_chd'],      // triads → seventh chord extension
+  ['triad_theory',  'arpeg'],        // triad theory → arpeggio application
+  ['chord_function','reharm'],       // tension understanding → reharmonization
+  ['chord_function','chd_mel'],      // harmonic function → chord melody
+  ['diatonic_harm', 'adv_harm'],     // diatonic theory → advanced harmony
+  ['extended_harm', 'harm_pro'],     // extended harmony → professional arranging
+  // Theory → Lead
+  ['diatonic_harm', 'adv_imp'],      // full harmonic vocab → advanced improvisation
+  ['voice_leading', 'solo_arr'],     // voice leading → solo arrangement
+  ['voice_leading', 'inversions'],   // voice leading → inversion choices
+  // Ear Training → Lead
+  ['maj_min_qual',  'blues_voc'],    // major/minor ear → blues tonality
+  ['chord_qual_rec','lead_chg'],     // chord recognition → targeting chord tones
+  ['melodic_dict',  'transcr'],      // melodic dictation → full transcription
+  ['modal_rec',     'modal_i'],      // modal ear → modal improvisation
+  ['modal_rec',     'modes_a'],      // modal ear → modal fretboard application
+  ['relative_pitch','fret_pro'],     // relative pitch → fretboard mastery
+  ['relative_pitch','sig_style'],    // relative pitch → signature style
+  // Ear Training → Harmony
+  ['chord_qual_rec','7th_chd'],      // chord quality ear → seventh chord application
+  ['harmonic_dict', 'chd_prog'],     // hearing progressions → applying them
+  ['harmonic_dict', 'reharm'],       // harmonic dictation → reharmonization
+  // Theory ↔ Ear Training (horizontal connections — parallel track)
+  ['intervals',     'interval_rec_p'],  // knowing intervals ↔ hearing them
+  ['major_sc_th',   'maj_min_qual'],    // scale construction ↔ major/minor quality
+  ['scale_degrees', 'interval_rec_d'], // naming intervals ↔ hearing intervals
+  ['triad_theory',  'chord_qual_rec'], // chord construction ↔ chord quality recognition
+  ['chord_function','harmonic_dict'],  // function analysis ↔ harmonic ear
+  ['diatonic_harm', 'harmonic_dict'],  // diatonic knowledge ↔ harmonic dictation
+  ['voice_leading', 'melodic_dict'],   // voice leading ↔ hearing melodic motion
+];
+
+var ARCHETYPES = [
+  {
+    id:'rocker',
+    ico:'🔥', name:'The Rocker',
+    color:'#f87171',
+    tagline:'Power, energy, and riffs.\nElectric guitar is your weapon.',
+    desc:'Power chords, palm muting, pentatonic lead, alternate picking. You want to play with a band and sound massive.',
+    coreBranches:['rhythm','technique','lead'],
+    core:['root','q_strum','whole_half','pick_hold','open_str','pw_chord','e_strum','fret_bas','tab_read','blues_sc','alt_pick','h_po','slides','bends','syncop','strum_st','16th_r','triplets','pent_b1','blues_voc','lead_chg','phrasing','vibrato','legato','trill','alt_spd','funk','pent_5p','economy','tapping','sweep','tech_int','adv_imp','sig_style','sess_rhy','ext_tech','chromatic','intervals','major_sc_th','scale_degrees','minor_scales','pitch_match','interval_rec_p','maj_min_qual'],
+    useful:['first_pos','open_chd','chord_tr','7th_chd','phrasing','full_fr','caged','chd_prog','barre','odd_time','maj_sc','notation','chd_mel','reharm','style_v','arpeg','poly_r','ens_rhy','transcr','solo_arr','composit','subdiv_int','modal_i','triad_theory','chord_function','interval_rec_d','chord_qual_rec','melodic_dict'],
+    songs:[
+      {title:'Smoke on the Water', artist:'Deep Purple',   nodes:['q_strum','tab_read','first_pos']},
+      {title:'Back in Black',      artist:'AC/DC',          nodes:['pw_chord','alt_pick','syncop','strum_st']},
+      {title:'Enter Sandman',      artist:'Metallica',      nodes:['pw_chord','alt_pick','h_po','bends','pent_b1']},
+      {title:'Sweet Child O\' Mine',artist:'Guns N\' Roses',nodes:['pent_b1','alt_pick','bends','vibrato','lead_chg']},
+    ],
+  },
+  {
+    id:'songwriter',
+    ico:'🎸', name:'The Songwriter',
+    color:'#fbbf24',
+    tagline:'Chords, voice, and emotion.\nMusic is what you feel.',
+    desc:'Open chords, fingerpicking, capo mastery, chord progressions. You want to write and perform your own songs.',
+    coreBranches:['harmony','rhythm','lead'],
+    core:['root','q_strum','whole_half','open_str','pw_chord','open_chd','chord_tr','e_strum','blues_sc','first_mel','tab_read','barre','chd_prog','7th_chd','syncop','strum_st','triplets','16th_r','blues_voc','phrasing','lead_chg','inversions','chd_mel','reharm','composit','subdiv_int','chromatic','intervals','major_sc_th','scale_degrees','minor_scales','triad_theory','pitch_match','interval_rec_p','maj_min_qual','interval_rec_d'],
+    useful:['pick_hold','fret_bas','first_pos','h_po','slides','bends','vibrato','trill','pent_b1','full_fr','pent_5p','alt_pick','legato','alt_spd','tech_int','funk','odd_time','poly_r','caged','maj_sc','notation','modal_i','arpeg','style_v','chord_function','diatonic_harm','chord_qual_rec','melodic_dict','harmonic_dict'],
+    songs:[
+      {title:'Wish You Were Here', artist:'Pink Floyd',     nodes:['open_chd','chord_tr','e_strum','first_pos']},
+      {title:'Wonderwall',         artist:'Oasis',           nodes:['open_chd','chord_tr','strum_st']},
+      {title:'Fast Car',           artist:'Tracy Chapman',   nodes:['open_chd','strum_st','16th_r','chord_tr']},
+      {title:'Blackbird',          artist:'The Beatles',     nodes:['first_pos','open_chd','tab_read','h_po']},
+    ],
+  },
+  {
+    id:'blues',
+    ico:'🎷', name:'The Blues Player',
+    color:'#60a5fa',
+    tagline:'Feel, expression, and soul.\nEvery note tells a story.',
+    desc:'Blues scale, string bending, vibrato, call and response. The most expressive tradition in guitar history.',
+    coreBranches:['lead','technique','rhythm'],
+    core:['root','pick_hold','open_str','q_strum','blues_sc','first_mel','fret_bas','e_strum','whole_half','alt_pick','h_po','slides','bends','vibrato','pent_b1','full_fr','pent_5p','blues_voc','lead_chg','phrasing','syncop','strum_st','triplets','legato','trill','modal_i','style_v','adv_imp','subdiv_int','tech_int','funk','chromatic','intervals','major_sc_th','minor_scales','pitch_match','interval_rec_p','maj_min_qual','chord_qual_rec','melodic_dict'],
+    useful:['open_chd','chord_tr','barre','chd_prog','7th_chd','first_pos','tab_read','alt_spd','economy','caged','maj_sc','arpeg','transcr','odd_time','poly_r','ens_rhy','adv_harm','solo_arr','composit','scale_degrees','triad_theory','interval_rec_d','harmonic_dict'],
+    songs:[
+      {title:'Pride & Joy',        artist:'Stevie Ray Vaughan',nodes:['blues_sc','blues_voc','bends','vibrato']},
+      {title:'Red House',          artist:'Jimi Hendrix',      nodes:['blues_voc','bends','vibrato','phrasing']},
+      {title:'The Thrill Is Gone', artist:'BB King',           nodes:['blues_voc','vibrato','phrasing','lead_chg']},
+      {title:'Crossroads',         artist:'Cream',             nodes:['blues_sc','bends','alt_pick','phrasing']},
+    ],
+  },
+  {
+    id:'jazz',
+    ico:'🎹', name:'The Jazz Explorer',
+    color:'#34d399',
+    tagline:'Harmony, theory, and sophistication.\nThe music that changes how you hear everything.',
+    desc:'7th chords, chord melody, reharmonization, modal improvisation. Jazz makes every other style deeper.',
+    coreBranches:['harmony','fretboard','lead'],
+    core:['root','pick_hold','open_str','open_chd','chord_tr','first_pos','tab_read','whole_half','e_strum','barre','chd_prog','7th_chd','pent_b1','full_fr','pent_5p','caged','maj_sc','notation','inversions','chd_mel','reharm','modal_i','arpeg','style_v','adv_harm','solo_arr','fret_pro','harm_pro','subdiv_int','triplets','chromatic','intervals','major_sc_th','scale_degrees','minor_scales','triad_theory','chord_function','diatonic_harm','voice_leading','extended_harm','pitch_match','interval_rec_p','maj_min_qual','interval_rec_d','chord_qual_rec','melodic_dict','harmonic_dict','modal_rec'],
+    useful:['blues_sc','blues_voc','phrasing','lead_chg','vibrato','slides','h_po','bends','trill','legato','alt_pick','alt_spd','tech_int','odd_time','poly_r','funk','ens_rhy','adv_imp','composit','transcr','modes_a','sess_rhy','sig_style','relative_pitch'],
+    songs:[
+      {title:'Autumn Leaves',      artist:'Traditional Jazz', nodes:['7th_chd','chd_prog','modal_i','arpeg']},
+      {title:'Summertime',         artist:'Gershwin',         nodes:['7th_chd','inversions','chd_mel','phrasing']},
+      {title:'Fly Me to the Moon', artist:'Bart Howard',      nodes:['7th_chd','chd_prog','inversions','reharm']},
+      {title:'All of Me',          artist:'Gerald Marks',     nodes:['barre','7th_chd','modal_i','lead_chg']},
+    ],
+  },
+  {
+    id:'shredder',
+    ico:'⚡', name:'The Shredder',
+    color:'#c084fc',
+    tagline:'Speed, precision, and technical mastery.\nThe instrument as athletic pursuit.',
+    desc:'Alternate picking, economy picking, sweep picking, tapping, legato runs. Technical guitar at its extreme edge.',
+    coreBranches:['technique','lead','fretboard'],
+    core:['root','pick_hold','fret_bas','open_str','first_pos','tab_read','whole_half','e_strum','alt_pick','h_po','slides','bends','pent_b1','full_fr','pent_5p','vibrato','legato','trill','alt_spd','economy','tapping','sweep','tech_int','modes_a','adv_imp','subdiv_int','16th_r','triplets','ext_tech','sig_style','fret_pro','chromatic','intervals','major_sc_th','scale_degrees','minor_scales','pitch_match','interval_rec_p','maj_min_qual'],
+    useful:['q_strum','syncop','strum_st','funk','odd_time','poly_r','ens_rhy','caged','maj_sc','notation','transcr','open_chd','chord_tr','barre','chd_prog','7th_chd','inversions','arpeg','modal_i','style_v','adv_harm','solo_arr','composit','triad_theory','diatonic_harm','interval_rec_d','melodic_dict','modal_rec'],
+    songs:[
+      {title:'Eruption',           artist:'Van Halen',         nodes:['alt_pick','tapping','vibrato','alt_spd']},
+      {title:'Cliffs of Dover',    artist:'Eric Johnson',       nodes:['alt_pick','legato','alt_spd','phrasing']},
+      {title:'Technical Difficulties',artist:'Racer X',        nodes:['alt_spd','economy','sweep','legato']},
+      {title:'For the Love of God',artist:'Steve Vai',         nodes:['vibrato','legato','tapping','modes_a']},
+    ],
+  },
+  {
+    id:'classical',
+    ico:'🎼', name:'The Classical Player',
+    color:'#f0c060',
+    tagline:'Precision, fingerstyle, and timeless repertoire.\nGuitar as a concert instrument.',
+    desc:'Fingerpicking, standard notation, arpeggios, vibrato, extended techniques. The most demanding physical discipline.',
+    coreBranches:['technique','fretboard','harmony'],
+    core:['root','fret_bas','open_str','first_pos','tab_read','open_chd','chord_tr','whole_half','h_po','slides','pent_b1','full_fr','vibrato','legato','trill','caged','maj_sc','notation','inversions','chd_mel','arpeg','subdiv_int','modes_a','transcr','adv_harm','solo_arr','tech_int','fret_pro','harm_pro','ext_tech','chromatic','intervals','major_sc_th','scale_degrees','minor_scales','triad_theory','chord_function','voice_leading','pitch_match','interval_rec_p','interval_rec_d','maj_min_qual','chord_qual_rec','melodic_dict'],
+    useful:['pick_hold','pw_chord','e_strum','q_strum','triplets','alt_pick','blues_sc','bends','pent_5p','reharm','odd_time','notation','maj_sc','poly_r','ens_rhy','funk','chd_prog','barre','7th_chd','syncop','adv_imp','composit','modal_i','style_v','sess_rhy','sig_style','diatonic_harm','extended_harm','harmonic_dict','modal_rec','relative_pitch'],
+    songs:[
+      {title:'Romanza (Romance)',   artist:'Traditional Spanish',nodes:['first_pos','open_chd','tab_read','vibrato']},
+      {title:'Recuerdos de la Alhambra',artist:'Tárrega',       nodes:['notation','vibrato','legato','chd_mel']},
+      {title:'Asturias',           artist:'Albéniz',             nodes:['alt_pick','notation','caged','chd_mel']},
+      {title:'Lagrima',            artist:'Tárrega',             nodes:['first_pos','notation','chd_mel','arpeg']},
+    ],
+  },
+  {
+    id:'all_rounder',
+    ico:'🌟', name:'The All-Rounder',
+    color:'#c8a84b',
+    tagline:'Balanced, curious, and comprehensive.\nThe full Berklee-track musician.',
+    desc:'All five branches treated equally. You want to understand music deeply across styles and become a complete guitarist.',
+    coreBranches:['rhythm','technique','fretboard','harmony','lead'],
+    core:[], // empty = all nodes are "core" — fully lit
+    useful:[],
+    songs:[
+      {title:'Wish You Were Here', artist:'Pink Floyd',     nodes:['open_chd','chord_tr','e_strum','first_pos']},
+      {title:'Sultans of Swing',   artist:'Dire Straits',   nodes:['barre','chd_prog','blues_voc','phrasing']},
+      {title:'Little Wing',        artist:'Jimi Hendrix',   nodes:['open_chd','inversions','phrasing','vibrato']},
+      {title:'Tears in Heaven',    artist:'Eric Clapton',   nodes:['open_chd','first_pos','tab_read','vibrato']},
+    ],
+  },
+  {
+    id:'casual',
+    ico:'🎵', name:'The Casual Strummer',
+    color:'#34d399',
+    tagline:'A few chords, a few songs, and a good time.\nNo grind required.',
+    desc:'Open chords, simple strumming, chord transitions, and a small song library. Sustainable, enjoyable, low-pressure playing.',
+    coreBranches:['harmony','rhythm'],
+    core:['root','q_strum','whole_half','open_str','pw_chord','first_mel','open_chd','chord_tr','e_strum','blues_sc','tab_read','barre','chd_prog','syncop','strum_st','triplets','chromatic','intervals','pitch_match','maj_min_qual'],
+    useful:['pick_hold','fret_bas','first_pos','h_po','slides','blues_voc','phrasing','16th_r','subdiv_int','major_sc_th','scale_degrees','interval_rec_p'],
+    songs:[
+      {title:'Knockin\' on Heaven\'s Door',artist:'Bob Dylan',  nodes:['open_chd','chord_tr','q_strum']},
+      {title:'Wonderwall',          artist:'Oasis',              nodes:['open_chd','chord_tr','strum_st']},
+      {title:'Horse With No Name',  artist:'America',            nodes:['open_chd','e_strum','syncop']},
+      {title:'Brown Eyed Girl',     artist:'Van Morrison',       nodes:['open_chd','strum_st','barre']},
+    ],
+  },
+];
+
+// ── ENGINE ────────────────────────────────────────────────
+
+// FRETCRAFT — Game state and core helpers
+// var S: single source of truth
+// nById, nState, prereqsDone, getRank: pure, no side effects
+
+// ═══════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════
+var S = {
+  xp: 0,  streak: 1,  sel: null,
+  pts: {},  achs: [],
+  lastPractice: {},
+  songHighlight: null,
+  archetype: null,
+  archSongs: [],
+};
+
+// Seed some demo progress so tree looks alive
+['root','pick_hold','open_str','q_strum','pw_chord','first_mel',
+ 'e_strum','fret_bas','first_pos','tab_read','open_chd','blues_sc',
+ 'chromatic','intervals','pitch_match','interval_rec_p'].forEach(function(id){
+  var n = NODES.find(function(x){ return x.id === id; });
+  if (n && !n.gate) { S.pts[id] = n.max; S.xp += n.max * 2; }
+});
+S.pts['chord_tr'] = 40; S.pts['alt_pick'] = 65; S.pts['pent_b1'] = 80;
+S.pts['barre'] = 35; S.pts['blues_voc'] = 55;
+S.xp += 360;
+S.achs = [
+  { ico:'⭐', txt:'HOLD: Posture mastered',      xp:100 },
+  { ico:'⭐', txt:'VOICE: Open Chords mastered', xp:160 },
+  { ico:'⭐', txt:'READ: Tab Reading mastered',  xp:80  },
+];
+
+function nById(id){ return NODES.find(function(n){ return n.id === id; }); }
+
+function nState(id){
+  var n = nById(id); if (!n) return 'locked';
+  var p = S.pts[id] || 0;
+  if (n.gate) return p >= 1 ? 'done' : 'locked';
+  return p >= n.max ? 'done' : p > 0 ? 'prog' : 'locked';
+}
+
+function branchColor(brId){
+  var b = BR.find(function(x){ return x.id === brId; });
+  return b ? b.color : '#c8a84b';
+}
+
+function prereqsDone(node){
+  return (node.parents || []).every(function(pid){ return nState(pid) === 'done'; });
+}
+
+// Ranks based on XP
+var RANKS = [
+  {name:'Initiate',xp:0},{name:'Seeker',xp:200},{name:'Adept',xp:500},
+  {name:'Scholar',xp:1000},{name:'Virtuoso',xp:1800},{name:'Expert',xp:3000},
+  {name:'Master',xp:5000},{name:'Luminary',xp:8000},{name:'Sage',xp:12000},{name:'Transcendent',xp:20000},
+];
+function getRank(){
+  var r = RANKS[0];
+  for (var i = 0; i < RANKS.length; i++){ if (S.xp >= RANKS[i].xp) r = RANKS[i]; }
+  return r;
+}
+
+// FRETCRAFT — Progression logic
+// selNode, checkGates, flash, toast, popup helpers
+
+// ═══════════════════════════════════════════════════
+//  INTERACTIONS
+// ═══════════════════════════════════════════════════
+function selNode(id){ S.sel = id; renderCard(); renderTree(); }
+
+// FRETCRAFT — Multi-dimensional XP system
+// Dimensions: duration × focus × type × accuracy × BPM × reflection + spacing bonus
+// Prereq gating: full XP if met, 25% exploration if not
+
+// ═══════════════════════════════════════════════════
+//  PRACTICE MODAL
+// ═══════════════════════════════════════════════════
+var mState = { dur:15, foc:2, typ:2, acc:2, bpm:2, ref:2 };
+var focL = ['','Mindless ×0.5','Focused ×1.0','Deliberate ×2.0'], focM = [0,.5,1.0,2.0];
+var typL = ['','Blocked ×1.0','Interleaved ×1.3'],              typM = [0,1.0,1.3];
+var accL = ['','Rough ~50%','Good ~80%','Clean ~95%','Perfect'], accM = [0,.5,1.0,1.3,1.5];
+var bpmL = ['','Below target','Partial','At target ×1.4'],      bpmM = [0,.8,1.0,1.4];
+var refL = ['','Skipped','Logged ×1.2'],                        refM = [0,1.0,1.2];
+
+function spacingBonus(nodeId){
+  var last = S.lastPractice[nodeId];
+  if (!last) return 0;
+  var hrs = (Date.now()-last)/3600000;
+  return hrs >= 48 ? 30 : hrs >= 20 ? 15 : 0;
+}
+
+function calcXP(){
+  var base = mState.dur * focM[mState.foc] * typM[mState.typ] * accM[mState.acc] * bpmM[mState.bpm] * refM[mState.ref];
+  var node = S.sel ? nById(S.sel) : null;
+  var space = node ? spacingBonus(node.id) : 0;
+  var raw = Math.round(base) + space;
+  var met = node ? prereqsDone(node) : true;
+  return { raw:raw, nodeXP:met?raw:0, globalXP:met?raw:Math.round(raw*.25), space:space, met:met };
+}
+
+function openModal(){
+  var name = 'General Practice';
+  if (S.sel){ var n=nById(S.sel); if(n) name=n.verb+': '+n.name; }
+  document.getElementById('modal-skill-name').textContent = name;
+  updModal();
+  document.getElementById('modal-ovl').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal-ovl').classList.remove('open'); }
+
+function updModal(){
+  mState.dur = +document.getElementById('s-dur').value;
+  mState.foc = +document.getElementById('s-foc').value;
+  mState.typ = +document.getElementById('s-typ').value;
+  mState.acc = +document.getElementById('s-acc').value;
+  mState.bpm = +document.getElementById('s-bpm').value;
+  mState.ref = +document.getElementById('s-ref').value;
+
+  document.getElementById('l-dur').textContent = mState.dur+' min';
+  document.getElementById('l-foc').textContent = focL[mState.foc];
+  document.getElementById('l-typ').textContent = typL[mState.typ];
+  document.getElementById('l-acc').textContent = accL[mState.acc];
+  document.getElementById('l-bpm').textContent = bpmL[mState.bpm];
+  document.getElementById('l-ref').textContent = refL[mState.ref];
+
+  var calc = calcXP();
+  var node = S.sel ? nById(S.sel) : null;
+
+  // Spacing bonus note
+  var sn = document.getElementById('spacing-note');
+  if (calc.space > 0){ sn.style.display='block'; document.getElementById('spacing-amt').textContent=calc.space; }
+  else { sn.style.display='none'; }
+
+  // Prereq warning
+  var pw = document.getElementById('prereq-warn');
+  if (node && !calc.met){
+    pw.style.display = 'block';
+    var missing = (node.parents||[]).filter(function(pid){ return nState(pid)!=='done'; })
+      .map(function(pid){ var p=nById(pid); return p?p.verb+' ('+p.name+')':pid; }).join(', ');
+    pw.innerHTML = '<strong>⚠ Prerequisites not yet mastered:</strong> '+missing+'<br>'+
+      'You can explore this skill, but XP won\'t count toward node mastery until prerequisites are complete. '+
+      'You\'ll earn <strong>25% ('+Math.round(calc.raw*.25)+' XP)</strong> as exploration credit.';
+  } else { pw.style.display='none'; }
+
+  // XP display
+  var displayXP = calc.met ? calc.nodeXP : Math.round(calc.raw*.25);
+  document.getElementById('xp-val').textContent = '+'+displayXP+' XP';
+  document.getElementById('xp-formula').textContent =
+    mState.dur+'×'+focM[mState.foc]+'×'+typM[mState.typ]+'×'+accM[mState.acc]+'×'+bpmM[mState.bpm]+'×'+refM[mState.ref]+
+    (calc.space?'+'+calc.space+' space':'')+(calc.met?'':' ×0.25 (explore)');
+
+  // Gate info
+  var gi = document.getElementById('gate-info');
+  if (!node||node.gate){ gi.innerHTML='<span style="color:var(--t3)">—</span>'; }
+  else if (calc.met){ gi.innerHTML='<span style="color:#34d399">✦ Met — full XP</span>'; }
+  else {
+    var done2=(node.parents||[]).filter(function(pid){return nState(pid)==='done';}).length;
+    var tot2=(node.parents||[]).length;
+    gi.innerHTML='<span style="color:#f87171">'+done2+'/'+tot2+' done<br>Explore at 25%</span>';
+  }
+}
+
+function submitSession(){
+  var calc = calcXP();
+  var node = S.sel ? nById(S.sel) : null;
+  if (node) S.lastPractice[node.id] = Date.now();
+
+  S.xp += calc.globalXP;
+  S.streak = Math.min(365, S.streak+1);
+
+  if (node && !node.gate){
+    if (calc.met){
+      var prev = S.pts[node.id]||0;
+      var gain = Math.round(calc.nodeXP * .45);
+      var now = Math.min(node.max, prev+gain);
+      S.pts[node.id] = now;
+      if (prev < node.max && now >= node.max){
+        S.xp += 80;
+        S.achs.push({ ico:'⭐', txt:node.verb+': '+node.name+' mastered', xp:calc.nodeXP+80 });
+        popup('⭐ MASTERED! +80 BONUS', '#c084fc');
+        checkGates();
+      } else {
+        S.achs.push({ ico:'✦', txt:'Practiced '+node.verb+': '+node.name, xp:calc.globalXP });
+        popup('+'+calc.globalXP+' XP', null);
+      }
+    } else {
+      S.achs.push({ ico:'🔭', txt:'Explored: '+node.name, xp:calc.globalXP });
+      popup('+'+calc.globalXP+' XP (explore)', null);
+    }
+  } else {
+    S.achs.push({ ico:'🎸', txt:'General practice', xp:calc.globalXP });
+    popup('+'+calc.globalXP+' XP', null);
+  }
+
+  closeModal();
+  renderLeft(); renderTree(); renderCard(); renderHeader(); renderAchs();
+}
+
+function checkGates(){
+  NODES.filter(function(n){ return n.gate; }).forEach(function(gate){
+    if (nState(gate.id)==='done') return;
+    if ((gate.parents||[]).every(function(pid){ return nState(pid)==='done'; })){
+      S.pts[gate.id] = 1;
+      S.xp += 500;
+      S.achs.push({ ico:'🌟', txt:gate.name+' — Constellation Aligned!', xp:500 });
+      toast('🌟 '+gate.name+' unlocked! +500 XP');
+    }
+  });
+}
+
+function popup(msg, color){
+  var el = document.createElement('div');
+  el.className = 'xp-pop';
+  el.textContent = msg;
+  el.style.left = (window.innerWidth/2-60)+'px';
+  el.style.top  = (window.innerHeight/2-40)+'px';
+  if (color) el.style.color = color;
+  document.body.appendChild(el);
+  setTimeout(function(){ el.remove(); }, 1600);
+}
+
+function toast(msg){
+  var el = document.createElement('div');
+  el.className = 'toast-msg';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(function(){ el.classList.add('out'); setTimeout(function(){ el.remove(); }, 250); }, 3000);
+}
+
+document.getElementById('modal-ovl').addEventListener('click', function(e){ if(e.target===this) closeModal(); });
+
+// ── RENDER ────────────────────────────────────────────────
+
+// FRETCRAFT — Nebula background renderer
+// buildBG: SVG defs (filters, gradients) + star field. Called once at boot.
+
+// ═══════════════════════════════════════════════════
+//  BUILD NEBULA BACKGROUND  (SVG, drawn once)
+// ═══════════════════════════════════════════════════
+function buildBG(){
+  var xs=NODES.map(function(n){return n.x;}), ys=NODES.map(function(n){return n.y;});
+  var minX=Math.min.apply(null,xs)-120, maxX=Math.max.apply(null,xs)+120;
+  var minY=Math.min.apply(null,ys)-120, maxY=Math.max.apply(null,ys)+120;
+  var W=maxX-minX, H=maxY-minY;
+  var svg = document.getElementById('tree-svg');
+
+  // Defs
+  var defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  defs.innerHTML =
+    // Glow filters (one per branch color + gate)
+    '<filter id="gR"><feGaussianBlur stdDeviation="5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<filter id="gT"><feGaussianBlur stdDeviation="5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<filter id="gF"><feGaussianBlur stdDeviation="5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<filter id="gH"><feGaussianBlur stdDeviation="5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<filter id="gL"><feGaussianBlur stdDeviation="5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<filter id="gG"><feGaussianBlur stdDeviation="12" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<filter id="gM"><feGaussianBlur stdDeviation="20" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<filter id="gTh"><feGaussianBlur stdDeviation="5" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<filter id="gEa"><feGaussianBlur stdDeviation="6" result="b"/><feComposite in="SourceGraphic" in2="b" operator="over"/></filter>'+
+    '<radialGradient id="nb0" cx="22%" cy="88%" r="32%"><stop offset="0%" stop-color="#5c2a08" stop-opacity=".22"/><stop offset="100%" stop-color="#090502" stop-opacity="0"/></radialGradient>'+
+    '<radialGradient id="nb1" cx="38%" cy="72%" r="28%"><stop offset="0%" stop-color="#3d1a05" stop-opacity=".18"/><stop offset="100%" stop-color="#090502" stop-opacity="0"/></radialGradient>'+
+    '<radialGradient id="nb2" cx="52%" cy="52%" r="26%"><stop offset="0%" stop-color="#8b4010" stop-opacity=".16"/><stop offset="100%" stop-color="#090502" stop-opacity="0"/></radialGradient>'+
+    '<radialGradient id="nb3" cx="66%" cy="72%" r="28%"><stop offset="0%" stop-color="#3d1a05" stop-opacity=".18"/><stop offset="100%" stop-color="#090502" stop-opacity="0"/></radialGradient>'+
+    '<radialGradient id="nb4" cx="80%" cy="88%" r="32%"><stop offset="0%" stop-color="#5c2a08" stop-opacity=".2"/><stop offset="100%" stop-color="#090502" stop-opacity="0"/></radialGradient>';
+  svg.insertBefore(defs, svg.firstChild);
+
+  // Background group
+  var bg = document.getElementById('bg-g');
+  var h = '<rect x="'+minX+'" y="'+minY+'" width="'+W+'" height="'+H+'" fill="#090502"/>';
+  // Nebula clouds
+  for (var i=0;i<5;i++) h += '<rect x="'+minX+'" y="'+minY+'" width="'+W+'" height="'+H+'" fill="url(#nb'+i+')" opacity="1"/>';
+  // Stars
+  var seed = 271828;
+  for (var s=0; s<350; s++){
+    seed=(seed*1664525+1013904223)>>>0;
+    var sx=((seed%W)+minX).toFixed(0);
+    seed=(seed*1664525+1013904223)>>>0;
+    var sy=((seed%H)+minY).toFixed(0);
+    seed=(seed*1664525+1013904223)>>>0;
+    var sr=((seed%14)/10+0.25).toFixed(1);
+    seed=(seed*1664525+1013904223)>>>0;
+    var sa=((seed%28)/100+0.03).toFixed(2);
+    var twinkle = seed%4===0;
+    // Stars: warm amber sparks, occasional hot-white twinkers
+    if (twinkle){
+      h += '<circle cx="'+sx+'" cy="'+sy+'" r="'+sr+'" fill="rgba(245,200,120,'+sa+')">'+
+           '<animate attributeName="opacity" values="'+sa+';'+(parseFloat(sa)*2.8).toFixed(2)+';'+sa+'" dur="'+(2+seed%4)+'s" repeatCount="indefinite"/></circle>';
+    } else {
+      h += '<circle cx="'+sx+'" cy="'+sy+'" r="'+sr+'" fill="rgba(200,118,42,'+sa+')" opacity=".65"/>';
+    }
+  }
+  bg.innerHTML = h;
+}
+
+// FRETCRAFT — Pan, zoom, touch camera
+// cam: {tx,ty,sc} — applyT, fitView, mouse/wheel/touch handlers
+
+// ═══════════════════════════════════════════════════
+//  PAN / ZOOM
+// ═══════════════════════════════════════════════════
+var cam = { tx:0, ty:0, sc:1 };
+var drag = { on:false, sx:0, sy:0, cx:0, cy:0 };
+
+function applyT(){
+  document.getElementById('cam-g').setAttribute('transform',
+    'translate('+cam.tx.toFixed(1)+','+cam.ty.toFixed(1)+') scale('+cam.sc.toFixed(4)+')');
+}
+
+function fitView(){
+  var vp = document.getElementById('vp');
+  var vw = vp.clientWidth, vh = vp.clientHeight;
+  if (!vw || !vh) return;
+  var xs = NODES.map(function(n){ return n.x; });
+  var ys = NODES.map(function(n){ return n.y; });
+  var minX = Math.min.apply(null,xs)-80, maxX = Math.max.apply(null,xs)+80;
+  var minY = Math.min.apply(null,ys)-80, maxY = Math.max.apply(null,ys)+80;
+  cam.sc = Math.min(vw/(maxX-minX), vh/(maxY-minY)) * 0.88;
+  cam.tx = vw/2 - (minX+(maxX-minX)/2)*cam.sc;
+  cam.ty = vh - 50 - maxY*cam.sc;
+  applyT();
+}
+
+function zoom(f){
+  var vp = document.getElementById('vp');
+  var cx = vp.clientWidth/2, cy = vp.clientHeight/2;
+  cam.tx = (cam.tx-cx)*f+cx; cam.ty = (cam.ty-cy)*f+cy;
+  cam.sc = Math.max(0.08, Math.min(4, cam.sc*f));
+  applyT();
+}
+
+var VP = document.getElementById('vp');
+VP.addEventListener('mousedown', function(e){
+  if (e.button !== 0) return;
+  drag.on=true; drag.sx=e.clientX; drag.sy=e.clientY; drag.cx=cam.tx; drag.cy=cam.ty;
+  e.preventDefault();
+});
+window.addEventListener('mousemove', function(e){
+  if (!drag.on) return;
+  cam.tx = drag.cx+(e.clientX-drag.sx); cam.ty = drag.cy+(e.clientY-drag.sy); applyT();
+});
+window.addEventListener('mouseup', function(){ drag.on=false; });
+VP.addEventListener('wheel', function(e){
+  e.preventDefault();
+  var r = VP.getBoundingClientRect();
+  var f = e.deltaY < 0 ? 1.12 : 0.9;
+  var cx = e.clientX-r.left, cy = e.clientY-r.top;
+  cam.tx=(cam.tx-cx)*f+cx; cam.ty=(cam.ty-cy)*f+cy;
+  cam.sc=Math.max(0.08,Math.min(4,cam.sc*f)); applyT();
+}, {passive:false});
+var t0 = {on:false,sx:0,sy:0,cx:0,cy:0,d0:0,z0:1};
+VP.addEventListener('touchstart', function(e){
+  if (e.touches.length===1){t0.on=true;t0.sx=e.touches[0].clientX;t0.sy=e.touches[0].clientY;t0.cx=cam.tx;t0.cy=cam.ty;}
+  else if (e.touches.length===2){t0.d0=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);t0.z0=cam.sc;}
+  e.preventDefault();
+}, {passive:false});
+VP.addEventListener('touchmove', function(e){
+  if (e.touches.length===1&&t0.on){cam.tx=t0.cx+(e.touches[0].clientX-t0.sx);cam.ty=t0.cy+(e.touches[0].clientY-t0.sy);applyT();}
+  else if (e.touches.length===2){var d=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);cam.sc=Math.max(0.08,Math.min(4,t0.z0*(d/t0.d0)));applyT();}
+  e.preventDefault();
+}, {passive:false});
+VP.addEventListener('touchend', function(){ t0.on=false; });
+
+// FRETCRAFT — Constellation tree renderer
+// renderTree: all edges and nodes into SVG cam-g
+// Reads: NODES, S, filterMap, CROSS_HINTS, archOpacity, nState, nById
+
+// ═══════════════════════════════════════════════════
+//  RENDER TREE
+// ═══════════════════════════════════════════════════
+var filterMap = { rhythm:'gR', technique:'gT', fretboard:'gF', harmony:'gH', lead:'gL', gate:'gG', theory:'gTh', eartraining:'gEa' };
+
+function renderTree(){
+  var edgesEl = document.getElementById('edges-g');
+  var nodesEl = document.getElementById('nodes-g');
+  var eHtml = '', nHtml = '';
+  var ci = 0;
+
+  // ── EDGES ──
+  NODES.forEach(function(node){
+    (node.parents || []).forEach(function(pid){
+      ci++;
+      var p = nById(pid); if (!p) return;
+      var pSt = nState(p.id), nSt = nState(node.id);
+      var hot = pSt==='done' && (nSt==='done'||nSt==='prog');
+      var active = pSt==='done';
+      var col = hot ? 'rgba(200,168,75,.55)' : active ? 'rgba(200,168,75,.15)' : 'rgba(100,80,140,.13)';
+      var sw = hot ? 1.8 : active ? 0.8 : 0.5;
+      var opacity = hot ? 0.85 : active ? 0.45 : 0.22;
+      // Gentle cubic bezier — control points pull toward midpoint vertically
+      var my = (p.y+node.y)/2;
+      var path = 'M'+p.x+','+p.y+' C'+p.x+','+my+' '+node.x+','+my+' '+node.x+','+node.y;
+      eHtml += '<path d="'+path+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" opacity="'+opacity+'" stroke-linecap="round"/>';
+      // Travelling particle on hot edges
+      if (hot){
+        var pid2 = 'ep'+ci;
+        eHtml += '<path id="'+pid2+'" d="'+path+'" fill="none"/>'+
+          '<circle r="1.8" fill="rgba(200,168,75,.72)"><animateMotion dur="'+(1.6+(ci%10)*.18).toFixed(1)+'s" repeatCount="indefinite"><mpath href="#'+pid2+'"/></animateMotion></circle>';
+      }
+    });
+  });
+
+  // ── NODES ──
+  NODES.forEach(function(node){
+    var ns = nState(node.id);
+    var pts = S.pts[node.id] || 0;
+    var pct = node.gate ? 0 : Math.min(1, pts/node.max);
+    var isSel = S.sel === node.id;
+    var isGate = node.gate === true;
+    var isMastery = node.id === 'mastery';
+    var isRoot = node.id === 'root';
+
+    var bColor = branchColor(node.br); // branch color = node color
+    var lv = LV[node.l] || LV[0];
+    var R = isGate ? (isMastery ? 42 : 24) : lv.nodeR;
+    var ri = R - 4;
+
+    var isDone = ns==='done', isProg = ns==='prog';
+
+    // Archetype-based opacity layered on top of state opacity
+    var baseOpacity = isDone ? 1 : isProg ? 0.82 : 0.35;
+    var archMult = archOpacity(node.id);
+    var nodeOpacity = (baseOpacity * archMult).toFixed(2);
+    var fillOpacity = isDone ? 0.85 : isProg ? 0.45 : 0.12;
+    var strokeColor = isDone ? bColor : isProg ? bColor : 'rgba(150,130,170,.4)';
+    var strokeW = isDone ? 2.2 : isProg ? 1.5 : 1;
+    var flt = (isDone||isSel||isGate) ? ' filter="url(#'+filterMap[node.br]+')"' : '';
+
+    // Corona rings for mastered nodes
+    var corona = '';
+    if (isDone && !isGate){
+      corona = '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+7)+'" fill="none" stroke="'+bColor+'" stroke-width="1" opacity=".18"/>'+
+               '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+14)+'" fill="none" stroke="'+bColor+'" stroke-width=".5" opacity=".08"/>';
+    }
+    if (isGate && isDone){
+      corona = '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+10)+'" fill="none" stroke="var(--gold2)" stroke-width="1.2" opacity=".35">'+
+               '<animate attributeName="r" values="'+(R+8)+';'+(R+18)+';'+(R+8)+'" dur="3s" repeatCount="indefinite"/>'+
+               '<animate attributeName="opacity" values=".35;.06;.35" dur="3s" repeatCount="indefinite"/></circle>';
+    }
+    if (isMastery){
+      corona = '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+14)+'" fill="none" stroke="var(--gold2)" stroke-width="1.8" opacity="'+(isDone?.4:.15)+'">'+
+               '<animate attributeName="r" values="'+(R+10)+';'+(R+26)+';'+(R+10)+'" dur="2.5s" repeatCount="indefinite"/>'+
+               '<animate attributeName="opacity" values=".4;.04;.4" dur="2.5s" repeatCount="indefinite"/></circle>';
+    }
+
+    // Song highlight ring (temporary, from clicking a song goal)
+    var highlighted = S.songHighlight && S.songHighlight.indexOf(node.id) >= 0;
+    var songRing = highlighted
+      ? '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+9)+'" fill="none" stroke="rgba(45,212,191,.55)" stroke-width="2" stroke-dasharray="4,3">'+
+        '<animateTransform attributeName="transform" type="rotate" from="0 '+node.x+' '+node.y+'" to="360 '+node.x+' '+node.y+'" dur="8s" repeatCount="indefinite"/>'+
+        '</circle>' : '';
+    var selPulse = isSel ? '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+6)+'" fill="none" stroke="'+bColor+'" stroke-width="1.2" opacity=".5">'+
+      '<animate attributeName="r" values="'+(R+4)+';'+(R+14)+';'+(R+4)+'" dur="1.8s" repeatCount="indefinite"/>'+
+      '<animate attributeName="opacity" values=".5;0;.5" dur="1.8s" repeatCount="indefinite"/></circle>' : '';
+
+    // Progress arc
+    var arc = '';
+    if (isProg && pct > 0){
+      var ang = pct*2*Math.PI-Math.PI/2;
+      var ax = (node.x+ri*Math.cos(ang)).toFixed(2), ay = (node.y+ri*Math.sin(ang)).toFixed(2);
+      var lg = pct>.5?1:0;
+      arc = '<path d="M'+node.x+','+(node.y-ri)+' A'+ri+','+ri+' 0 '+lg+',1 '+ax+','+ay+'" fill="none" stroke="'+bColor+'" stroke-width="2.2" stroke-linecap="round" opacity=".82"/>';
+    }
+
+    // 4-point star shape for mastered nodes
+    function starPts(cx,cy,outerR,innerR,n){
+      var pts2='';
+      for(var i=0;i<n*2;i++){
+        var a=Math.PI/n*i-Math.PI/2;
+        var r2=i%2===0?outerR:innerR;
+        pts2+=(i?'L':'M')+(cx+r2*Math.cos(a)).toFixed(1)+','+(cy+r2*Math.sin(a)).toFixed(1);
+      }
+      return pts2+'Z';
+    }
+    var starOverlay = isDone ? '<path d="'+starPts(node.x,node.y,R+2,R*0.45,4)+'" fill="'+bColor+'" opacity=".32"/>' : '';
+
+    // Text colors
+    var nameColor = isDone ? bColor : isProg ? bColor : 'rgba(140,120,155,.55)';
+    var verbColor = isDone ? 'rgba(240,192,96,.85)' : isProg ? bColor : 'rgba(100,80,120,.4)';
+    var ptsColor  = isDone ? bColor+'99' : 'rgba(200,168,75,.4)';
+
+    var R_text = isGate ? 12 : lv.nodeR <= 14 ? 13 : lv.nodeR <= 17 ? 13 : 13;
+    var ico_fs = isMastery ? 26 : isGate ? 16 : isRoot ? 18 : [14,15,16,17,18][node.l]||14;
+    var lbl = node.name.length > 13 ? node.name.slice(0,12)+'…' : node.name;
+
+    nHtml += '<g class="nd" data-id="'+node.id+'" onclick="selNode(\''+node.id+'\')" style="cursor:pointer;opacity:'+nodeOpacity+'"'+flt+'>';
+    nHtml += selPulse + corona + songRing;
+    // Soft glow halo
+    nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R+4)+'" fill="'+bColor+'" opacity="'+(isDone?.14:isProg?.06:.02)+'"/>';
+    // Main body
+    nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+R+'" fill="'+bColor+'" opacity="'+fillOpacity+'" stroke="'+strokeColor+'" stroke-width="'+strokeW+'"/>';
+    // Inner highlight
+    nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+(R-6)+'" fill="white" opacity="'+(isDone?.1:isProg?.04:.02)+'"/>';
+    nHtml += arc + starOverlay;
+    // Icon
+    nHtml += '<text x="'+node.x+'" y="'+(node.y-(isGate||isRoot?2:4))+'" text-anchor="middle" dominant-baseline="middle" font-size="'+ico_fs+'">'+node.ico+'</text>';
+    // Verb (only show when done, above node name)
+    if (!isGate && isDone && node.verb){
+      nHtml += '<text x="'+node.x+'" y="'+(node.y+R+8)+'" text-anchor="middle" font-size="5.5" fill="'+verbColor+'" font-family="\'Segoe UI\',sans-serif" letter-spacing=".1em">'+node.verb+'</text>';
+    }
+    // Name
+    if (!isGate){
+      nHtml += '<text x="'+node.x+'" y="'+(node.y+R+(isDone?17:11))+'" text-anchor="middle" font-size="'+R_text+'" fill="'+nameColor+'" font-family="Cinzel,Georgia,serif">'+lbl+'</text>';
+    } else {
+      nHtml += '<text x="'+node.x+'" y="'+(node.y+R+10)+'" text-anchor="middle" font-size="'+(isMastery?10:8)+'" fill="'+(isDone?'var(--gold2)':'rgba(200,168,75,.45)')+'" font-family="Cinzel,Georgia,serif">'+node.name+'</text>';
+    }
+    // Points for in-progress
+    if (!isGate && isProg){
+      nHtml += '<text x="'+node.x+'" y="'+(node.y+R+22)+'" text-anchor="middle" font-size="5.5" fill="'+ptsColor+'" font-family="\'Segoe UI\',sans-serif">'+pts+'/'+node.max+'</text>';
+    }
+    // Invisible hit target
+    nHtml += '<circle cx="'+node.x+'" cy="'+node.y+'" r="'+R+'" fill="rgba(0,0,0,0)"/>';
+    nHtml += '</g>';
+  });
+
+  // Branch name labels at bottom of each cluster
+  var clusterY = {}; // lowest Y per branch (most negative = top of canvas = lowest y value)
+  // We want labels at the TOP of each branch cluster, which is the most negative Y value
+  // But actually labels work better at the BOTTOM of the foundation tier as anchor labels
+  // Let's put them near the root, offset by branch X
+  var branchX = {rhythm:-590, technique:-380, fretboard:-80, theory:130, eartraining:340, harmony:560, lead:780};
+  Object.keys(branchX).forEach(function(brId){
+    var brData = BR.find(function(b){ return b.id===brId; });
+    var bx = branchX[brId], by = 90; // below root node
+    nHtml += '<text x="'+bx+'" y="'+by+'" text-anchor="middle" font-size="9" fill="'+brData.color+'" opacity=".55" font-family="\'Segoe UI\',sans-serif" letter-spacing=".1em">'+brData.name.toUpperCase()+'</text>';
+    nHtml += '<line x1="'+bx+'" y1="74" x2="'+bx+'" y2="82" stroke="'+brData.color+'" stroke-width="1" opacity=".35"/>';
+  });
+
+  edgesEl.innerHTML = eHtml;
+  nodesEl.innerHTML = nHtml;
+}
+
+// FRETCRAFT — Panel renderers
+// renderLeft, renderCard, renderHeader, renderAchs
+
+// ═══════════════════════════════════════════════════
+//  LEFT PANEL
+// ═══════════════════════════════════════════════════
+function renderLeft(){
+  // Branches
+  var bl = document.getElementById('branch-list');
+  bl.innerHTML = BR.map(function(br){
+    var done = NODES.filter(function(n){ return n.br===br.id && nState(n.id)==='done'; }).length;
+    var total = NODES.filter(function(n){ return n.br===br.id; }).length;
+    var pct = total ? Math.round(done/total*100) : 0;
+    return '<div class="branch-item active">'+
+      '<div class="b-dot" style="background:'+br.color+';color:'+br.color+'"></div>'+
+      '<div style="flex:1;min-width:0">'+
+        '<div style="display:flex;justify-content:space-between">'+
+          '<span class="b-name">'+br.ico+' '+br.name+'</span>'+
+          '<span class="b-prog">'+done+'/'+total+'</span>'+
+        '</div>'+
+        '<div class="b-bar"><div class="b-fill" style="width:'+pct+'%;background:'+br.color+';box-shadow:0 0 4px '+br.color+'40"></div></div>'+
+      '</div></div>';
+  }).join('');
+
+  // Next up — one per branch, first reachable
+  var nl = document.getElementById('next-list');
+  var suggestions = [];
+  BR.forEach(function(br){
+    var brNodes = NODES.filter(function(n){ return n.br===br.id && !n.gate; })
+                       .sort(function(a,b){ return a.y - b.y; }); // sort by y (root=-0, higher=-more)
+    for (var i=0; i<brNodes.length; i++){
+      var n = brNodes[i]; var ns = nState(n.id);
+      if (ns==='prog'){ suggestions.push({n:n,br:br}); break; }
+      if (ns==='locked' && prereqsDone(n)){ suggestions.push({n:n,br:br}); break; }
+    }
+  });
+  nl.innerHTML = suggestions.map(function(s){
+    return '<div class="next-item" onclick="selNode(\''+s.n.id+'\')" style="border-color:'+s.br.color+'22">'+
+      '<div class="ni-ico">'+s.n.ico+'</div>'+
+      '<div class="ni-text">'+
+        '<div class="ni-verb" style="color:'+s.br.color+'">'+s.n.verb+'</div>'+
+        '<div class="ni-name" style="color:'+s.br.color+'dd">'+s.n.name+'</div>'+
+        '<div class="ni-branch">'+s.br.name+'</div>'+
+      '</div></div>';
+  }).join('');
+
+  // Song goals from archetype
+  var lp = document.getElementById('branch-list').closest('.tree-sidebar') || document.getElementById('branch-list').closest('.lp');
+  var oldSongs = lp.querySelector('#song-goals-sec');
+  if (oldSongs) oldSongs.remove();
+  var songs = S.archSongs || [];
+  if (songs.length){
+    var arch = ARCHETYPES.find(function(a){ return a.id===S.archetype; });
+    var ac = arch ? arch.color : 'var(--gold)';
+    var sg = document.createElement('div');
+    sg.id = 'song-goals-sec';
+    sg.className = 'panel-sec';
+    var sh = '<div class="sec-label">Song Goals</div>';
+    songs.forEach(function(song){
+      var met2 = song.nodes.filter(function(nid){ return nState(nid)==='done'; }).length;
+      var tot2 = song.nodes.length;
+      var pct2 = Math.round(met2/tot2*100);
+      sh += '<div style="margin-bottom:.45rem;cursor:pointer" onclick="highlightSongNodes('+JSON.stringify(song.nodes)+')" title="Highlight required skills on tree">'+
+        '<div style="font-size:.62rem;color:var(--t1);font-weight:600;margin-bottom:.08rem">'+song.title+'</div>'+
+        '<div style="font-size:.5rem;color:var(--t3);margin-bottom:.18rem">'+song.artist+'</div>'+
+        '<div style="display:flex;align-items:center;gap:.4rem">'+
+          '<div style="flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden">'+
+            '<div style="height:100%;width:'+pct2+'%;background:'+ac+';border-radius:2px;transition:width .4s"></div>'+
+          '</div>'+
+          '<span style="font-size:.5rem;color:'+ac+';font-weight:700;white-space:nowrap">'+pct2+'%</span>'+
+        '</div></div>';
+    });
+    sg.innerHTML = sh;
+    lp.appendChild(sg);
+  }
+}
+
+// Highlight song required nodes on tree (adds a temporary pulse to those nodes)
+function highlightSongNodes(nodeIds){
+  S.songHighlight = nodeIds;
+  renderTree();
+  toast('🎵 Song path highlighted on constellation');
+  setTimeout(function(){ S.songHighlight = null; renderTree(); }, 8000);
+}
+
+// ═══════════════════════════════════════════════════
+//  RIGHT PANEL — NODE CARD
+// ═══════════════════════════════════════════════════
+function renderCard(){
+  var el = document.getElementById('node-card');
+  if (!S.sel){
+    el.innerHTML = '<div class="nc-empty"><div class="nc-empty-ico">🌌</div>'+
+      '<div style="font-size:.58rem;letter-spacing:.07em">Select a star to begin</div>'+
+      '<div style="font-size:.5rem;color:rgba(200,168,75,.22);margin-top:.3rem;line-height:1.7">Larger stars = higher difficulty<br>Color marks the branch</div></div>';
+    return;
+  }
+  var node = nById(S.sel); if (!node) return;
+  var pts = S.pts[node.id] || 0;
+  var pct = node.gate ? 0 : Math.min(100, Math.round(pts/node.max*100));
+  var ns = nState(node.id);
+  var bColor = branchColor(node.br);
+  var lv = LV[node.l] || LV[0];
+  var met = prereqsDone(node);
+
+  var fillGrad = ns==='done'
+    ? 'linear-gradient(90deg,rgba(0,0,0,.3),'+bColor+')'
+    : 'linear-gradient(90deg,rgba(0,0,0,.3),rgba(200,168,75,.6))';
+
+  el.innerHTML =
+    '<div class="node-card">'+
+    '<div class="nc-top">'+
+      '<div class="nc-ico">'+node.ico+'</div>'+
+      '<div>'+
+        '<div class="nc-verb" style="color:'+bColor+'">'+node.verb+'</div>'+
+        '<div class="nc-name">'+node.name+
+          (S.archetype ? function(){
+            var role=nodeRole(node.id);
+            var label=role==='core'?'Core Path':role==='useful'?'Useful':'Optional';
+            var cls='role-'+role;
+            return ' <span class="role-badge '+cls+'">'+label+'</span>';
+          }() : '')+
+        '</div>'+
+        '<div class="nc-meta">'+lv.name+' · '+lv.meta+'</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="nc-branch-badge" style="background:'+bColor+'18;border-color:'+bColor+'50;color:'+bColor+'">'+
+      '<span style="width:5px;height:5px;border-radius:50%;background:'+bColor+';box-shadow:0 0 4px '+bColor+';display:inline-block"></span>'+
+      BR.find(function(b){return b.id===node.br;}).name+
+    '</div>'+
+    '<div class="nc-desc">'+node.desc+'</div>'+
+    (node.gate
+      ? '<div class="gate-status" style="background:'+bColor+'14;border:1px solid '+bColor+'40;color:'+(ns==='done'?bColor:'rgba(200,168,75,.5)')+'">'+
+          (ns==='done'?'✦ Gate Cleared — Constellation Aligned':'⬡ Gate Locked — master surrounding stars to unlock')+'</div>'
+      : '<div class="pts-block">'+
+          '<div class="pts-row"><span class="pts-lbl">Mastery Points</span>'+
+          '<span class="pts-val" style="color:'+(ns==='done'?bColor:ns==='prog'?'var(--gold)':'var(--t3)')+'">'+pts+'/'+node.max+'</span></div>'+
+          '<div class="pts-track"><div class="pts-fill" style="width:'+pct+'%;background:'+fillGrad+'"></div></div>'+
+          '<div class="pts-sub">'+pct+'% · '+(ns==='done'?'✦ Mastered':ns==='prog'?'In progress':met?'Ready to start':'Prerequisites not yet met')+'</div>'+
+        '</div>')+
+    '<div class="tips-label">Practice Tips</div>'+
+    '<div class="tips">'+node.tips.map(function(t){
+      return '<div class="tip"><span class="tip-arrow">→</span><span>'+t+'</span></div>';
+    }).join('')+'</div></div>';
+
+  document.getElementById('research-box').innerHTML =
+    '<strong>📚 '+lv.name+' — Research Basis</strong>'+node.ref;
+}
+
+// ═══════════════════════════════════════════════════
+//  HEADER
+// ═══════════════════════════════════════════════════
+function renderHeader(){
+  document.getElementById('h-xp').textContent = S.xp.toLocaleString();
+  var done = NODES.filter(function(n){ return !n.gate && nState(n.id)==='done'; }).length;
+  document.getElementById('h-sk').textContent = done;
+  document.getElementById('h-streak').textContent = S.streak;
+  document.getElementById('h-rank').textContent = getRank().name;
+  var topLv = 0;
+  for (var l=4; l>=0; l--){
+    if (NODES.filter(function(n){ return n.l===l && !n.gate; }).some(function(n){ return nState(n.id)==='done'; })){
+      topLv=l; break;
+    }
+  }
+  document.getElementById('h-level').textContent = LV[topLv].name;
+}
+
+function renderAchs(){
+  var el = document.getElementById('achs-list');
+  if (!S.achs.length){ el.innerHTML='<div class="ach-empty">Achievements appear here as you practice.</div>'; return; }
+  el.innerHTML = S.achs.slice(-5).reverse().map(function(a){
+    return '<div class="ach"><span class="ach-ico">'+a.ico+'</span><span class="ach-txt">'+a.txt+'</span><span class="ach-xp">+'+a.xp+'</span></div>';
+  }).join('');
+}
+
+// ── FEATURES ──────────────────────────────────────────────
+
+// FRETCRAFT — Archetype onboarding UI
+// renderArchGrid, selectArchetype, startWithArchetype
+// renderArchHUD, showArchPicker, highlightSongNodes
+
+// ── Node role for current archetype
+function nodeRole(nodeId){
+  if (!S.archetype) return 'core'; // all-rounder or not selected
+  var arch = ARCHETYPES.find(function(a){ return a.id===S.archetype; });
+  if (!arch) return 'core';
+  if (arch.core.length === 0) return 'core'; // all-rounder
+  if (arch.core.indexOf(nodeId) >= 0) return 'core';
+  if (arch.useful.indexOf(nodeId) >= 0) return 'useful';
+  return 'optional';
+}
+
+// ── Render archetype selection grid
+function renderArchGrid(){
+  var el = document.getElementById('arch-grid');
+  el.innerHTML = ARCHETYPES.map(function(arch){
+    var brDots = arch.coreBranches.map(function(brId){
+      var br = BR.find(function(b){ return b.id===brId; });
+      return '<div class="ac-dot" style="background:'+br.color+';box-shadow:0 0 4px '+br.color+'"></div>';
+    }).join('');
+    var songs = arch.songs.slice(0,3).map(function(s){
+      return '<div class="ac-song-item"><div class="ac-song-dot" style="color:'+arch.color+'"></div>'+s.title+' — '+s.artist+'</div>';
+    }).join('');
+    return '<div class="arch-card" id="ac-'+arch.id+'" onclick="selectArchetype(\''+arch.id+'\')"'+
+      ' style="border-color:'+arch.color+'44;color:'+arch.color+'">'+
+      '<div class="ac-ico">'+arch.ico+'</div>'+
+      '<div class="ac-name" style="color:'+arch.color+'">'+arch.name+'</div>'+
+      '<div class="ac-tagline" style="white-space:pre-line;color:var(--t3)">'+arch.tagline+'</div>'+
+      '<div class="ac-branches">'+brDots+'</div>'+
+      '<div class="ac-core-label" style="color:'+arch.color+'">Core branches</div>'+
+      '<div class="ac-songs" style="color:'+arch.color+'66">'+songs+'</div>'+
+      '</div>';
+  }).join('');
+}
+
+var _selectedArch = null;
+
+function selectArchetype(id){
+  _selectedArch = id;
+  document.querySelectorAll('.arch-card').forEach(function(el){ el.classList.remove('selected'); });
+  var el = document.getElementById('ac-'+id);
+  if (el){
+    var arch = ARCHETYPES.find(function(a){ return a.id===id; });
+    el.classList.add('selected');
+    el.style.color = arch.color;
+    el.style.borderColor = arch.color;
+    el.style.boxShadow = '0 0 20px '+arch.color+'44';
+  }
+  var btn = document.getElementById('arch-start');
+  btn.classList.add('ready');
+}
+
+function startWithArchetype(forceId){
+  var id = forceId || _selectedArch;
+  if (!id) return;
+  S.archetype = id;
+  S.archSongs = ARCHETYPES.find(function(a){ return a.id===id; }).songs;
+  document.getElementById('archetype-screen').style.display = 'none';
+  var app = document.getElementById('app');
+  app.style.display = 'flex';
+  app.style.height = '100%';
+  renderArchHUD();
+  renderLeft();
+  renderTree();
+  renderCard();
+  renderHeader();
+  renderAchs();
+  setTimeout(fitView, 80);
+}
+
+function renderArchHUD(){
+  var arch = ARCHETYPES.find(function(a){ return a.id===S.archetype; });
+  if (!arch) return;
+  document.getElementById('arch-hud-slot').innerHTML =
+    '<div class="arch-hud" onclick="showArchPicker()" title="Change archetype">'+
+    '<div class="ah-row">'+
+      '<div class="ah-ico">'+arch.ico+'</div>'+
+      '<div>'+
+        '<div class="ah-name" style="color:'+arch.color+'">'+arch.name+'</div>'+
+        '<div class="ah-tagline">'+arch.tagline.split('\n')[0]+'</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="ah-change">↻ Change archetype</div>'+
+    '</div>';
+}
+
+function showArchPicker(){
+  // Fade the screen back in for re-selection
+  var scr = document.getElementById('archetype-screen');
+  scr.style.display = 'flex';
+  // Re-highlight current selection
+  if (S.archetype) selectArchetype(S.archetype);
+}
+
+// ── Apply archetype node opacity in renderTree:
+//    core = full opacity (already default)
+//    useful = 80% opacity
+//    optional = 40% opacity (visible but clearly deprioritised)
+function archOpacity(nodeId){
+  var role = nodeRole(nodeId);
+  return role==='core' ? 1 : role==='useful' ? 0.72 : 0.38;
+}
+
+// ── SONG ANALYZER (stub — full implementation in features/song-analyzer.js) ──
+function processPDF(file) {
+  var el = document.getElementById('sa-result');
+  el.innerHTML = '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:.7rem;color:var(--t3);padding:.8rem;font-style:italic">Song analyzer coming in the next build session.</div>';
+}
+
+// ── BOOT ──────────────────────────────────────────────────
+
+// ── BOOT ──────────────────────────────────────────────────────────
+// Tab switching
+function switchTab(tab) {
+  ['tree','practice','analyze','wiki'].forEach(function(t) {
+    document.getElementById('view-'+t).classList.toggle('on', t===tab);
+    document.getElementById('tnav-'+t).classList.toggle('on', t===tab);
+  });
+}
+
+// Modal close on backdrop
+document.getElementById('modal-ovl').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Drag-and-drop on analyze tab
+var dz = document.getElementById('drop-zone');
+if (dz) {
+  dz.addEventListener('dragover', function(e) { e.preventDefault(); dz.classList.add('drag'); });
+  dz.addEventListener('dragleave', function() { dz.classList.remove('drag'); });
+  dz.addEventListener('drop', function(e) {
+    e.preventDefault(); dz.classList.remove('drag');
+    var f = e.dataTransfer.files[0];
+    if (f && f.type === 'application/pdf') processPDF(f);
+    else toast('Please drop a PDF file');
+  });
+  document.getElementById('pdf-input').addEventListener('change', function() {
+    if (this.files[0]) processPDF(this.files[0]);
+  });
+}
+
+// Wiki: show glossary terms from mastered nodes
+function renderWiki() {
+  var el = document.getElementById('wiki-content');
+  var glossary = {
+    'chromatic':     { term:'Chromatic Scale',     def:'The 12 notes of Western music arranged by half steps. Every fret on the guitar is one half step.' },
+    'intervals':     { term:'Interval',             def:'The distance between two notes, measured in half steps. Intervals are the building blocks of all scales and chords.' },
+    'major_sc_th':   { term:'Major Scale',          def:'A 7-note scale built from the pattern W-W-H-W-W-W-H (W=whole step, H=half step). The foundation of Western music.' },
+    'scale_degrees': { term:'Scale Degrees / Roman Numerals', def:'Numbering the notes of a scale 1–7. Roman numerals (I, IV, V) describe chord relationships that stay the same in every key.' },
+    'minor_scales':  { term:'Relative Minor',       def:'Every major key has a relative minor that uses the same notes. C major and A minor share all 7 notes.' },
+    'triad_theory':  { term:'Triad',                def:'A 3-note chord built by stacking thirds: root + 3rd + 5th. The basis of all chord harmony.' },
+    'chord_function':{ term:'Chord Function',       def:'The harmonic role of a chord: Tonic (home), Subdominant (leaving), Dominant (tension). The V chord resolves to I because of the leading tone.' },
+    'diatonic_harm': { term:'Diatonic Harmony',     def:'The 7 chords built from a major scale, each with a predictable quality and Roman numeral label.' },
+    'voice_leading': { term:'Voice Leading',        def:'Moving each chord voice by the smallest possible interval. The principle that makes harmonic motion feel smooth and inevitable.' },
+    'extended_harm': { term:'Extended Harmony',     def:'Chords built beyond the 7th: 9ths, 11ths, 13ths. The tritone substitution: replacing any dominant 7 with the chord a tritone away.' },
+    'pitch_match':   { term:'Audiation',            def:'Hearing music in your mind before or without playing it. Gordon (1997): the foundational skill of all musicianship.' },
+    'maj_min_qual':  { term:'Chord Quality',        def:'Whether a chord is major, minor, dominant, diminished, or augmented. The quality is defined by the 3rd.' },
+    'interval_rec_d':{ term:'Diatonic Intervals',   def:'The named intervals within an octave: minor 2nd through major 7th. Each has a unique sound recognizable by ear.' },
+    'chord_qual_rec':{ term:'Harmonic Ear',         def:'The ability to identify chord quality by ear alone, in real time, without an instrument.' },
+    'melodic_dict':  { term:'Melodic Dictation',    def:'Hearing a melody and reproducing it on guitar from memory. The gateway to playing by ear.' },
+    'harmonic_dict': { term:'Harmonic Dictation',   def:'Hearing a chord progression and identifying each chord and its Roman numeral function.' },
+    'modal_rec':     { term:'Modal Colour',         def:'The distinctive emotional quality of each mode, determined by its characteristic note: Dorian (natural 6), Lydian (#4), Mixolydian (b7).' },
+    'relative_pitch':{ term:'Relative Pitch',       def:'Identifying any note, interval, or chord by ear using a reference pitch. Entirely learnable — the professional standard.' },
+  };
+
+  var mastered = Object.keys(glossary).filter(function(id) {
+    return nState(id) === 'done';
+  });
+
+  if (!mastered.length) {
+    el.innerHTML = '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:.75rem;color:var(--t3);font-style:italic;line-height:1.8">Master Theory and Ear Training nodes to unlock glossary entries.<br>Start with <strong style="color:var(--gold)">HOLD: Posture & Hold</strong> and work upward.</div>';
+    return;
+  }
+
+  el.innerHTML = mastered.map(function(id) {
+    var g = glossary[id];
+    var nd = nById(id);
+    var bc = nd ? (BR.find(function(b){return b.id===nd.br;})||{color:'var(--gold)'}).color : 'var(--gold)';
+    return '<div style="margin-bottom:1rem;padding:.65rem .8rem;background:var(--bg4);border:1px solid var(--border);border-left:3px solid '+bc+';border-radius:.1rem">' +
+      '<div style="font-family:\'Cinzel\',Georgia,serif;font-size:.65rem;letter-spacing:.08em;color:'+bc+';margin-bottom:.25rem">'+g.term+'</div>' +
+      '<div style="font-family:\'Cormorant Garamond\',Georgia,serif;font-size:.72rem;color:var(--t2);line-height:1.7;font-weight:300">'+g.def+'</div>' +
+      '</div>';
+  }).join('');
+}
+
+// Override switchTab to render wiki on demand
+var _switchTab = switchTab;
+switchTab = function(tab) {
+  _switchTab(tab);
+  if (tab === 'wiki') renderWiki();
+};
+
+// Build background (stars/nebula) immediately
+buildBG();
+
+// Show archetype screen — tree renders after selection via startWithArchetype()
+renderArchGrid();
+
+window.addEventListener('resize', function() {
+  clearTimeout(window._rt);
+  window._rt = setTimeout(fitView, 200);
+});
+</script>
+</body>
+</html>
