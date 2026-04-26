@@ -150,17 +150,24 @@ function renderTree(){
     nHtml += '</g>';
   });
 
-  // Branch name labels at bottom of each cluster
-  var clusterY = {}; // lowest Y per branch (most negative = top of canvas = lowest y value)
-  // We want labels at the TOP of each branch cluster, which is the most negative Y value
-  // But actually labels work better at the BOTTOM of the foundation tier as anchor labels
-  // Let's put them near the root, offset by branch X
+  // Branch labels below root — icon, name, short description
   var branchX = {rhythm:-590, technique:-380, fretboard:-80, theory:130, eartraining:340, harmony:560, lead:780};
+  var branchDesc = {
+    rhythm:      'Pulse, timing & rhythmic feel',
+    technique:   'Fretting, picking & physical control',
+    fretboard:   'Notes, scales & neck navigation',
+    theory:      'Intervals, scales & chord construction',
+    eartraining: 'Listening & sound recognition',
+    harmony:     'Chords, voicings & progressions',
+    lead:        'Melody, improvisation & expression'
+  };
   Object.keys(branchX).forEach(function(brId){
     var brData = BR.find(function(b){ return b.id===brId; });
-    var bx = branchX[brId], by = 90; // below root node
-    nHtml += '<text x="'+bx+'" y="'+by+'" text-anchor="middle" font-size="9" fill="'+brData.color+'" opacity=".55" font-family="\'Segoe UI\',sans-serif" letter-spacing=".1em">'+brData.name.toUpperCase()+'</text>';
-    nHtml += '<line x1="'+bx+'" y1="74" x2="'+bx+'" y2="82" stroke="'+brData.color+'" stroke-width="1" opacity=".35"/>';
+    var bx = branchX[brId];
+    nHtml += '<line x1="'+bx+'" y1="60" x2="'+bx+'" y2="74" stroke="'+brData.color+'" stroke-width="1.5" opacity=".4"/>';
+    nHtml += '<text x="'+bx+'" y="88" text-anchor="middle" dominant-baseline="middle" font-size="20">'+brData.ico+'</text>';
+    nHtml += '<text x="'+bx+'" y="107" text-anchor="middle" font-size="13" fill="'+brData.color+'" opacity=".9" font-family="Cinzel,Georgia,serif" letter-spacing=".06em">'+brData.name+'</text>';
+    nHtml += '<text x="'+bx+'" y="120" text-anchor="middle" font-size="8" fill="'+brData.color+'" opacity=".5" font-family="\'Segoe UI\',sans-serif" letter-spacing=".04em">'+branchDesc[brId]+'</text>';
   });
 
   edgesEl.innerHTML = eHtml;

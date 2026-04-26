@@ -930,16 +930,10 @@ body { display: flex; flex-direction: column; }
     <div class="tab-view on" id="view-tree">
       <div class="tree-layout">
 
-        <!-- Left sidebar: archetype HUD + branch filters -->
+        <!-- Left sidebar: archetype HUD + song goals -->
         <div class="tree-sidebar">
           <div id="arch-hud-slot"></div>
           <div class="panel-sec">
-            <div class="sec-label">Branches</div>
-            <div id="branch-list"></div>
-          </div>
-          <div class="panel-sec">
-            <div class="sec-label">Next Up</div>
-            <div id="next-list"></div>
             <button class="log-btn" onclick="openModal()">✦ Log Practice</button>
           </div>
           <div id="song-goals-sec"></div>
@@ -1889,21 +1883,6 @@ var S = {
   inPreTest: false,
 };
 
-// Seed some demo progress so tree looks alive
-['root','pick_hold','open_str','q_strum','pw_chord','first_mel',
- 'e_strum','fret_bas','first_pos','tab_read','open_chd','blues_sc',
- 'chromatic','intervals','pitch_match','interval_rec_p'].forEach(function(id){
-  var n = NODES.find(function(x){ return x.id === id; });
-  if (n && !n.gate) { S.pts[id] = n.max; S.xp += n.max * 2; }
-});
-S.pts['chord_tr'] = 40; S.pts['alt_pick'] = 65; S.pts['pent_b1'] = 80;
-S.pts['barre'] = 35; S.pts['blues_voc'] = 55;
-S.xp += 360;
-S.achs = [
-  { ico:'⭐', txt:'HOLD: Posture mastered',      xp:100 },
-  { ico:'⭐', txt:'VOICE: Open Chords mastered', xp:160 },
-  { ico:'⭐', txt:'READ: Tab Reading mastered',  xp:80  },
-];
 
 function nById(id){ return NODES.find(function(n){ return n.id === id; }); }
 
@@ -2386,17 +2365,24 @@ function renderTree(){
     nHtml += '</g>';
   });
 
-  // Branch name labels at bottom of each cluster
-  var clusterY = {}; // lowest Y per branch (most negative = top of canvas = lowest y value)
-  // We want labels at the TOP of each branch cluster, which is the most negative Y value
-  // But actually labels work better at the BOTTOM of the foundation tier as anchor labels
-  // Let's put them near the root, offset by branch X
+  // Branch labels below root — icon, name, short description
   var branchX = {rhythm:-590, technique:-380, fretboard:-80, theory:130, eartraining:340, harmony:560, lead:780};
+  var branchDesc = {
+    rhythm:      'Pulse, timing & rhythmic feel',
+    technique:   'Fretting, picking & physical control',
+    fretboard:   'Notes, scales & neck navigation',
+    theory:      'Intervals, scales & chord construction',
+    eartraining: 'Listening & sound recognition',
+    harmony:     'Chords, voicings & progressions',
+    lead:        'Melody, improvisation & expression'
+  };
   Object.keys(branchX).forEach(function(brId){
     var brData = BR.find(function(b){ return b.id===brId; });
-    var bx = branchX[brId], by = 90; // below root node
-    nHtml += '<text x="'+bx+'" y="'+by+'" text-anchor="middle" font-size="9" fill="'+brData.color+'" opacity=".55" font-family="\'Segoe UI\',sans-serif" letter-spacing=".1em">'+brData.name.toUpperCase()+'</text>';
-    nHtml += '<line x1="'+bx+'" y1="74" x2="'+bx+'" y2="82" stroke="'+brData.color+'" stroke-width="1" opacity=".35"/>';
+    var bx = branchX[brId];
+    nHtml += '<line x1="'+bx+'" y1="60" x2="'+bx+'" y2="74" stroke="'+brData.color+'" stroke-width="1.5" opacity=".4"/>';
+    nHtml += '<text x="'+bx+'" y="88" text-anchor="middle" dominant-baseline="middle" font-size="20">'+brData.ico+'</text>';
+    nHtml += '<text x="'+bx+'" y="107" text-anchor="middle" font-size="13" fill="'+brData.color+'" opacity=".9" font-family="Cinzel,Georgia,serif" letter-spacing=".06em">'+brData.name+'</text>';
+    nHtml += '<text x="'+bx+'" y="120" text-anchor="middle" font-size="8" fill="'+brData.color+'" opacity=".5" font-family="\'Segoe UI\',sans-serif" letter-spacing=".04em">'+branchDesc[brId]+'</text>';
   });
 
   edgesEl.innerHTML = eHtml;
@@ -2410,74 +2396,31 @@ function renderTree(){
 //  LEFT PANEL
 // ═══════════════════════════════════════════════════
 function renderLeft(){
-  // Branches
-  var bl = document.getElementById('branch-list');
-  bl.innerHTML = BR.map(function(br){
-    var done = NODES.filter(function(n){ return n.br===br.id && nState(n.id)==='done'; }).length;
-    var total = NODES.filter(function(n){ return n.br===br.id; }).length;
-    var pct = total ? Math.round(done/total*100) : 0;
-    return '<div class="branch-item active">'+
-      '<div class="b-dot" style="background:'+br.color+';color:'+br.color+'"></div>'+
-      '<div style="flex:1;min-width:0">'+
-        '<div style="display:flex;justify-content:space-between">'+
-          '<span class="b-name">'+br.ico+' '+br.name+'</span>'+
-          '<span class="b-prog">'+done+'/'+total+'</span>'+
-        '</div>'+
-        '<div class="b-bar"><div class="b-fill" style="width:'+pct+'%;background:'+br.color+';box-shadow:0 0 4px '+br.color+'40"></div></div>'+
-      '</div></div>';
-  }).join('');
-
-  // Next up — one per branch, first reachable
-  var nl = document.getElementById('next-list');
-  var suggestions = [];
-  BR.forEach(function(br){
-    var brNodes = NODES.filter(function(n){ return n.br===br.id && !n.gate; })
-                       .sort(function(a,b){ return a.y - b.y; }); // sort by y (root=-0, higher=-more)
-    for (var i=0; i<brNodes.length; i++){
-      var n = brNodes[i]; var ns = nState(n.id);
-      if (ns==='prog'){ suggestions.push({n:n,br:br}); break; }
-      if (ns==='locked' && prereqsDone(n)){ suggestions.push({n:n,br:br}); break; }
-    }
-  });
-  nl.innerHTML = suggestions.map(function(s){
-    return '<div class="next-item" onclick="selNode(\''+s.n.id+'\')" style="border-color:'+s.br.color+'22">'+
-      '<div class="ni-ico">'+s.n.ico+'</div>'+
-      '<div class="ni-text">'+
-        '<div class="ni-verb" style="color:'+s.br.color+'">'+s.n.verb+'</div>'+
-        '<div class="ni-name" style="color:'+s.br.color+'dd">'+s.n.name+'</div>'+
-        '<div class="ni-branch">'+s.br.name+'</div>'+
-      '</div></div>';
-  }).join('');
-
-  // Song goals from archetype
-  var lp = document.getElementById('branch-list').closest('.tree-sidebar') || document.getElementById('branch-list').closest('.lp');
-  var oldSongs = lp.querySelector('#song-goals-sec');
-  if (oldSongs) oldSongs.remove();
+  var sg = document.getElementById('song-goals-sec');
+  if (!sg) return;
+  sg.innerHTML = '';
+  sg.className = '';
   var songs = S.archSongs || [];
-  if (songs.length){
-    var arch = ARCHETYPES.find(function(a){ return a.id===S.archetype; });
-    var ac = arch ? arch.color : 'var(--gold)';
-    var sg = document.createElement('div');
-    sg.id = 'song-goals-sec';
-    sg.className = 'panel-sec';
-    var sh = '<div class="sec-label">Song Goals</div>';
-    songs.forEach(function(song){
-      var met2 = song.nodes.filter(function(nid){ return nState(nid)==='done'; }).length;
-      var tot2 = song.nodes.length;
-      var pct2 = Math.round(met2/tot2*100);
-      sh += '<div style="margin-bottom:.45rem;cursor:pointer" onclick="highlightSongNodes('+JSON.stringify(song.nodes)+')" title="Highlight required skills on tree">'+
-        '<div style="font-size:.62rem;color:var(--t1);font-weight:600;margin-bottom:.08rem">'+song.title+'</div>'+
-        '<div style="font-size:.5rem;color:var(--t3);margin-bottom:.18rem">'+song.artist+'</div>'+
-        '<div style="display:flex;align-items:center;gap:.4rem">'+
-          '<div style="flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden">'+
-            '<div style="height:100%;width:'+pct2+'%;background:'+ac+';border-radius:2px;transition:width .4s"></div>'+
-          '</div>'+
-          '<span style="font-size:.5rem;color:'+ac+';font-weight:700;white-space:nowrap">'+pct2+'%</span>'+
-        '</div></div>';
-    });
-    sg.innerHTML = sh;
-    lp.appendChild(sg);
-  }
+  if (!songs.length) return;
+  var arch = ARCHETYPES.find(function(a){ return a.id===S.archetype; });
+  var ac = arch ? arch.color : 'var(--gold)';
+  var sh = '<div class="sec-label">Song Goals</div>';
+  songs.forEach(function(song){
+    var met2 = song.nodes.filter(function(nid){ return nState(nid)==='done'; }).length;
+    var tot2 = song.nodes.length;
+    var pct2 = Math.round(met2/tot2*100);
+    sh += '<div style="margin-bottom:.45rem;cursor:pointer" onclick="highlightSongNodes('+JSON.stringify(song.nodes)+')" title="Highlight required skills on tree">'+
+      '<div style="font-size:.62rem;color:var(--t1);font-weight:600;margin-bottom:.08rem">'+song.title+'</div>'+
+      '<div style="font-size:.5rem;color:var(--t3);margin-bottom:.18rem">'+song.artist+'</div>'+
+      '<div style="display:flex;align-items:center;gap:.4rem">'+
+        '<div style="flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden">'+
+          '<div style="height:100%;width:'+pct2+'%;background:'+ac+';border-radius:2px;transition:width .4s"></div>'+
+        '</div>'+
+        '<span style="font-size:.5rem;color:'+ac+';font-weight:700;white-space:nowrap">'+pct2+'%</span>'+
+      '</div></div>';
+  });
+  sg.className = 'panel-sec';
+  sg.innerHTML = sh;
 }
 
 // Highlight song required nodes on tree (adds a temporary pulse to those nodes)
