@@ -2173,6 +2173,45 @@ function fitView(){
   applyT();
 }
 
+function fitToActiveNodes(){
+  var vp = document.getElementById('vp');
+  var vw = vp.clientWidth, vh = vp.clientHeight;
+  if (!vw || !vh){ fitView(); return; }
+
+  var inProg = NODES.filter(function(n){ return !n.gate && nState(n.id) === 'prog'; });
+
+  var focusSet = {};
+  if (inProg.length){
+    inProg.forEach(function(n){
+      focusSet[n.id] = true;
+      (n.parents||[]).forEach(function(pid){ focusSet[pid] = true; });
+      NODES.forEach(function(c){
+        if ((c.parents||[]).indexOf(n.id) >= 0) focusSet[c.id] = true;
+      });
+    });
+  } else {
+    NODES.forEach(function(n){
+      if (n.l === 0 || n.id === 'g0') focusSet[n.id] = true;
+    });
+  }
+
+  var focus = NODES.filter(function(n){ return focusSet[n.id]; });
+  if (!focus.length){ fitView(); return; }
+
+  var xs = focus.map(function(n){ return n.x; });
+  var ys = focus.map(function(n){ return n.y; });
+  var pad = 140;
+  var minX = Math.min.apply(null,xs) - pad;
+  var maxX = Math.max.apply(null,xs) + pad;
+  var minY = Math.min.apply(null,ys) - pad;
+  var maxY = Math.max.apply(null,ys) + pad;
+
+  cam.sc = Math.min(vw/(maxX-minX), vh/(maxY-minY), 1.8);
+  cam.tx = vw/2 - ((minX+maxX)/2) * cam.sc;
+  cam.ty = vh/2 - ((minY+maxY)/2) * cam.sc;
+  applyT();
+}
+
 function zoom(f){
   var vp = document.getElementById('vp');
   var cx = vp.clientWidth/2, cy = vp.clientHeight/2;
@@ -2615,7 +2654,7 @@ function enterTree(){
   renderCard();
   renderHeader();
   renderAchs();
-  setTimeout(fitView, 80);
+  setTimeout(fitToActiveNodes, 80);
 }
 
 function renderArchHUD(){

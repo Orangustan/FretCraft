@@ -80,7 +80,7 @@ function enterTree(){
   renderCard();
   renderHeader();
   renderAchs();
-  setTimeout(fitView, 80);
+  setTimeout(fitToActiveNodes, 80);
 }
 
 function renderArchHUD(){
