@@ -31,5 +31,7 @@ export function useSkillTree(tree: SkillTree) {
     setSelectedNodeId((prev) => (prev === nodeId ? null : nodeId));
   };
 
-  return { nodeStatuses, playerSummary, handleNodeClick, selectedNodeId };
+  const resetSelection = () => setSelectedNodeId(null);
+
+  return { nodeStatuses, playerSummary, handleNodeClick, selectedNodeId, resetSelection };
 }
