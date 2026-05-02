@@ -2,3 +2,4 @@
 
 export * from "./schema/index";
 export * from "./engine/xpEngine";
+export * from "./engine/unlockEngine";
