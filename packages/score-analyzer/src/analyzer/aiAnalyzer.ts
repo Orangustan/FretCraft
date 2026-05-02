@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import type { ExtractedScore } from "../parser/pdfExtractor.js";
 
 // Mirror of @guitar-st/core types — structurally compatible for when core has a built dist
-type MusicElementType =
+export type MusicElementType =
   | "key"
   | "time-signature"
   | "technique"
@@ -12,7 +12,7 @@ type MusicElementType =
   | "dynamic"
   | "articulation";
 
-interface MusicElement {
+export interface MusicElement {
   type: MusicElementType;
   value: string;
   measure?: number;
