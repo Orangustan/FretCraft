@@ -1,0 +1,159 @@
+.score-uploader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-12) var(--space-6);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.score-uploader__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.score-uploader__subtitle {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-top: calc(-1 * var(--space-5));
+}
+
+.score-uploader__drop-zone {
+  width: 100%;
+  min-height: 280px;
+  border: 2px dashed var(--color-border-amber);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  cursor: pointer;
+  transition: background var(--transition-base), border-color var(--transition-base);
+  position: relative;
+}
+
+.score-uploader__drop-zone:hover,
+.score-uploader__drop-zone--drag-over {
+  background: var(--color-accent-amber-glow);
+  border-color: var(--color-accent-amber);
+}
+
+.score-uploader__drop-zone--has-file {
+  min-height: 160px;
+}
+
+.score-uploader__music-icon {
+  width: 64px;
+  height: 64px;
+  color: var(--color-accent-amber-dim);
+  transition: color var(--transition-base);
+}
+
+.score-uploader__drop-zone:hover .score-uploader__music-icon,
+.score-uploader__drop-zone--drag-over .score-uploader__music-icon {
+  color: var(--color-accent-amber);
+}
+
+.score-uploader__drop-label {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.score-uploader__drop-sublabel {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.score-uploader__file-info {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+.score-uploader__file-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--color-accent-amber);
+  flex-shrink: 0;
+}
+
+.score-uploader__file-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.score-uploader__file-name {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.score-uploader__file-size {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.score-uploader__file-clear {
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: var(--space-1);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  transition: color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.score-uploader__file-clear:hover {
+  color: var(--color-text-secondary);
+}
+
+.score-uploader__file-clear svg {
+  width: 16px;
+  height: 16px;
+}
+
+.score-uploader__error {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background: rgba(220, 61, 61, 0.12);
+  border: 1px solid rgba(220, 61, 61, 0.4);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #ff7070;
+  line-height: 1.5;
+}
+
+.score-uploader__actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.score-uploader__input {
+  display: none;
+}

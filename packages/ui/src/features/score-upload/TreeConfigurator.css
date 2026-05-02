@@ -1,0 +1,188 @@
+.tree-configurator {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tree-configurator__header {
+  padding: var(--space-6) var(--space-8);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.tree-configurator__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.tree-configurator__subtitle {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.tree-configurator__table-wrap {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-8);
+}
+
+.tree-configurator__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tree-configurator__table th {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-align: left;
+  padding: 0 var(--space-3) var(--space-3) var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tree-configurator__table th:last-child {
+  text-align: right;
+}
+
+.tree-configurator__row {
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--transition-fast);
+}
+
+.tree-configurator__row:hover {
+  background: var(--color-bg-elevated);
+}
+
+.tree-configurator__cell {
+  padding: var(--space-3);
+  vertical-align: middle;
+}
+
+.tree-configurator__cell:last-child {
+  text-align: right;
+}
+
+.tree-configurator__name-input,
+.tree-configurator__xp-input {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  padding: var(--space-1) var(--space-2);
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+  width: 100%;
+}
+
+.tree-configurator__name-input:focus,
+.tree-configurator__xp-input:focus {
+  outline: none;
+  border-color: var(--color-accent-amber);
+  background: var(--color-bg-elevated);
+}
+
+.tree-configurator__xp-input {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-accent-amber);
+  width: 72px;
+  text-align: right;
+}
+
+.tree-configurator__tier-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-elevated);
+}
+
+.tree-configurator__prereqs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tree-configurator__prereq-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 2px var(--space-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.tree-configurator__prereq-tag--none {
+  color: var(--color-text-muted);
+  font-style: italic;
+  border: none;
+  background: none;
+}
+
+.tree-configurator__delete-btn {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: var(--space-1);
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.tree-configurator__delete-btn:hover {
+  color: #ff7070;
+  border-color: rgba(220, 61, 61, 0.4);
+  background: rgba(220, 61, 61, 0.08);
+}
+
+.tree-configurator__delete-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tree-configurator__empty {
+  text-align: center;
+  padding: var(--space-12);
+  font-size: 14px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+}
+
+.tree-configurator__footer {
+  padding: var(--space-5) var(--space-8);
+  border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.tree-configurator__node-count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
