@@ -1,0 +1,114 @@
+.skill-node {
+  position: absolute;
+  width: 160px;
+  height: 80px;
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  background: var(--color-bg-elevated);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-2) var(--space-3);
+  transition: box-shadow var(--transition-base), border-color var(--transition-base);
+  user-select: none;
+}
+
+.skill-node:hover {
+  filter: brightness(1.1);
+}
+
+.skill-node--locked {
+  border-color: var(--color-locked);
+  opacity: 0.4;
+  cursor: default;
+}
+
+.skill-node--available {
+  border-color: var(--color-accent-amber);
+}
+
+.skill-node--in-progress {
+  border-color: var(--color-accent-blue);
+}
+
+.skill-node--completed {
+  border-color: var(--color-success);
+}
+
+.skill-node--selected {
+  box-shadow: 0 0 0 3px var(--color-accent-amber), 0 0 20px rgba(245, 166, 35, 0.35);
+}
+
+.skill-node__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+
+.skill-node__label {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.skill-node--locked .skill-node__label {
+  color: var(--color-text-muted);
+}
+
+.skill-node__tier {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-node__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.skill-node__xp {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-accent-amber-dim);
+  letter-spacing: 0.05em;
+}
+
+.skill-node--completed .skill-node__xp {
+  color: var(--color-success);
+}
+
+.skill-node__lock-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+
+.skill-node__lock-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-locked-text);
+}

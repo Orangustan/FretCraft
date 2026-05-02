@@ -1,6 +1,8 @@
 import type { SkillTree } from "../schema/SkillTree";
 import { ROCKER_TREE } from "./rocker/tree";
 
+export { ROCKER_TREE } from "./rocker/tree";
+
 export const ARCHETYPE_REGISTRY: Record<string, SkillTree> = {
   rocker: ROCKER_TREE,
 };
