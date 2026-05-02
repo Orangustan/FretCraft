@@ -2,3 +2,4 @@
 
 export * from "./schema/index";
 export * from "./engine/index";
+export * from "./archetypes/index";
