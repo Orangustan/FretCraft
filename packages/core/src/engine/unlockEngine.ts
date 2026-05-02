@@ -1,5 +1,6 @@
 import type { Player, NodeStatus } from "../schema/Player";
-import type { SkillNode, SkillTree } from "../schema/SkillTree";
+import type { SkillNode } from "../schema/SkillNode";
+import type { SkillTree } from "../schema/SkillTree";
 import { calculateLevel } from "./xpEngine";
 
 function isUnlockConditionSatisfied(node: SkillNode, player: Player): boolean {
@@ -16,6 +17,8 @@ function isUnlockConditionSatisfied(node: SkillNode, player: Player): boolean {
     }
     case "time-played":
       return true;
+    default:
+      return false;
   }
 }
 
