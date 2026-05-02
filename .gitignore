@@ -8,7 +8,7 @@ dist
 .env
 
 # Package results
-packages/audio-lab/results
+packages/audio-lab/results/*.log
 
 # Mac junk
 .DS_Store
