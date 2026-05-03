@@ -6,6 +6,46 @@
   max-width: 960px;
 }
 
+.practice-hub__branch-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: -16px;
+}
+
+.practice-hub__branch-tab {
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-sub);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.practice-hub__branch-tab--active {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-muted);
+}
+
+.practice-hub__branch-tab:not(:first-child) {
+  border-color: color-mix(in srgb, var(--branch-color) 40%, transparent);
+  color: color-mix(in srgb, var(--branch-color) 80%, var(--color-text-muted));
+}
+
+.practice-hub__branch-tab:not(:first-child):hover,
+.practice-hub__branch-tab:not(:first-child).practice-hub__branch-tab--active {
+  background: color-mix(in srgb, var(--branch-color) 18%, transparent);
+  border-color: var(--branch-color);
+  color: var(--branch-color);
+}
+
 .practice-hub__empty {
   padding: var(--space-8);
   text-align: center;

@@ -68,3 +68,56 @@
 .tier-test-banner__btn:hover {
   background: rgba(200, 118, 42, 0.22);
 }
+
+.branch-legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.branch-chip {
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-sub);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.branch-chip--all {
+  border-color: var(--color-border);
+}
+
+.branch-chip--all.branch-chip--active {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  border-color: var(--color-text-muted);
+}
+
+.branch-chip:not(.branch-chip--all) {
+  border-color: color-mix(in srgb, var(--branch-color) 40%, transparent);
+  color: color-mix(in srgb, var(--branch-color) 80%, var(--color-text-muted));
+}
+
+.branch-chip:not(.branch-chip--all):hover {
+  background: color-mix(in srgb, var(--branch-color) 15%, transparent);
+  border-color: var(--branch-color);
+  color: var(--branch-color);
+}
+
+.branch-chip:not(.branch-chip--all).branch-chip--active {
+  background: color-mix(in srgb, var(--branch-color) 20%, transparent);
+  border-color: var(--branch-color);
+  color: var(--branch-color);
+}

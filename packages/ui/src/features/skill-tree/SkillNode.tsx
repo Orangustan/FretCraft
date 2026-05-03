@@ -6,6 +6,7 @@ interface SkillNodeProps {
   status: NodeStatus;
   isSelected: boolean;
   onClick: () => void;
+  dimmed?: boolean;
 }
 
 function LockIcon() {
@@ -17,7 +18,7 @@ function LockIcon() {
   );
 }
 
-export function SkillNode({ node, status, isSelected, onClick }: SkillNodeProps) {
+export function SkillNode({ node, status, isSelected, onClick, dimmed = false }: SkillNodeProps) {
   const pos = node.position ?? { x: 0, y: 0 };
   const isLocked = status === 'locked';
 
@@ -25,6 +26,7 @@ export function SkillNode({ node, status, isSelected, onClick }: SkillNodeProps)
     'skill-node',
     `skill-node--${status}`,
     isSelected ? 'skill-node--selected' : '',
+    dimmed ? 'skill-node--dimmed' : '',
   ]
     .filter(Boolean)
     .join(' ');

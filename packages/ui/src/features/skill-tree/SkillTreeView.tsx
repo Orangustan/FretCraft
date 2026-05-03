@@ -1,8 +1,18 @@
 import { useState, useMemo } from 'react';
 import { ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE, VAIDEOLOGY_TREE, COUNTRY_TREE, ROCKER_TIER_TESTS, COUNTRY_TIER_TESTS } from '@guitar-st/core';
+import type { TierTestResult, BranchType } from '@guitar-st/core';
 
 const BUILT_IN_TREES = [ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE, VAIDEOLOGY_TREE, COUNTRY_TREE];
-import type { TierTestResult } from '@guitar-st/core';
+
+const BRANCHES: { id: BranchType; label: string; color: string }[] = [
+  { id: 'technique',        label: 'Technique',         color: '#f87171' },
+  { id: 'rhythm-timing',    label: 'Rhythm & Timing',   color: '#fb923c' },
+  { id: 'fretboard-theory', label: 'Fretboard & Theory',color: '#facc15' },
+  { id: 'harmony-chords',   label: 'Harmony & Chords',  color: '#4ade80' },
+  { id: 'lead-improvisation',label: 'Lead & Improv',    color: '#60a5fa' },
+  { id: 'music-theory',     label: 'Music Theory',      color: '#c084fc' },
+  { id: 'ear-training',     label: 'Ear Training',      color: '#f472b6' },
+];
 import { usePlayer } from '../../store/playerStore';
 import { useSkillTree } from './useSkillTree';
 import { SkillTreeCanvas } from './SkillTreeCanvas';
@@ -18,6 +28,7 @@ export default function SkillTreeView() {
   const { nodeStatuses, handleNodeClick, selectedNodeId, resetSelection } = useSkillTree(activeTree);
   const [practiceNodeId, setPracticeNodeId] = useState<string | null>(null);
   const [activeTierTestId, setActiveTierTestId] = useState<string | null>(null);
+  const [activeBranch, setActiveBranch] = useState<BranchType | 'all'>('all');
 
   const selectedNode = selectedNodeId
     ? activeTree.nodes.find((n) => n.id === selectedNodeId) ?? null
@@ -51,6 +62,7 @@ export default function SkillTreeView() {
   const handleTreeChange = (treeId: string) => {
     setActiveTree(treeId);
     resetSelection();
+    setActiveBranch('all');
   };
 
   const handlePracticeComplete = (earnedXp: number) => {
@@ -100,11 +112,31 @@ export default function SkillTreeView() {
         </div>
       )}
 
+      <div className="branch-legend">
+        <button
+          className={`branch-chip branch-chip--all${activeBranch === 'all' ? ' branch-chip--active' : ''}`}
+          onClick={() => setActiveBranch('all')}
+        >
+          All
+        </button>
+        {BRANCHES.map((b) => (
+          <button
+            key={b.id}
+            className={`branch-chip${activeBranch === b.id ? ' branch-chip--active' : ''}`}
+            style={{ '--branch-color': b.color } as React.CSSProperties}
+            onClick={() => setActiveBranch(activeBranch === b.id ? 'all' : b.id)}
+          >
+            {b.label}
+          </button>
+        ))}
+      </div>
+
       <SkillTreeCanvas
         tree={activeTree}
         nodeStatuses={nodeStatuses}
         selectedNodeId={selectedNodeId}
         onNodeClick={handleNodeClick}
+        activeBranch={activeBranch}
       />
       {selectedNode && (
         <NodeDetailPanel

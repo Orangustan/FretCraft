@@ -1,3 +1,12 @@
+export type BranchType =
+  | "technique"
+  | "rhythm-timing"
+  | "fretboard-theory"
+  | "harmony-chords"
+  | "lead-improvisation"
+  | "music-theory"
+  | "ear-training";
+
 export type MusicElementType =
   | "key"
   | "time-signature"
@@ -58,6 +67,7 @@ export interface SkillNode {
   label: string;
   archetype: string;
   tier: number;
+  branch?: BranchType;
   content: NodeContent;
   exercises?: Exercise[];
   xpReward: number;

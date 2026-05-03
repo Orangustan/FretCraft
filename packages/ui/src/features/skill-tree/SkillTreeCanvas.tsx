@@ -1,4 +1,4 @@
-import type { SkillTree, NodeStatus } from '@guitar-st/core';
+import type { SkillTree, NodeStatus, BranchType } from '@guitar-st/core';
 import { SkillNode } from './SkillNode';
 import './SkillTreeCanvas.css';
 
@@ -21,9 +21,10 @@ interface SkillTreeCanvasProps {
   nodeStatuses: Record<string, NodeStatus>;
   selectedNodeId: string | null;
   onNodeClick: (nodeId: string) => void;
+  activeBranch?: BranchType | 'all';
 }
 
-export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClick }: SkillTreeCanvasProps) {
+export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClick, activeBranch = 'all' }: SkillTreeCanvasProps) {
   const nodeMap = new Map(tree.nodes.map((n) => [n.id, n]));
 
   return (
@@ -99,15 +100,19 @@ export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClic
           )}
         </svg>
 
-        {tree.nodes.map((node) => (
-          <SkillNode
-            key={node.id}
-            node={node}
-            status={nodeStatuses[node.id] ?? 'locked'}
-            isSelected={selectedNodeId === node.id}
-            onClick={() => onNodeClick(node.id)}
-          />
-        ))}
+        {tree.nodes.map((node) => {
+          const dimmed = activeBranch !== 'all' && node.branch !== activeBranch;
+          return (
+            <SkillNode
+              key={node.id}
+              node={node}
+              status={nodeStatuses[node.id] ?? 'locked'}
+              isSelected={selectedNodeId === node.id}
+              onClick={() => onNodeClick(node.id)}
+              dimmed={dimmed}
+            />
+          );
+        })}
       </div>
     </div>
   );
