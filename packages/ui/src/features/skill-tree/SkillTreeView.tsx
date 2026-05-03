@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
-import { ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE, ROCKER_TIER_TESTS } from '@guitar-st/core';
+import { ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE, VAIDEOLOGY_TREE, COUNTRY_TREE, ROCKER_TIER_TESTS, COUNTRY_TIER_TESTS } from '@guitar-st/core';
 
-const BUILT_IN_TREES = [ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE];
+const BUILT_IN_TREES = [ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE, VAIDEOLOGY_TREE, COUNTRY_TREE];
 import type { TierTestResult } from '@guitar-st/core';
 import { usePlayer } from '../../store/playerStore';
 import { useSkillTree } from './useSkillTree';
@@ -11,7 +11,7 @@ import { PracticeSession } from '../practice/PracticeSession';
 import { TierTestModal } from '../practice/TierTestModal';
 import './SkillTreeView.css';
 
-const TIER_TEST_REGISTRY = [...ROCKER_TIER_TESTS];
+const TIER_TEST_REGISTRY = [...ROCKER_TIER_TESTS, ...COUNTRY_TIER_TESTS];
 
 export default function SkillTreeView() {
   const { activeTree, customTrees, setActiveTree, dispatch, player } = usePlayer();

@@ -1,0 +1,304 @@
+.wiki-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.wiki-view__header {
+  flex-shrink: 0;
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  background: var(--color-bg-secondary);
+}
+
+.wiki-view__kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-amber);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.wiki-view__tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--color-bg-surface);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  border: 1px solid var(--color-border);
+}
+
+.wiki-view__tab {
+  padding: 5px 16px;
+  background: none;
+  border: none;
+  border-radius: calc(var(--radius-md) - 2px);
+  font-family: var(--font-sub);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.wiki-view__tab--active {
+  background: var(--color-bg-elevated);
+  color: var(--color-accent-amber);
+}
+
+.wiki-view__content {
+  flex: 1;
+  overflow: auto;
+}
+
+/* ── Glossary ── */
+.wiki-glossary {
+  padding: var(--space-5) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 860px;
+}
+
+.wiki-glossary__controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  position: sticky;
+  top: 0;
+  background: var(--color-bg-primary);
+  padding-bottom: var(--space-3);
+  z-index: 10;
+}
+
+.wiki-glossary__search {
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text-primary);
+  font-size: 13px;
+  font-family: var(--font-sub);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.wiki-glossary__search:focus {
+  border-color: var(--color-accent-amber);
+}
+
+.wiki-glossary__search::placeholder {
+  color: var(--color-text-muted);
+}
+
+.wiki-glossary__cats {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.wiki-glossary__cat {
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.wiki-glossary__cat--active {
+  background: rgba(245, 166, 35, 0.1);
+  border-color: var(--color-accent-amber);
+  color: var(--color-accent-amber);
+}
+
+.wiki-glossary__empty {
+  color: var(--color-text-muted);
+  font-size: 13px;
+}
+
+.wiki-glossary__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.wiki-glossary__entry {
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.wiki-glossary__term {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.wiki-glossary__cat-tag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-accent-amber);
+  background: rgba(245, 166, 35, 0.1);
+  border: 1px solid rgba(245, 166, 35, 0.25);
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+}
+
+.wiki-glossary__def {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── Lore ── */
+.wiki-lore {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+.wiki-lore__nav {
+  width: 200px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}
+
+.wiki-lore__nav-btn {
+  padding: var(--space-2) var(--space-3);
+  background: none;
+  border: none;
+  border-radius: var(--radius-sm);
+  text-align: left;
+  font-family: var(--font-sub);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  line-height: 1.4;
+}
+
+.wiki-lore__nav-btn:hover {
+  color: var(--color-text-secondary);
+  background: var(--color-bg-surface);
+}
+
+.wiki-lore__nav-btn--active {
+  color: var(--color-accent-amber);
+  background: rgba(245, 166, 35, 0.08);
+}
+
+.wiki-lore__article {
+  flex: 1;
+  padding: var(--space-6) var(--space-7, 40px);
+  overflow-y: auto;
+  max-width: 680px;
+}
+
+.wiki-lore__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.wiki-lore__era {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent-amber);
+  margin: 0;
+}
+
+.wiki-lore__title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.wiki-lore__summary {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
+.wiki-lore__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-5);
+}
+
+.wiki-lore__meta-block {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wiki-lore__meta-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.wiki-lore__meta-value {
+  font-size: 13px;
+  color: var(--color-text-primary);
+  line-height: 1.5;
+}
+
+.wiki-lore__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.wiki-lore__para {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin: 0;
+}

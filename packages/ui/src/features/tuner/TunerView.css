@@ -1,0 +1,211 @@
+.tuner-view {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: var(--space-8, 48px) var(--space-4, 20px);
+  min-height: 100%;
+}
+
+.tuner-view__card {
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl, 16px);
+  padding: var(--space-7, 40px) var(--space-8, 48px);
+  width: min(480px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5, 28px);
+}
+
+.tuner-view__kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent-amber);
+  margin: 0;
+}
+
+/* ── Note display ── */
+.tuner-view__display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 96px;
+  justify-content: center;
+}
+
+.tuner-view__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 2px;
+  transition: color 0.08s;
+}
+
+.tuner-view__note--idle {
+  color: var(--color-text-muted);
+}
+
+.tuner-view__note-name {
+  font-family: var(--font-display);
+  font-size: 80px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tuner-view__note-octave {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+.tuner-view__cents {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 600;
+  transition: color 0.08s;
+  letter-spacing: 0.05em;
+}
+
+/* ── Needle track ── */
+.tuner-view__needle-track {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background: var(--color-bg-surface);
+  border-radius: 5px;
+  overflow: visible;
+}
+
+.tuner-view__needle-center {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  width: 2px;
+  height: 18px;
+  background: var(--color-border);
+  transform: translateX(-50%);
+  border-radius: 1px;
+}
+
+.tuner-view__needle {
+  position: absolute;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  transition: left 0.06s, background 0.08s;
+}
+
+.tuner-view__needle-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── Buttons ── */
+.tuner-view__connect-btn,
+.tuner-view__stop-btn {
+  padding: var(--space-3) var(--space-6, 32px);
+  border-radius: var(--radius-md);
+  border: none;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: filter var(--transition-base);
+}
+
+.tuner-view__connect-btn {
+  background: var(--color-accent-amber);
+  color: #000;
+}
+
+.tuner-view__connect-btn:hover {
+  filter: brightness(1.1);
+}
+
+.tuner-view__stop-btn {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+}
+
+.tuner-view__stop-btn:hover {
+  border-color: var(--color-text-secondary);
+  color: var(--color-text-primary);
+}
+
+.tuner-view__listening {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 0;
+  animation: pulse-opacity 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse-opacity {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Reference ── */
+.tuner-view__reference {
+  width: 100%;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tuner-view__reference-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.tuner-view__strings {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tuner-view__string-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.tuner-view__string-num {
+  color: var(--color-text-muted);
+  width: 14px;
+  text-align: right;
+  font-size: 10px;
+}
+
+.tuner-view__string-note {
+  color: var(--color-accent-amber);
+  font-weight: 700;
+  font-size: 14px;
+  width: 18px;
+}
+
+.tuner-view__string-full {
+  color: var(--color-text-secondary);
+  font-size: 11px;
+}
