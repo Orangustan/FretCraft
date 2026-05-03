@@ -1,0 +1,54 @@
+.badge-shelf {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.badge-shelf__badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: var(--space-2) var(--space-2);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--color-border);
+  background: var(--color-bg-surface);
+  min-width: 64px;
+  opacity: 0.3;
+  filter: grayscale(1);
+  transition: opacity 0.2s, filter 0.2s;
+  cursor: default;
+}
+
+.badge-shelf__badge--unlocked {
+  opacity: 1;
+  filter: none;
+  border-color: rgba(245, 166, 35, 0.4);
+  background: rgba(245, 166, 35, 0.05);
+}
+
+.badge-shelf__icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.badge-shelf__label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 60px;
+}
+
+.badge-shelf__badge--unlocked .badge-shelf__label {
+  color: var(--color-text-primary);
+}
+
+.badge-shelf__xp {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  color: var(--color-accent-amber);
+}

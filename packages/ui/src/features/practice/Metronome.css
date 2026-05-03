@@ -1,0 +1,131 @@
+.metronome {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  min-width: 220px;
+}
+
+.metronome__beats {
+  display: flex;
+  gap: var(--space-2);
+  justify-content: center;
+}
+
+.metronome__beat {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-bg-surface);
+  border: 1.5px solid var(--color-border);
+  transition: background 0.05s, box-shadow 0.05s;
+}
+
+.metronome__beat--downbeat {
+  width: 18px;
+  height: 18px;
+  border-color: var(--color-accent-amber);
+}
+
+.metronome__beat--active {
+  background: var(--color-accent-amber);
+  box-shadow: 0 0 8px rgba(245, 166, 35, 0.7);
+}
+
+.metronome__beat--downbeat.metronome__beat--active {
+  box-shadow: 0 0 14px rgba(245, 166, 35, 0.9);
+}
+
+.metronome__controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.metronome__bpm-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  justify-content: center;
+}
+
+.metronome__bpm-value {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  min-width: 3ch;
+  text-align: right;
+}
+
+.metronome__bpm-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  letter-spacing: 0.1em;
+}
+
+.metronome__slider {
+  width: 100%;
+  accent-color: var(--color-accent-amber);
+}
+
+.metronome__timesig-row {
+  display: flex;
+  gap: var(--space-1);
+  justify-content: center;
+}
+
+.metronome__timesig-btn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.metronome__timesig-btn:hover {
+  border-color: var(--color-accent-amber);
+  color: var(--color-text-primary);
+}
+
+.metronome__timesig-btn--active {
+  border-color: var(--color-accent-amber);
+  color: var(--color-accent-amber);
+  background: rgba(245, 166, 35, 0.1);
+}
+
+.metronome__toggle {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-accent-amber);
+  background: rgba(245, 166, 35, 0.15);
+  color: var(--color-accent-amber);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: background var(--transition-base);
+}
+
+.metronome__toggle:hover {
+  background: rgba(245, 166, 35, 0.25);
+}
+
+.metronome__toggle--stop {
+  border-color: var(--color-error, #e05c5c);
+  color: var(--color-error, #e05c5c);
+  background: rgba(224, 92, 92, 0.1);
+}
+
+.metronome__toggle--stop:hover {
+  background: rgba(224, 92, 92, 0.2);
+}

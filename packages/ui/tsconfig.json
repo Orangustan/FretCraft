@@ -6,7 +6,8 @@
     "baseUrl": ".",
     "paths": {
       "@/": ["./src/"],
-      "@guitar-st/core": ["../core/src/index.ts"]
+      "@guitar-st/core": ["../core/src/index.ts"],
+      "@guitar-st/audio-lab": ["../audio-lab/src/index.ts"]
     }
   },
   "include": ["src"]

@@ -1,57 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* Colors */
-  --color-bg-primary: #0f0f14;
-  --color-bg-secondary: #16161e;
-  --color-bg-surface: #1c1c26;
-  --color-bg-elevated: #22222e;
-
-  --color-accent-amber: #f5a623;
-  --color-accent-amber-dim: #c47e0f;
-  --color-accent-amber-glow: rgba(245, 166, 35, 0.2);
-
-  --color-accent-blue: #4a9eff;
-  --color-accent-blue-dim: #2f7bd6;
-  --color-accent-blue-glow: rgba(74, 158, 255, 0.2);
-
-  --color-success: #3ddc84;
-  --color-success-glow: rgba(61, 220, 132, 0.2);
-
-  --color-locked: #4a4a5a;
-  --color-locked-text: #6b6b80;
-
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-amber: rgba(245, 166, 35, 0.4);
-
-  --color-text-primary: #e8e8f0;
-  --color-text-secondary: #9090a8;
-  --color-text-muted: #5a5a70;
-
   /* Typography */
-  --font-display: 'Rajdhani', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-display: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
+  --font-sub:     'Cinzel', Georgia, serif;
+  --font-body:    'Cormorant Garamond', Garamond, Georgia, serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Background — luthier's workshop */
+  --color-bg-primary:   #0b0704;
+  --color-bg-secondary: #100c08;
+  --color-bg-surface:   #160f0a;
+  --color-bg-elevated:  #1e1510;
+  --color-bg-hover:     #261a12;
+
+  /* Gold — aged brass, not chrome */
+  --color-accent-gold:           #c8762a;
+  --color-accent-gold-bright:    #e8943a;
+  --color-accent-gold-highlight: #f5c060;
+  --color-accent-gold-deep:      #6b3d12;
+  --color-accent-gold-glow:      rgba(200, 118, 42, 0.25);
+
+  /* Verdigris — sharp accent */
+  --color-accent-verd:       #4a9e8e;
+  --color-accent-verd-bright: #5dbdaa;
+  --color-accent-verd-glow:  rgba(74, 158, 142, 0.2);
+
+  /* Parchment text */
+  --color-text-primary:   #f2e8d5;
+  --color-text-secondary: #c9b898;
+  --color-text-muted:     #7a6648;
+
+  /* Borders — gold-tinted */
+  --color-border:      rgba(200, 118, 42, 0.18);
+  --color-border-gold: rgba(200, 118, 42, 0.4);
+
+  /* Status */
+  --color-success:      #3ddc84;
+  --color-success-glow: rgba(61, 220, 132, 0.2);
+  --color-locked:       rgba(200, 118, 42, 0.12);
+  --color-locked-text:  #5a4030;
+
+  /* Branch colors */
+  --color-branch-rhythm:    #60a5fa;
+  --color-branch-technique: #34d399;
+  --color-branch-fretboard: #fbbf24;
+  --color-branch-harmony:   #f87171;
+  --color-branch-lead:      #c084fc;
+  --color-branch-gates:     #f0c060;
 
   /* Spacing */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
   --space-10: 40px;
   --space-12: 48px;
   --space-16: 64px;
 
   /* Border radius */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 10px;
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
 
   /* Transitions */
   --transition-fast: 120ms ease;
   --transition-base: 220ms ease;
+
+  /* Aliases for components still using old variable names */
+  --color-accent-amber:     var(--color-accent-gold-bright);
+  --color-accent-amber-dim: var(--color-accent-gold);
+  --color-accent-amber-glow: var(--color-accent-gold-glow);
+  --color-accent-blue:      var(--color-accent-verd);
+  --color-accent-blue-dim:  var(--color-accent-verd);
+  --color-accent-blue-glow: var(--color-accent-verd-glow);
+  --color-border-amber:     var(--color-border-gold);
 }
 
 *,
@@ -65,9 +91,9 @@
 html,
 body {
   background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
-  font-family: var(--font-display);
-  font-size: 16px;
-  line-height: 1.5;
+  color: var(--color-text-secondary);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }

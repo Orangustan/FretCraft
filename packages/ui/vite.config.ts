@@ -7,6 +7,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@guitar-st/core": path.resolve(__dirname, "../core/src/index.ts"),
+      "@guitar-st/audio-lab": path.resolve(__dirname, "../audio-lab/src/index.ts"),
       "@/": path.resolve(__dirname, "./src/"),
     },
   },

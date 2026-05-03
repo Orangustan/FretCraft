@@ -11,18 +11,68 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-6);
-  background-color: var(--color-bg-secondary);
+  background: linear-gradient(180deg, #0d0905 0%, rgba(11, 7, 4, 0.97) 100%);
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
+  position: relative;
+}
+
+/* Gold sheen engraved line */
+.app-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--color-accent-gold-deep) 20%,
+    var(--color-accent-gold) 50%,
+    var(--color-accent-gold-deep) 80%,
+    transparent 100%
+  );
+}
+
+/* Woodgrain texture overlay */
+.app-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    92deg,
+    transparent 0px, rgba(200, 118, 42, 0.012) 1px,
+    transparent 2px, rgba(200, 118, 42, 0.008) 3px,
+    transparent 5px
+  );
 }
 
 .app-header__title {
   font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--color-accent-amber);
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
+  background: linear-gradient(
+    160deg,
+    var(--color-accent-gold-deep) 0%,
+    var(--color-accent-gold) 35%,
+    var(--color-accent-gold-highlight) 55%,
+    var(--color-accent-gold-bright) 75%,
+    var(--color-accent-gold-deep) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: ember 4s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes ember {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(200, 118, 42, 0.3)); }
+  50%       { filter: drop-shadow(0 0 12px rgba(245, 192, 96, 0.5)) drop-shadow(0 0 24px rgba(200, 118, 42, 0.2)); }
 }
 
 .app-header__level {
@@ -30,15 +80,28 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-1) var(--space-3);
-  background-color: var(--color-bg-elevated);
-  border: 1px solid var(--color-border-amber);
+  background: linear-gradient(135deg, var(--color-bg-hover), var(--color-bg-elevated));
+  border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 12px;
+  font-family: var(--font-sub);
+  font-size: 11px;
   font-weight: 600;
-  color: var(--color-accent-amber);
-  letter-spacing: 0.06em;
+  color: var(--color-accent-gold);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.app-header__level::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 118, 42, 0.3), transparent);
 }
 
 /* Tab Navigation */
@@ -57,11 +120,11 @@
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
-  color: var(--color-text-secondary);
-  font-family: var(--font-display);
-  font-size: 14px;
+  color: var(--color-text-muted);
+  font-family: var(--font-sub);
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
   transition: color var(--transition-fast), border-color var(--transition-fast);
@@ -69,12 +132,12 @@
 }
 
 .app-nav__tab:hover {
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
 }
 
 .app-nav__tab--active {
-  color: var(--color-accent-amber);
-  border-bottom-color: var(--color-accent-amber);
+  color: var(--color-accent-gold);
+  border-bottom-color: var(--color-accent-gold);
 }
 
 .app-nav__tab svg {
@@ -102,8 +165,8 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: var(--color-accent-amber);
-  animation: pulse-amber 1.2s ease-in-out infinite;
+  background-color: var(--color-accent-gold);
+  animation: pulse-gold 1.2s ease-in-out infinite;
 }
 
 .app-loading__dot:nth-child(2) {
@@ -115,7 +178,7 @@
   animation-delay: 0.4s;
 }
 
-@keyframes pulse-amber {
+@keyframes pulse-gold {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(0.75); }
+  50%       { opacity: 0.3; transform: scale(0.75); }
 }

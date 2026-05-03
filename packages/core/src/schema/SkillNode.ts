@@ -44,10 +44,12 @@ export interface Exercise {
   bpm?: number;
   durationSeconds?: number;
   xpValue: number;
+  /** MIDI note name for pitch-detection exercises, e.g. "A4" or "E2" */
+  targetNote?: string;
 }
 
 export interface UnlockCondition {
-  type: "xp-threshold" | "node-complete" | "time-played";
+  type: "xp-threshold" | "node-complete" | "time-played" | "tier-test-passed";
   value: number;
 }
 

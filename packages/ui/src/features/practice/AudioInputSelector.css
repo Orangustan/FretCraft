@@ -1,0 +1,103 @@
+.audio-input-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  min-width: 220px;
+}
+
+.audio-input-selector__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.audio-input-selector__title {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.audio-input-selector__status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.audio-input-selector__status--on {
+  color: var(--color-success);
+  border-color: var(--color-success);
+  background: rgba(80, 200, 120, 0.08);
+}
+
+.audio-input-selector__select {
+  font-size: 12px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  width: 100%;
+}
+
+.audio-input-selector__vu {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-bg-surface);
+  overflow: hidden;
+}
+
+.audio-input-selector__vu-bar {
+  height: 100%;
+  background: var(--color-success);
+  border-radius: 4px;
+  transition: width 0.05s linear;
+}
+
+.audio-input-selector__error {
+  font-size: 11px;
+  color: var(--color-error, #e05c5c);
+  margin: 0;
+}
+
+.audio-input-selector__btn {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-accent-amber);
+  background: rgba(245, 166, 35, 0.12);
+  color: var(--color-accent-amber);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.audio-input-selector__btn:hover:not(:disabled) {
+  background: rgba(245, 166, 35, 0.22);
+}
+
+.audio-input-selector__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.audio-input-selector__btn--disconnect {
+  border-color: var(--color-error, #e05c5c);
+  color: var(--color-error, #e05c5c);
+  background: rgba(224, 92, 92, 0.08);
+}
+
+.audio-input-selector__btn--disconnect:hover {
+  background: rgba(224, 92, 92, 0.18);
+}

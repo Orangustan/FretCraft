@@ -15,4 +15,6 @@ export interface Player {
   xpTotal: number;
   level: number;
   nodeProgress: Record<string, NodeProgress>;
+  passedTierTests: string[];
+  unlockedAchievements: string[];
 }

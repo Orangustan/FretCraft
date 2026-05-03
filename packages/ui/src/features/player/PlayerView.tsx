@@ -1,7 +1,10 @@
 import { useState, useRef } from 'react';
-import { ROCKER_TREE, xpProgressInLevel, calculateLevel } from '@guitar-st/core';
+import { ARCHETYPE_REGISTRY, xpProgressInLevel, calculateLevel } from '@guitar-st/core';
 import { usePlayer } from '../../store/playerStore';
 import { ProgressBar, Card, Button } from '../../shared/components';
+import { BadgeShelf } from './BadgeShelf';
+import { SessionHeatmap } from './SessionHeatmap';
+import { ShareCard } from './ShareCard';
 import './PlayerView.css';
 
 export default function PlayerView() {
@@ -14,7 +17,7 @@ export default function PlayerView() {
   const xpProgress = xpProgressInLevel(player.xp);
   const xpPct = Math.round(xpProgress.percent * 100);
 
-  const allTrees = [ROCKER_TREE, ...customTrees];
+  const allTrees = [...Object.values(ARCHETYPE_REGISTRY), ...customTrees];
   const progressTrees = allTrees.filter((tree) =>
     tree.nodes.some((n) => n.id in player.nodeProgress),
   );
@@ -49,6 +52,15 @@ export default function PlayerView() {
         <div className="player-level">{level}</div>
         <ProgressBar value={xpPct} label="XP to Next Level" />
         <p className="player-xp-total">Total XP: {player.xp}</p>
+        <ShareCard
+          playerName={player.name}
+          xp={player.xp}
+          unlockedAchievements={player.unlockedAchievements}
+          treeProgress={progressTrees.map((t) => {
+            const completed = t.nodes.filter((n) => player.nodeProgress[n.id] === 'complete').length;
+            return { name: t.name, pct: t.nodes.length > 0 ? Math.round((completed / t.nodes.length) * 100) : 0 };
+          })}
+        />
       </section>
 
       {/* Section 2: Tree Progress Cards */}
@@ -76,7 +88,19 @@ export default function PlayerView() {
         </section>
       )}
 
-      {/* Section 3: My Custom Trees */}
+      {/* Section 3: Practice Activity */}
+      <section className="practice-activity-section">
+        <h2 className="section-label">Practice Activity</h2>
+        <SessionHeatmap sessions={player.practiceSessions} />
+      </section>
+
+      {/* Section 4: Achievements */}
+      <section className="achievements-section">
+        <h2 className="section-label">Achievements</h2>
+        <BadgeShelf unlockedIds={player.unlockedAchievements} />
+      </section>
+
+      {/* Section 4: My Custom Trees */}
       <section className="my-custom-trees">
         <h2 className="section-label">My Custom Trees</h2>
         {customTrees.length === 0 ? (

@@ -16,6 +16,8 @@ function adaptPlayer(storePlayer: StorePlayer): CorePlayer {
     xpTotal: storePlayer.xp,
     level: storePlayer.level,
     nodeProgress,
+    passedTierTests: storePlayer.passedTierTests ?? [],
+    unlockedAchievements: storePlayer.unlockedAchievements ?? [],
   };
 }
 

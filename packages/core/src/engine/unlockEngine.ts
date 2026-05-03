@@ -81,11 +81,24 @@ export function canUnlockNode(
   return { canUnlock: true };
 }
 
-export function completeNode(nodeId: string, tree: SkillTree, player: Player): Player {
+function accuracyMultiplier(accuracy: number): number {
+  if (accuracy >= 0.9) return 1.0;
+  if (accuracy >= 0.7) return 0.75;
+  if (accuracy >= 0.5) return 0.5;
+  return 0.25;
+}
+
+export function completeNode(
+  nodeId: string,
+  tree: SkillTree,
+  player: Player,
+  accuracyScore = 1.0
+): Player {
   const node = tree.nodes.find((n) => n.id === nodeId);
   if (!node) throw new Error(`Node '${nodeId}' not found in tree`);
 
-  const newXpTotal = player.xpTotal + node.xpReward;
+  const earnedXp = Math.round(node.xpReward * accuracyMultiplier(accuracyScore));
+  const newXpTotal = player.xpTotal + earnedXp;
   return {
     ...player,
     xpTotal: newXpTotal,
@@ -95,7 +108,7 @@ export function completeNode(nodeId: string, tree: SkillTree, player: Player): P
       [nodeId]: {
         nodeId,
         status: "completed",
-        xpEarned: node.xpReward,
+        xpEarned: earnedXp,
         completedExercises: player.nodeProgress[nodeId]?.completedExercises ?? [],
         completedAt: new Date().toISOString(),
       },

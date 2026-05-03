@@ -9,5 +9,8 @@
   "devDependencies": {
     "typescript": "^5.0.0",
     "vitest": "^1.0.0"
+  },
+  "dependencies": {
+    "pitchy": "^4.1.0"
   }
 }

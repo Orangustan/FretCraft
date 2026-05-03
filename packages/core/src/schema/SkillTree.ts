@@ -1,6 +1,6 @@
 import type { SkillNode } from "./SkillNode";
 
-export type ArchetypeId = "rocker" | "jazz" | "custom";
+export type ArchetypeId = "rocker" | "jazz" | "blues" | "classical" | "metal" | "custom";
 
 export interface SkillTree {
   id: string;

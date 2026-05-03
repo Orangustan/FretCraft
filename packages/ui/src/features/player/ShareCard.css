@@ -1,0 +1,196 @@
+.share-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+/* The card is rendered at a fixed size for html2canvas, then hidden visually */
+.share-card {
+  width: 400px;
+  background: #11111b;
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: absolute;
+  left: -9999px;
+  pointer-events: none;
+}
+
+.share-card__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.share-card__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(245, 166, 35, 0.2);
+  border: 2px solid rgba(245, 166, 35, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f5a623;
+  flex-shrink: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.share-card__identity {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.share-card__name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #cdd6f4;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.share-card__level {
+  font-size: 11px;
+  color: #f5a623;
+  margin: 0;
+  font-family: monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.share-card__xp-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.share-card__xp-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f5a623;
+  font-family: monospace;
+}
+
+.share-card__xp-label {
+  font-size: 9px;
+  color: #6c7086;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-family: monospace;
+}
+
+.share-card__xp-bar-wrap {
+  height: 4px;
+  border-radius: 2px;
+  background: #1e1e2e;
+  overflow: hidden;
+}
+
+.share-card__xp-bar {
+  height: 100%;
+  background: #f5a623;
+  border-radius: 2px;
+}
+
+.share-card__trees {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.share-card__tree-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.share-card__tree-name {
+  font-size: 11px;
+  color: #a6adc8;
+  width: 100px;
+  flex-shrink: 0;
+  font-family: monospace;
+}
+
+.share-card__tree-bar-track {
+  flex: 1;
+  height: 5px;
+  border-radius: 3px;
+  background: #1e1e2e;
+  overflow: hidden;
+}
+
+.share-card__tree-bar {
+  height: 100%;
+  background: rgba(245, 166, 35, 0.65);
+  border-radius: 3px;
+}
+
+.share-card__tree-pct {
+  font-size: 10px;
+  color: #6c7086;
+  width: 30px;
+  text-align: right;
+  font-family: monospace;
+}
+
+.share-card__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.share-card__badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(245, 166, 35, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  font-size: 11px;
+}
+
+.share-card__badge-label {
+  color: #a6adc8;
+  font-family: monospace;
+}
+
+.share-card__footer {
+  font-size: 10px;
+  color: #45475a;
+  text-align: right;
+  font-family: monospace;
+  letter-spacing: 0.05em;
+}
+
+/* The visible share button */
+.share-card__btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-accent-amber);
+  background: rgba(245, 166, 35, 0.12);
+  color: var(--color-accent-amber);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-display);
+  cursor: pointer;
+  transition: background var(--transition-base);
+}
+
+.share-card__btn:hover:not(:disabled) {
+  background: rgba(245, 166, 35, 0.22);
+}
+
+.share-card__btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
