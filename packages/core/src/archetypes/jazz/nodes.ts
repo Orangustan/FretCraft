@@ -10,7 +10,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 100,
     prerequisites: [],
-    position: { x: 250, y: 200 },
+    position: { x: 250, y: 800 },
     unlockCondition: undefined,
     content: {
       description:
@@ -68,7 +68,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "rhythm-timing",
     xpReward: 100,
     prerequisites: [],
-    position: { x: 600, y: 200 },
+    position: { x: 600, y: 800 },
     unlockCondition: undefined,
     content: {
       description:
@@ -120,7 +120,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 120,
     prerequisites: ["jazz-001"],
-    position: { x: 100, y: 400 },
+    position: { x: 100, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -178,7 +178,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "fretboard-theory",
     xpReward: 120,
     prerequisites: ["jazz-001"],
-    position: { x: 350, y: 400 },
+    position: { x: 350, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -237,7 +237,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "fretboard-theory",
     xpReward: 120,
     prerequisites: ["jazz-002"],
-    position: { x: 600, y: 400 },
+    position: { x: 600, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -289,7 +289,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "music-theory",
     xpReward: 150,
     prerequisites: ["jazz-003"],
-    position: { x: 50, y: 600 },
+    position: { x: 50, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -347,7 +347,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 150,
     prerequisites: ["jazz-003", "jazz-004"],
-    position: { x: 300, y: 600 },
+    position: { x: 300, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -398,7 +398,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 150,
     prerequisites: ["jazz-005"],
-    position: { x: 550, y: 600 },
+    position: { x: 550, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -457,7 +457,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "music-theory",
     xpReward: 150,
     prerequisites: ["jazz-005"],
-    position: { x: 750, y: 600 },
+    position: { x: 750, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -516,7 +516,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 200,
     prerequisites: ["jazz-006", "jazz-007"],
-    position: { x: 150, y: 800 },
+    position: { x: 150, y: 200 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -575,7 +575,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 200,
     prerequisites: ["jazz-007", "jazz-008"],
-    position: { x: 450, y: 800 },
+    position: { x: 450, y: 200 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -626,7 +626,7 @@ export const JAZZ_NODES: SkillNode[] = [
     branch: "music-theory",
     xpReward: 200,
     prerequisites: ["jazz-009"],
-    position: { x: 700, y: 800 },
+    position: { x: 700, y: 200 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:

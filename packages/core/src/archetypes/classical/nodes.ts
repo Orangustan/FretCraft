@@ -11,7 +11,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 100,
     prerequisites: [],
     unlockCondition: undefined,
-    position: { x: 250, y: 200 },
+    position: { x: 250, y: 800 },
     content: {
       description:
         "The rest stroke, known in Spanish as apoyando, is the foundational right-hand technique of classical guitar. The finger plucks through the string and comes to rest on the adjacent string, producing a full, projecting tone essential for melodic lines and scale passages.",
@@ -70,7 +70,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 100,
     prerequisites: [],
     unlockCondition: undefined,
-    position: { x: 600, y: 200 },
+    position: { x: 600, y: 800 },
     content: {
       description:
         "The free stroke, tirando in Spanish, is the versatile right-hand technique where the finger plucks the string and moves freely through the air without touching the adjacent string. It is the default stroke for arpeggios, chords, and any passage where multiple strings must ring simultaneously.",
@@ -129,7 +129,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 120,
     prerequisites: ["classical-001", "classical-002"],
     unlockCondition: undefined,
-    position: { x: 100, y: 400 },
+    position: { x: 100, y: 600 },
     content: {
       description:
         "Arpeggio technique is the cornerstone of classical guitar accompaniment and texture. Training the right-hand fingers to move independently in the p-i-m-a pattern and its variations develops the coordination needed for virtually every classical study and piece.",
@@ -189,7 +189,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 120,
     prerequisites: ["classical-001"],
     unlockCondition: undefined,
-    position: { x: 350, y: 400 },
+    position: { x: 350, y: 600 },
     content: {
       description:
         "Classical guitar left-hand technique demands a specific hand frame: arched fingers, thumb centered behind the neck, and the wrist slightly dropped. This posture allows all four fingers to reach each fret with maximum efficiency and minimal tension, forming the biomechanical foundation for advanced playing.",
@@ -248,7 +248,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 120,
     prerequisites: ["classical-002"],
     unlockCondition: undefined,
-    position: { x: 600, y: 400 },
+    position: { x: 600, y: 600 },
     content: {
       description:
         "Playing scales in a fixed left-hand position develops fretboard fluency, right-hand alternation, and the muscle memory required for reading and performing classical pieces. Single-position major and natural minor scales are the essential vocabulary of classical guitar technique.",
@@ -310,7 +310,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 150,
     prerequisites: ["classical-003"],
     unlockCondition: undefined,
-    position: { x: 50, y: 600 },
+    position: { x: 50, y: 400 },
     content: {
       description:
         "Tremolo is the p-a-m-i pattern repeated at speed so that the melody note (played by a, m, i in succession) sounds continuous while the thumb provides a bass accompaniment. It is the defining technique of pieces like Tárrega's Recuerdos de la Alhambra and demands extreme right-hand evenness.",
@@ -370,7 +370,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 150,
     prerequisites: ["classical-004", "classical-005"],
     unlockCondition: undefined,
-    position: { x: 300, y: 600 },
+    position: { x: 300, y: 400 },
     content: {
       description:
         "The CAGED system maps the five open chord shapes (C, A, G, E, D) across the entire guitar neck, revealing how any chord, scale, or arpeggio can be played in multiple positions. Understanding CAGED unlocks fretboard geography and is invaluable for both classical reading and improvisation.",
@@ -430,7 +430,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 150,
     prerequisites: ["classical-005"],
     unlockCondition: undefined,
-    position: { x: 550, y: 600 },
+    position: { x: 550, y: 400 },
     content: {
       description:
         "Sight reading is the ability to perform music directly from notation without prior practice. For classical guitarists, reading standard notation (not tablature) is a professional expectation and dramatically expands the repertoire available to study and perform.",
@@ -490,7 +490,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 150,
     prerequisites: ["classical-003"],
     unlockCondition: undefined,
-    position: { x: 750, y: 600 },
+    position: { x: 750, y: 400 },
     content: {
       description:
         "Dynamic control—the ability to play at different volumes with intention and consistency—is what separates musical performance from mechanical execution. Classical guitar notation regularly calls for pp (pianissimo) through ff (fortissimo) as well as gradual crescendos and diminuendos.",
@@ -551,7 +551,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 200,
     prerequisites: ["classical-006", "classical-007"],
     unlockCondition: undefined,
-    position: { x: 150, y: 800 },
+    position: { x: 150, y: 200 },
     content: {
       description:
         "J.S. Bach's lute and keyboard works, transcribed for classical guitar, are the gold standard of counterpoint study and polyphonic playing. Pieces like the Bourée in E minor and Prelude in D minor demand that the guitarist voice multiple independent lines simultaneously—bass, inner voices, and melody.",
@@ -611,7 +611,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 200,
     prerequisites: ["classical-007", "classical-008"],
     unlockCondition: undefined,
-    position: { x: 450, y: 800 },
+    position: { x: 450, y: 200 },
     content: {
       description:
         "Francisco Tárrega's miniatures—Lágrima, Adelita, and Malaguena—represent the quintessential Romantic classical guitar repertoire and showcase cantabile melody, expressive rubato, and the idiomatic Spanish guitar sound. These pieces unite technical precision with deep musical feeling.",
@@ -671,7 +671,7 @@ export const CLASSICAL_NODES: SkillNode[] = [
     xpReward: 200,
     prerequisites: ["classical-009"],
     unlockCondition: undefined,
-    position: { x: 700, y: 800 },
+    position: { x: 700, y: 200 },
     content: {
       description:
         "Preparing for concert performance demands skills that go beyond playing notes correctly: secure memorization, physical stage presence, and managing the physiological effects of performance anxiety. Every professional classical guitarist develops a systematic pre-performance routine.",

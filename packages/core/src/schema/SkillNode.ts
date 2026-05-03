@@ -29,6 +29,7 @@ export interface MediaRef {
   url: string;
   label: string;
   timestampSeconds?: number;
+  hand?: "left" | "right";
 }
 
 export interface ExternalLink {

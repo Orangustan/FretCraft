@@ -1,5 +1,15 @@
-import type { SkillNode as SkillNodeType, NodeStatus } from '@guitar-st/core';
+import type { SkillNode as SkillNodeType, NodeStatus, BranchType } from '@guitar-st/core';
 import './SkillNode.css';
+
+const BRANCH_COLORS: Partial<Record<BranchType, string>> = {
+  'technique':          '#f87171',
+  'rhythm-timing':      '#fb923c',
+  'fretboard-theory':   '#facc15',
+  'harmony-chords':     '#4ade80',
+  'lead-improvisation': '#60a5fa',
+  'music-theory':       '#c084fc',
+  'ear-training':       '#f472b6',
+};
 
 interface SkillNodeProps {
   node: SkillNodeType;
@@ -21,6 +31,7 @@ function LockIcon() {
 export function SkillNode({ node, status, isSelected, onClick, dimmed = false }: SkillNodeProps) {
   const pos = node.position ?? { x: 0, y: 0 };
   const isLocked = status === 'locked';
+  const branchColor = node.branch ? (BRANCH_COLORS[node.branch] ?? 'var(--color-accent-gold-deep)') : 'var(--color-accent-gold-deep)';
 
   const classNames = [
     'skill-node',
@@ -34,18 +45,23 @@ export function SkillNode({ node, status, isSelected, onClick, dimmed = false }:
   return (
     <div
       className={classNames}
-      style={{ left: pos.x, top: pos.y }}
+      style={{ left: pos.x, top: pos.y, '--branch-color': branchColor } as React.CSSProperties}
       onClick={isLocked ? undefined : onClick}
       role="button"
       tabIndex={isLocked ? -1 : 0}
       onKeyDown={(e) => { if (!isLocked && (e.key === 'Enter' || e.key === ' ')) onClick(); }}
     >
+      <div className="skill-node__accent" />
+
       <div className="skill-node__header">
         <span className="skill-node__label">{node.label}</span>
         <span className="skill-node__tier">{node.tier}</span>
       </div>
 
       <div className="skill-node__footer">
+        {node.branch && (
+          <span className="skill-node__branch-dot" />
+        )}
         <span className="skill-node__xp">+{node.xpReward} XP</span>
       </div>
 

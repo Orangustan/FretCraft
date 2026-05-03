@@ -48,11 +48,11 @@ export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClic
 
               const from = {
                 cx: prereq.position.x + NODE_WIDTH / 2,
-                cy: prereq.position.y + NODE_HEIGHT,
+                cy: prereq.position.y,
               };
               const to = {
                 cx: node.position.x + NODE_WIDTH / 2,
-                cy: node.position.y,
+                cy: node.position.y + NODE_HEIGHT,
               };
 
               const prereqStatus = nodeStatuses[prereqId] ?? 'locked';

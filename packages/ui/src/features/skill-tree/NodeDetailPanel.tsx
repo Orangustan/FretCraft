@@ -9,6 +9,55 @@ function youtubeEmbedUrl(url: string): string | null {
   return `https://www.youtube.com/embed/${ytMatch[1]}`;
 }
 
+function isPlaceholderUrl(url: string): boolean {
+  return url === '#placeholder' || url.startsWith('#placeholder');
+}
+
+function HandBadge({ hand }: { hand: 'left' | 'right' }) {
+  return (
+    <span className={`node-detail-panel__hand-badge node-detail-panel__hand-badge--${hand}`}>
+      {hand === 'left' ? 'LEFT HAND' : 'RIGHT HAND'}
+    </span>
+  );
+}
+
+function VideoPlaceholder({ label, hand }: { label: string; hand?: 'left' | 'right' }) {
+  return (
+    <div className="node-detail-panel__media-item">
+      <div className="node-detail-panel__media-label-row">
+        <p className="node-detail-panel__media-label">{label}</p>
+        {hand && <HandBadge hand={hand} />}
+      </div>
+      <div className="node-detail-panel__video-placeholder">
+        <svg viewBox="0 0 48 48" fill="none" className="node-detail-panel__video-placeholder-icon">
+          <circle cx="24" cy="24" r="20" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M20 17l12 7-12 7V17z" fill="currentColor" opacity="0.6" />
+        </svg>
+        <span className="node-detail-panel__placeholder-text">Video coming soon</span>
+      </div>
+    </div>
+  );
+}
+
+function PdfPlaceholder({ label }: { label: string }) {
+  return (
+    <div className="node-detail-panel__media-item">
+      <p className="node-detail-panel__media-label">{label}</p>
+      <div className="node-detail-panel__pdf-placeholder">
+        <svg viewBox="0 0 48 48" fill="none" className="node-detail-panel__pdf-placeholder-icon">
+          <rect x="10" y="4" width="28" height="40" rx="3" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M16 14h16M16 20h16M16 26h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M28 32h8v8l-4-2-4 2V32z" fill="currentColor" opacity="0.5" />
+        </svg>
+        <div className="node-detail-panel__pdf-placeholder-text">
+          <span className="node-detail-panel__placeholder-title">Sheet Music</span>
+          <span className="node-detail-panel__placeholder-text">PDF notation coming soon</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MediaSection({ refs }: { refs: MediaRef[] }) {
   if (!refs || refs.length === 0) return null;
   return (
@@ -17,11 +66,17 @@ function MediaSection({ refs }: { refs: MediaRef[] }) {
       <div className="node-detail-panel__media">
         {refs.map((ref, i) => {
           if (ref.type === 'video') {
+            if (isPlaceholderUrl(ref.url)) {
+              return <VideoPlaceholder key={i} label={ref.label} hand={ref.hand} />;
+            }
             const embedUrl = youtubeEmbedUrl(ref.url);
             if (embedUrl) {
               return (
                 <div key={i} className="node-detail-panel__media-item">
-                  <p className="node-detail-panel__media-label">{ref.label}</p>
+                  <div className="node-detail-panel__media-label-row">
+                    <p className="node-detail-panel__media-label">{ref.label}</p>
+                    {ref.hand && <HandBadge hand={ref.hand} />}
+                  </div>
                   <div className="node-detail-panel__video-wrap">
                     <iframe
                       src={embedUrl}
@@ -36,6 +91,19 @@ function MediaSection({ refs }: { refs: MediaRef[] }) {
             }
             return (
               <a key={i} href={ref.url} target="_blank" rel="noopener noreferrer" className="node-detail-panel__media-link">
+                {ref.label}
+              </a>
+            );
+          }
+          if (ref.type === 'pdf-excerpt') {
+            if (isPlaceholderUrl(ref.url)) {
+              return <PdfPlaceholder key={i} label={ref.label} />;
+            }
+            return (
+              <a key={i} href={ref.url} target="_blank" rel="noopener noreferrer" className="node-detail-panel__media-link node-detail-panel__media-link--pdf">
+                <svg viewBox="0 0 16 16" fill="currentColor" className="node-detail-panel__pdf-icon">
+                  <path d="M4 0h8a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H4z"/>
+                </svg>
                 {ref.label}
               </a>
             );

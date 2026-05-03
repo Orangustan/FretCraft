@@ -10,7 +10,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "fretboard-theory",
     xpReward: 90,
     prerequisites: [],
-    position: { x: 250, y: 200 },
+    position: { x: 250, y: 800 },
     unlockCondition: undefined,
     content: {
       description:
@@ -68,7 +68,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "music-theory",
     xpReward: 80,
     prerequisites: [],
-    position: { x: 600, y: 200 },
+    position: { x: 600, y: 800 },
     unlockCondition: undefined,
     content: {
       description:
@@ -127,7 +127,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "music-theory",
     xpReward: 110,
     prerequisites: ["vai-001"],
-    position: { x: 100, y: 400 },
+    position: { x: 100, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -185,7 +185,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "ear-training",
     xpReward: 100,
     prerequisites: ["vai-001"],
-    position: { x: 350, y: 400 },
+    position: { x: 350, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -242,7 +242,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "ear-training",
     xpReward: 110,
     prerequisites: ["vai-003", "vai-004"],
-    position: { x: 580, y: 400 },
+    position: { x: 580, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -301,7 +301,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "music-theory",
     xpReward: 110,
     prerequisites: ["vai-003"],
-    position: { x: 780, y: 400 },
+    position: { x: 780, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -360,7 +360,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 140,
     prerequisites: ["vai-003", "vai-005", "vai-006"],
-    position: { x: 80, y: 600 },
+    position: { x: 80, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -419,7 +419,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "fretboard-theory",
     xpReward: 130,
     prerequisites: ["vai-005", "vai-006"],
-    position: { x: 310, y: 600 },
+    position: { x: 310, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -480,7 +480,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "rhythm-timing",
     xpReward: 130,
     prerequisites: ["vai-002"],
-    position: { x: 560, y: 600 },
+    position: { x: 560, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -540,7 +540,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "music-theory",
     xpReward: 120,
     prerequisites: ["vai-009", "vai-006"],
-    position: { x: 790, y: 600 },
+    position: { x: 790, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -601,7 +601,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "music-theory",
     xpReward: 190,
     prerequisites: ["vai-007", "vai-008"],
-    position: { x: 250, y: 800 },
+    position: { x: 250, y: 200 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -661,7 +661,7 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 200,
     prerequisites: ["vai-011", "vai-010"],
-    position: { x: 600, y: 800 },
+    position: { x: 600, y: 200 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:

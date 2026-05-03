@@ -10,7 +10,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 100,
     prerequisites: [],
-    position: { x: 250, y: 200 },
+    position: { x: 250, y: 800 },
     unlockCondition: undefined,
     content: {
       description:
@@ -69,7 +69,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "fretboard-theory",
     xpReward: 100,
     prerequisites: [],
-    position: { x: 600, y: 200 },
+    position: { x: 600, y: 800 },
     unlockCondition: undefined,
     content: {
       description:
@@ -129,7 +129,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 120,
     prerequisites: ["blues-001", "blues-002"],
-    position: { x: 100, y: 400 },
+    position: { x: 100, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -187,7 +187,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "rhythm-timing",
     xpReward: 120,
     prerequisites: ["blues-001"],
-    position: { x: 350, y: 400 },
+    position: { x: 350, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -246,7 +246,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 120,
     prerequisites: ["blues-002"],
-    position: { x: 600, y: 400 },
+    position: { x: 600, y: 600 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -306,7 +306,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 150,
     prerequisites: ["blues-003", "blues-004"],
-    position: { x: 50, y: 600 },
+    position: { x: 50, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -365,7 +365,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 150,
     prerequisites: ["blues-004"],
-    position: { x: 300, y: 600 },
+    position: { x: 300, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -424,7 +424,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 150,
     prerequisites: ["blues-003", "blues-005"],
-    position: { x: 550, y: 600 },
+    position: { x: 550, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -474,7 +474,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 150,
     prerequisites: ["blues-005"],
-    position: { x: 750, y: 600 },
+    position: { x: 750, y: 400 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -534,7 +534,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 200,
     prerequisites: ["blues-006", "blues-007"],
-    position: { x: 150, y: 800 },
+    position: { x: 150, y: 200 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -585,7 +585,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "rhythm-timing",
     xpReward: 200,
     prerequisites: ["blues-007", "blues-008"],
-    position: { x: 450, y: 800 },
+    position: { x: 450, y: 200 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:
@@ -644,7 +644,7 @@ export const BLUES_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 200,
     prerequisites: ["blues-009"],
-    position: { x: 700, y: 800 },
+    position: { x: 700, y: 200 },
     unlockCondition: { type: "node-complete", value: 1 },
     content: {
       description:

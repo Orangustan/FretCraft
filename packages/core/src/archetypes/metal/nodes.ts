@@ -11,7 +11,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 100,
     prerequisites: [],
     unlockCondition: undefined,
-    position: { x: 250, y: 200 },
+    position: { x: 250, y: 800 },
     content: {
       description:
         "Alternate picking—strict down-up-down-up motion with the pick—is the mechanical engine behind metal lead playing and fast single-note riffs. Ingraining perfect alternate picking mechanics from the start prevents the inefficient habits that cap speed and accuracy at higher tempos.",
@@ -70,7 +70,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 100,
     prerequisites: [],
     unlockCondition: undefined,
-    position: { x: 600, y: 200 },
+    position: { x: 600, y: 800 },
     content: {
       description:
         "Palm muting is the backbone of heavy metal rhythm guitar: resting the picking-hand heel on the strings near the bridge creates a tight, percussive chug that defines the genre's aggression and power. Controlled mute pressure combined with downstroke or alternate picking delivers everything from thrash chugs to djent-style articulation.",
@@ -130,7 +130,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 120,
     prerequisites: ["metal-001", "metal-002"],
     unlockCondition: undefined,
-    position: { x: 100, y: 400 },
+    position: { x: 100, y: 600 },
     content: {
       description:
         "Drop tunings—most commonly Drop D (D-A-D-G-B-e) and Drop B—lower the lowest string by a whole step, enabling one-finger power chords and heavier open-string riffs that are central to modern metal. The altered tuning expands the guitar's range downward while simplifying certain rhythm patterns.",
@@ -189,7 +189,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 120,
     prerequisites: ["metal-002"],
     unlockCondition: undefined,
-    position: { x: 350, y: 400 },
+    position: { x: 350, y: 600 },
     content: {
       description:
         "Gallop rhythms (long-short-short or short-short-long 16th note groupings) and thrash-metal palm-muted 16th-note patterns are the rhythmic signatures of classic heavy metal and thrash. Mastering these patterns at speed requires both picking-hand endurance and locked-in timing.",
@@ -250,7 +250,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 120,
     prerequisites: ["metal-001"],
     unlockCondition: undefined,
-    position: { x: 600, y: 400 },
+    position: { x: 600, y: 600 },
     content: {
       description:
         "The minor pentatonic and natural minor scales are the primary melodic vocabulary for classic and modern metal leads. From Black Sabbath to Pantera, the dark, aggressive sound of minor-based soloing defines the genre's lead guitar identity.",
@@ -311,7 +311,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 150,
     prerequisites: ["metal-003", "metal-004"],
     unlockCondition: undefined,
-    position: { x: 50, y: 600 },
+    position: { x: 50, y: 400 },
     content: {
       description:
         "Sweep picking uses a single continuous pick stroke across multiple strings while the fretting hand plays an arpeggio shape, producing fast cascading runs that are a hallmark of melodic death metal and neo-classical metal. Synchronizing both hands precisely is the core challenge.",
@@ -371,7 +371,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 150,
     prerequisites: ["metal-004", "metal-005"],
     unlockCondition: undefined,
-    position: { x: 300, y: 600 },
+    position: { x: 300, y: 400 },
     content: {
       description:
         "Two-hand tapping allows the picking hand to fret notes on the guitar neck, dramatically extending the range of arpeggios, runs, and intervallic leaps possible in a single phrase. Popularized by Eddie Van Halen, it became fundamental to 80s shred and modern metal technique.",
@@ -431,7 +431,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 150,
     prerequisites: ["metal-005"],
     unlockCondition: undefined,
-    position: { x: 550, y: 600 },
+    position: { x: 550, y: 400 },
     content: {
       description:
         "The diminished scale and harmonic minor scale bring a dark, neo-classical tension to metal lead playing. The raised 7th degree of the harmonic minor creates an exotic, almost Middle-Eastern flavor, while the symmetrical diminished scale offers a uniquely unstable and dissonant color for aggressive solos.",
@@ -491,7 +491,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 150,
     prerequisites: ["metal-001"],
     unlockCondition: undefined,
-    position: { x: 750, y: 600 },
+    position: { x: 750, y: 400 },
     content: {
       description:
         "Tremolo picking—sustaining a single note with maximum-speed alternate picking—creates the rapid, blurred pitch effect central to black metal and death metal. It transforms a single note into a wall of sound and demands peak picking-hand speed, endurance, and consistency.",
@@ -552,7 +552,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 200,
     prerequisites: ["metal-006", "metal-007"],
     unlockCondition: undefined,
-    position: { x: 150, y: 800 },
+    position: { x: 150, y: 200 },
     content: {
       description:
         "Systematic speed building with a metronome is the scientifically proven method for increasing picking and fretting speed while preserving accuracy. Practicing too fast too soon embeds tension and errors; methodical tempo scaling rewires muscle memory cleanly and permanently.",
@@ -612,7 +612,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 200,
     prerequisites: ["metal-007", "metal-008"],
     unlockCondition: undefined,
-    position: { x: 450, y: 800 },
+    position: { x: 450, y: 200 },
     content: {
       description:
         "Neo-classical metal phrasing combines Baroque-influenced sequenced runs, sweep arpeggios, and harmonic minor scale vocabulary into an aggressive, guitar-based classical style pioneered by Yngwie Malmsteen. The approach demands technical fluency, a deep scale vocabulary, and the musical sense to make fast passages feel dramatic rather than merely fast.",
@@ -673,7 +673,7 @@ export const METAL_NODES: SkillNode[] = [
     xpReward: 200,
     prerequisites: ["metal-009"],
     unlockCondition: undefined,
-    position: { x: 700, y: 800 },
+    position: { x: 700, y: 200 },
     content: {
       description:
         "Composing metal guitar parts requires understanding song structure (intro, verse, pre-chorus, chorus, breakdown, solo, outro), riff development, and how to create tension and release across a full track. A well-composed metal song feels inevitable—each section flows naturally into the next.",

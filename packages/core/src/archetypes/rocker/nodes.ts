@@ -10,7 +10,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 100,
     prerequisites: [],
-    position: { x: 250, y: 200 },
+    position: { x: 250, y: 800 },
     content: {
       description:
         "Master the essential open chord shapes—E, A, D, G, C, and Am—that form the backbone of rock guitar. Clean fretting and smooth transitions between these chords unlock virtually every beginner rock song.",
@@ -56,7 +56,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 80,
     prerequisites: [],
-    position: { x: 600, y: 200 },
+    position: { x: 600, y: 800 },
     content: {
       description:
         "Develop a controlled, consistent picking hand using alternate picking and strong downstrokes—the twin foundations of rock rhythm and lead playing. Good pick technique dramatically improves speed, tone, and endurance.",
@@ -68,6 +68,19 @@ export const ROCKER_NODES: SkillNode[] = [
       tips: [
         "Hold the pick at roughly a 45-degree angle to the string for a brighter attack",
         "Keep wrist motion small and economical—big arm swings waste energy",
+      ],
+      mediaRefs: [
+        {
+          type: "pdf-excerpt",
+          url: "#placeholder",
+          label: "Pick Technique — Notation Sheet",
+        },
+        {
+          type: "video",
+          url: "https://youtu.be/WmQWTOimz4k?si=vs3PHEf0p2-oQY00",
+          label: "Alternate Picking Fundamentals",
+          hand: "right",
+        },
       ],
     },
     exercises: [
@@ -103,7 +116,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 120,
     prerequisites: ["rocker-001"],
-    position: { x: 100, y: 400 },
+    position: { x: 100, y: 600 },
     content: {
       description:
         "Power chords—root plus fifth, with no third—are the defining sound of rock and punk guitar. Their distortion-friendly two-note structure lets you move effortlessly up and down the neck while maintaining a thick, aggressive tone.",
@@ -149,7 +162,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 100,
     prerequisites: ["rocker-002"],
-    position: { x: 600, y: 400 },
+    position: { x: 600, y: 600 },
     content: {
       description:
         "Palm muting—resting the picking-hand edge lightly on the strings near the bridge—creates the chunky, percussive chug central to rock and metal rhythm guitar. Controlling mute pressure lets you blend muted and open tones for dynamic riffs.",
@@ -195,7 +208,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "fretboard-theory",
     xpReward: 150,
     prerequisites: ["rocker-001"],
-    position: { x: 350, y: 400 },
+    position: { x: 350, y: 600 },
     content: {
       description:
         "The minor pentatonic scale is the single most important scale in rock guitar, underpinning solos from the blues to heavy metal. Learning its five positions across the neck gives you a melodic vocabulary you can use immediately.",
@@ -241,7 +254,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 200,
     prerequisites: ["rocker-003"],
-    position: { x: 50, y: 600 },
+    position: { x: 50, y: 400 },
     content: {
       description:
         "Barre chords—where the index finger frets all six strings across one fret—unlock every major and minor chord shape across the entire neck. They demand more left-hand strength than open chords but give you complete harmonic freedom.",
@@ -287,7 +300,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "rhythm-timing",
     xpReward: 175,
     prerequisites: ["rocker-003", "rocker-004"],
-    position: { x: 300, y: 600 },
+    position: { x: 300, y: 400 },
     content: {
       description:
         "Rock rhythm guitar is built on repeating patterns that lock in with the drummer and drive the song forward. Combining power chords and palm muting into structured rhythmic figures is what separates 'playing chords' from 'playing rock.",
@@ -334,7 +347,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 200,
     prerequisites: ["rocker-005"],
-    position: { x: 530, y: 600 },
+    position: { x: 530, y: 400 },
     content: {
       description:
         "Pentatonic lead playing turns scale knowledge into expressive melodies by adding phrasing, rhythm, and dynamics to raw note choices. Learning to 'speak' the pentatonic scale—not just run it—is the core skill of classic rock soloing.",
@@ -381,7 +394,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 150,
     prerequisites: ["rocker-005"],
-    position: { x: 700, y: 600 },
+    position: { x: 700, y: 400 },
     content: {
       description:
         "String bending—pushing or pulling a fretted string sideways to raise its pitch—is the most emotionally expressive technique in rock guitar. A well-executed whole-step bend sounds vocal and human; a sloppy one sounds out of tune.",
@@ -427,7 +440,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 225,
     prerequisites: ["rocker-009"],
-    position: { x: 700, y: 800 },
+    position: { x: 700, y: 200 },
     content: {
       description:
         "Vibrato—rhythmic pitch oscillation applied to a sustained note—is the signature of a mature rock guitarist and is as personal as a fingerprint. Combined with maximizing sustain, it transforms single notes into singing, emotive statements.",
@@ -474,7 +487,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 300,
     prerequisites: ["rocker-008", "rocker-004"],
-    position: { x: 400, y: 800 },
+    position: { x: 400, y: 200 },
     content: {
       description:
         "Sweep picking—dragging the pick across multiple strings in one fluid motion while fretting an arpeggio shape—produces the fast, cascading runs associated with neo-classical and progressive rock. It requires both hands to synchronize precisely.",
@@ -521,7 +534,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "lead-improvisation",
     xpReward: 350,
     prerequisites: ["rocker-008", "rocker-007"],
-    position: { x: 570, y: 800 },
+    position: { x: 570, y: 200 },
     content: {
       description:
         "Improvisation is the ability to compose melodic and rhythmic ideas in real time over a chord progression, drawing on all your technical and theoretical knowledge at once. A fluent improviser listens as much as they play, shaping phrases around what the band is doing.",
