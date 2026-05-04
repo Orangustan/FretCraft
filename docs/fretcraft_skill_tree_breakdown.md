@@ -49,6 +49,32 @@ Tab uses six lines (one per string, low E at bottom) with fret numbers. As Vai n
 
 ---
 
+#### `rocker-002` — Pick Technique ◆ (cluster node)
+**Branch:** `technique` · **XP:** 0 (earned through children) · **Prerequisites:** none
+
+Decomposes the picking hand into six progressive sub-nodes spanning grip, individual stroke mechanics, tone perception, coordination, and synthesis. Total cluster XP: 175.
+
+| Child Node | Branch | XP | Intra-cluster Prerequisites |
+|---|---|---|---|
+| `rocker-002-1` Pick Grip & Setup | `technique` | 20 | — (root) |
+| `rocker-002-2` Downstroke Mechanics | `technique` | 30 | `rocker-002-1` |
+| `rocker-002-3` Upstroke Control | `technique` | 25 | `rocker-002-1` |
+| `rocker-002-4` Pick Angle & Tone | `ear-training` | 25 | `rocker-002-1` |
+| `rocker-002-5` Alternate Picking Coordination | `technique` | 35 | `rocker-002-2`, `rocker-002-3` |
+| `rocker-002-6` Wrist Economy & String Crossing | `technique` | 40 | `rocker-002-4`, `rocker-002-5` |
+
+**Dependency graph within the cluster:**
+```
+rocker-002-1 ──► rocker-002-2 ──┐
+             │                   ├──► rocker-002-5 ──┐
+             ├──► rocker-002-3 ──┘                   ├──► rocker-002-6
+             └──► rocker-002-4 ───────────────────────┘
+```
+
+`rocker-002-6` (Wrist Economy & String Crossing) is the experiential culmination: it requires both the tone awareness from `rocker-002-4` and the coordination from `rocker-002-5`, synthesizing all prior work into practical cross-string playing.
+
+---
+
 ### Tier 2 — Parallel Development
 
 Four theory-and-ear nodes plus the Open Chords practical cluster. The academic and experiential tracks diverge here and must both be followed — prerequisites enforce this. The Open Chords cluster (a prototype of the sub-node architecture) runs parallel to the theory nodes, applying what vai-001 and vai-002 taught in a hands-on context.

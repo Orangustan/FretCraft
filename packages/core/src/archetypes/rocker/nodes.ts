@@ -54,20 +54,22 @@ export const ROCKER_NODES: SkillNode[] = [
     archetype: "rocker",
     tier: 1,
     branch: "technique",
-    xpReward: 80,
+    xpReward: 0,
     prerequisites: [],
     position: { x: 600, y: 800 },
+    childNodeIds: [
+      "rocker-002-1",
+      "rocker-002-2",
+      "rocker-002-3",
+      "rocker-002-4",
+      "rocker-002-5",
+      "rocker-002-6",
+    ],
     content: {
       description:
         "Develop a controlled, consistent picking hand using alternate picking and strong downstrokes—the twin foundations of rock rhythm and lead playing. Good pick technique dramatically improves speed, tone, and endurance.",
       objectives: [
-        "Alternate-pick a single string at 80 bpm with even attack on every note",
-        "Execute eight consecutive downstrokes per measure cleanly at 100 bpm",
-        "Maintain relaxed grip and wrist motion throughout a two-minute exercise",
-      ],
-      tips: [
-        "Hold the pick at roughly a 45-degree angle to the string for a brighter attack",
-        "Keep wrist motion small and economical—big arm swings waste energy",
+        "Complete all 6 sub-nodes to unlock Pick Technique",
       ],
       mediaRefs: [
         {
@@ -83,27 +85,298 @@ export const ROCKER_NODES: SkillNode[] = [
         },
       ],
     },
+    musicElements: [
+      { type: "technique", value: "alternate picking" },
+      { type: "technique", value: "downstroke" },
+    ],
+  },
+
+  // ── Pick Technique cluster (rocker-002 children) ─────────────────────────
+  {
+    id: "rocker-002-1",
+    label: "Pick Grip & Setup",
+    archetype: "rocker",
+    tier: 1,
+    branch: "technique",
+    xpReward: 20,
+    prerequisites: [],
+    parentNodeId: "rocker-002",
+    position: { x: 600, y: 1000 },
+    content: {
+      description:
+        "Every aspect of pick technique—downstrokes, upstrokes, tone—depends on holding the pick correctly before anything else. Three variables define the grip: how much pick to expose (3–4mm past the fingertip is the standard starting point), grip firmness (enough tension to keep the pick from spinning, loose enough that the hand stays relaxed), and the angle at which the pick face meets the string. The index-and-thumb standard grip is the most widely taught starting point; variations exist but introduce extra variables before the fundamentals are in place.",
+      objectives: [
+        "Demonstrate the standard pick grip — pick doesn't spin or slip during strumming, hand is visibly relaxed",
+        "Name the three grip variables (pick exposure, firmness, string contact angle) and describe what changing each one does",
+      ],
+      tips: [
+        "Expose only 3–4mm of pick past the fingertip — more pick means more flex and less control at the tip",
+        "If your pick spins during strumming, the grip is too loose; if your hand aches after 30 seconds, it's too tight",
+        "The angle of the pick face (flat vs. angled ~45°) is separate from grip — you'll explore its effect on tone in rocker-002-4",
+      ],
+    },
     exercises: [
       {
-        id: "ex-rocker-002-1",
+        id: "ex-rocker-002-1-1",
         type: "technique",
         prompt:
-          "Alternate-pick the open low-E string for two minutes, keeping every note even in volume and timing.",
-        bpm: 80,
-        xpValue: 40,
+          "Intentionally hold the pick incorrectly three times: (1) grip it at the very tip with no exposed edge, (2) let it hang loosely so it wobbles, (3) squeeze as hard as you can. Notice what each feels and sounds like. Then form the standard grip and contrast it against all three. Strum the open low-E 10 times and confirm the pick stays stable and your hand stays relaxed.",
+        durationSeconds: 60,
+        xpValue: 10,
       },
       {
-        id: "ex-rocker-002-2",
+        id: "ex-rocker-002-1-2",
         type: "technique",
         prompt:
-          "Perform strict downstroke eighth notes across all six open strings, one string per measure.",
-        bpm: 100,
-        xpValue: 40,
+          "Pick the open low-E string 20 times at a comfortable pace, deliberately varying grip pressure from very light to very firm across the 20 strokes. Identify the pressure level where the pick is stable and the hand is not fatigued. That is your baseline grip.",
+        durationSeconds: 45,
+        xpValue: 10,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "pick grip" },
+    ],
+  },
+
+  {
+    id: "rocker-002-2",
+    label: "Downstroke Mechanics",
+    archetype: "rocker",
+    tier: 1,
+    branch: "technique",
+    xpReward: 30,
+    prerequisites: ["rocker-002-1"],
+    parentNodeId: "rocker-002",
+    position: { x: 420, y: 1150 },
+    content: {
+      description:
+        "The downstroke is rock's primary motion — the driver behind power chord chugging, punk eighth-note assaults, and any rhythm that needs to feel heavy and locked in. Proper downstroke motion comes from wrist rotation, not elbow swing: the forearm stays relatively still while the wrist pivots down through the string. The pick should return naturally above the string path after contact, ready to fall again. This recovery motion — getting the pick back up without consciously lifting — is what separates an economical stroke from an effortful one.",
+      objectives: [
+        "Execute 8 consecutive downstrokes at 100 bpm on a single string with consistent attack volume across all 8 strokes",
+        "Demonstrate that the motion comes from wrist rotation, not arm movement — elbow stays still during the exercise",
+      ],
+      tips: [
+        "Let the wrist relax between each stroke — a tense wrist tightens the motion and kills endurance",
+        "Watch your elbow: if it rises and falls with each stroke, the motion is in the wrong place",
+        "Practice slow enough to feel every stroke clearly before building speed",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-rocker-002-2-1",
+        type: "technique",
+        prompt:
+          "Set a metronome to 80 bpm. Play strict downstroke eighth notes on the open low-E string for 30 seconds — two strokes per beat. Focus entirely on wrist origin and consistent volume. When clean at 80, increase to 100 bpm and repeat.",
+        bpm: 80,
+        bpmGoal: 100,
+        durationSeconds: 60,
+        xpValue: 15,
+      },
+      {
+        id: "ex-rocker-002-2-2",
+        type: "technique",
+        prompt:
+          "Six-string downstroke sweep: one downstroke per string, from low E to high E, at a slow and deliberate pace. Each string should sound clearly and at equal volume. Pause between strings to reset if needed. When clean string-by-string, attempt the sweep in one continuous motion without pausing.",
+        durationSeconds: 60,
+        xpValue: 15,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "downstroke" },
+    ],
+  },
+
+  {
+    id: "rocker-002-3",
+    label: "Upstroke Control",
+    archetype: "rocker",
+    tier: 1,
+    branch: "technique",
+    xpReward: 25,
+    prerequisites: ["rocker-002-1"],
+    parentNodeId: "rocker-002",
+    position: { x: 600, y: 1150 },
+    content: {
+      description:
+        "The upstroke is the downstroke's neglected partner. Most beginners practice downstrokes instinctively but never isolate the upstroke — the result is a 'flick' motion that produces a quieter, thinner sound that breaks the evenness of alternate picking. The upstroke is the same wrist rotation reversed: from below the string, the wrist rotates upward through the contact point. Equal volume and attack on both directions is the benchmark. Until the upstroke sounds indistinguishable from the downstroke in a recording, alternate picking will always be uneven.",
+      objectives: [
+        "Play 8 consecutive upstrokes at 80 bpm on a single string with volume matching your downstrokes",
+        "Describe in one sentence what the wrist does differently on an upstroke versus a downstroke",
+      ],
+      tips: [
+        "The upstroke catches less string surface than a downstroke — don't compensate by slowing down; instead, angle the pick slightly more aggressively through the string",
+        "Record yourself: volume mismatches are much easier to hear on playback than in the moment",
+        "The upstroke is not a backswing — it is its own articulated stroke",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-rocker-002-3-1",
+        type: "technique",
+        prompt:
+          "Set a metronome to 70 bpm. Play strictly upstrokes on the open low-E string — one upstroke per beat — for 30 seconds. Do not allow any downstrokes. Focus on a deliberate, controlled upward motion through the string.",
+        bpm: 70,
+        durationSeconds: 30,
+        xpValue: 12,
+      },
+      {
+        id: "ex-rocker-002-3-2",
+        type: "technique",
+        prompt:
+          "Play one deliberate downstroke on the open low-E, then one deliberate upstroke. Alternate slowly — one per beat at 60 bpm — and compare the sound of each stroke. Adjust the upstroke until both strokes produce the same volume. Repeat until 10 consecutive pairs are even.",
+        bpm: 60,
+        durationSeconds: 60,
+        xpValue: 13,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "upstroke" },
+    ],
+  },
+
+  {
+    id: "rocker-002-4",
+    label: "Pick Angle & Tone",
+    archetype: "rocker",
+    tier: 1,
+    branch: "ear-training",
+    xpReward: 25,
+    prerequisites: ["rocker-002-1"],
+    parentNodeId: "rocker-002",
+    position: { x: 780, y: 1150 },
+    content: {
+      description:
+        "How the pick face contacts the string determines tone as much as amp settings do. A flat pick angle (face perpendicular to the string) produces a darker, rounder attack with a softer transient. An angled pick (30–45° tilt so the edge leads) produces a brighter, more articulate attack with a sharper transient — the sound most associated with classic rock clarity. A second variable is pick position over the body: playing near the bridge produces a tighter, brighter sound; near the neck pickup produces warmth and fullness. Knowing these relationships by ear — not just in theory — means reaching for them consciously when the song calls for it.",
+      objectives: [
+        "Identify flat-pick vs. angled-pick tone correctly in 5 of 5 blind A/B comparisons",
+        "Describe in one sentence which pick position over the body you would use for a palm-muted power chord chug versus a clean arpeggiated lead line, and why",
+      ],
+      tips: [
+        "The flat vs. angled difference is more dramatic on a clean tone — use a clean amp setting for this exercise so the distinction is unmistakable",
+        "Bridge position sounds almost thin without distortion; add gain and the tightness becomes punch — context matters",
+        "Most players settle on a default angle (usually slightly angled) and only shift intentionally for specific sonic goals",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-rocker-002-4-1",
+        type: "ear-training",
+        prompt:
+          "On a clean amp setting, pick the open B string 5 times with the pick face completely flat (perpendicular to the string), then 5 times with the pick angled 45°. Record both sets if possible. Listen for the difference in attack sharpness and brightness. Repeat and confirm you can hear the distinction consistently.",
+        durationSeconds: 60,
+        xpValue: 12,
+      },
+      {
+        id: "ex-rocker-002-4-2",
+        type: "ear-training",
+        prompt:
+          "Play a repeating single-note pattern (four notes, any fret) three times over: once with the pick positioned directly over the bridge pickup, once in the middle of the body, once near the neck pickup. Record all three passes. Listen back and describe what changes — attack, warmth, body. Then decide: for a palm-muted rhythm part, where would you position the pick?",
+        durationSeconds: 90,
+        xpValue: 13,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "pick angle" },
+      { type: "technique", value: "pick position" },
+    ],
+  },
+
+  {
+    id: "rocker-002-5",
+    label: "Alternate Picking Coordination",
+    archetype: "rocker",
+    tier: 1,
+    branch: "technique",
+    xpReward: 35,
+    prerequisites: ["rocker-002-2", "rocker-002-3"],
+    parentNodeId: "rocker-002",
+    position: { x: 510, y: 1300 },
+    content: {
+      description:
+        "Alternate picking means every note receives a downstroke followed by an upstroke, strictly cycling, regardless of which string you're on or where the note falls in the beat. The key discipline: the pick always continues its down-up-down-up cycle even when a stroke doesn't hit a string. This 'ghost stroke' motion keeps the hand locked to the pulse. The failure mode is 'convenience picking' — taking extra downstrokes on beat one because it feels natural — which breaks the cycle and causes timing hesitations at faster tempos. Evenness in both volume and timing across both directions is the benchmark.",
+      objectives: [
+        "Alternate-pick a single string for 2 minutes at 80 bpm with even attack on every note — no ghost downstrokes",
+        "Play a 6-note ascending pattern (e.g., three notes per string across two strings) using strict alternate picking without losing the down-up cycle at a string change",
+      ],
+      tips: [
+        "If you lose the cycle, stop and restart rather than scrambling to recover — rebuilding after a scramble reinforces the wrong habit",
+        "Down on beats, up on the 'and': at 80 bpm, downstrokes fall on 1, 2, 3, 4; upstrokes fall between. Use this as a checkpoint",
+        "The string change is the hardest moment — keep the hand moving even as it adjusts for the next string",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-rocker-002-5-1",
+        type: "technique",
+        prompt:
+          "Set a metronome to 80 bpm. Alternate-pick the open low-E string for 2 minutes: down on every beat, up on every 'and.' Count aloud (1-and-2-and-3-and-4-and) for at least the first 30 seconds. Every note should be equal in volume and every stroke should be intentional, not reflexive.",
+        bpm: 80,
+        durationSeconds: 120,
+        xpValue: 17,
+      },
+      {
+        id: "ex-rocker-002-5-2",
+        type: "technique",
+        prompt:
+          "Play three notes on the low-E string (open, 2nd fret, 4th fret) followed by three notes on the A string (open, 2nd fret, 4th fret) using strict alternate picking — the stroke that crosses strings should be whichever comes next in the cycle, not always a downstroke. Start at 60 bpm. When the cycle holds cleanly through the string change, increase to 75 bpm.",
+        bpm: 60,
+        bpmGoal: 75,
+        durationSeconds: 90,
+        xpValue: 18,
       },
     ],
     musicElements: [
       { type: "technique", value: "alternate picking" },
-      { type: "technique", value: "downstroke" },
+    ],
+  },
+
+  {
+    id: "rocker-002-6",
+    label: "Wrist Economy & String Crossing",
+    archetype: "rocker",
+    tier: 1,
+    branch: "technique",
+    xpReward: 40,
+    prerequisites: ["rocker-002-4", "rocker-002-5"],
+    parentNodeId: "rocker-002",
+    position: { x: 645, y: 1450 },
+    content: {
+      description:
+        "The synthesis test for pick technique: can the pick travel between strings without tension, extra motion, or muted intermediary strings? Wrist economy means the pick traces the shortest path between contact points — no large arm arcs, no shoulder involvement. The moment the shoulder or elbow begins compensating for string changes, accuracy and endurance both drop. This node also introduces the outside vs. inside picking distinction: outside picking (moving from a lower string to a higher one using a downstroke, or vice versa) is mechanically easier; inside picking (crossing between strings with the pick trapped between them) is harder and requires deliberate practice. Knowing this distinction explains why certain licks feel natural and others feel awkward.",
+      objectives: [
+        "Cross between non-adjacent strings (e.g., low E to B string) cleanly at 70 bpm using alternate picking — no muted intermediate strings",
+        "Sustain an alternately-picked two-string pattern for 90 seconds at 70 bpm without pick position drift or fatigue in the wrist",
+      ],
+      tips: [
+        "If an intermediate string rings when you don't want it to, the pick arc is too large — reduce the motion until only the target string sounds",
+        "Inside picking (pick trapped between two strings at the moment of crossing) is the hardest position: practice it in slow motion, watching the hand, before adding tempo",
+        "Fatigue during this exercise almost always signals too much tension — relax the wrist completely between strokes",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-rocker-002-6-1",
+        type: "technique",
+        prompt:
+          "Set a metronome to 60 bpm. Play two notes on the low-E string followed by two notes on the D string (skipping the A string entirely) using strict alternate picking. The A string must remain silent. Start slowly enough to watch the pick path, then increase to 70 bpm when clean.",
+        bpm: 60,
+        bpmGoal: 70,
+        durationSeconds: 90,
+        xpValue: 18,
+      },
+      {
+        id: "ex-rocker-002-6-2",
+        type: "technique",
+        prompt:
+          "Play a repeating two-bar pattern: bar 1 is a power chord on the low E (root + 5th on A string), bar 2 is a single-note lick on the G string using alternate picking. The string jump from A to G requires the pick to cross two strings in one motion. At 70 bpm, the crossing must happen cleanly without the D string sounding. Sustain for 90 seconds.",
+        bpm: 70,
+        durationSeconds: 90,
+        xpValue: 22,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "string crossing" },
+      { type: "technique", value: "wrist economy" },
     ],
   },
 
