@@ -10,7 +10,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "harmony-chords",
     xpReward: 100,
     prerequisites: [],
-    position: { x: 250, y: 800 },
+    position: { x: 250, y: 1600 },
     content: {
       description:
         "Master the essential open chord shapes—E, A, D, G, C, and Am—that form the backbone of rock guitar. Clean fretting and smooth transitions between these chords unlock virtually every beginner rock song.",
@@ -56,7 +56,7 @@ export const ROCKER_NODES: SkillNode[] = [
     branch: "technique",
     xpReward: 0,
     prerequisites: [],
-    position: { x: 600, y: 800 },
+    position: { x: 600, y: 1600 },
     childNodeIds: [
       "rocker-002-1",
       "rocker-002-2",
@@ -101,7 +101,7 @@ export const ROCKER_NODES: SkillNode[] = [
     xpReward: 20,
     prerequisites: [],
     parentNodeId: "rocker-002",
-    position: { x: 600, y: 1000 },
+    position: { x: 600, y: 1400 },
     content: {
       description:
         "Every aspect of pick technique—downstrokes, upstrokes, tone—depends on holding the pick correctly before anything else. Three variables define the grip: how much pick to expose (3–4mm past the fingertip is the standard starting point), grip firmness (enough tension to keep the pick from spinning, loose enough that the hand stays relaxed), and the angle at which the pick face meets the string. The index-and-thumb standard grip is the most widely taught starting point; variations exist but introduce extra variables before the fundamentals are in place.",
@@ -147,7 +147,7 @@ export const ROCKER_NODES: SkillNode[] = [
     xpReward: 30,
     prerequisites: ["rocker-002-1"],
     parentNodeId: "rocker-002",
-    position: { x: 420, y: 1150 },
+    position: { x: 420, y: 1250 },
     content: {
       description:
         "The downstroke is rock's primary motion — the driver behind power chord chugging, punk eighth-note assaults, and any rhythm that needs to feel heavy and locked in. Proper downstroke motion comes from wrist rotation, not elbow swing: the forearm stays relatively still while the wrist pivots down through the string. The pick should return naturally above the string path after contact, ready to fall again. This recovery motion — getting the pick back up without consciously lifting — is what separates an economical stroke from an effortful one.",
@@ -195,7 +195,7 @@ export const ROCKER_NODES: SkillNode[] = [
     xpReward: 25,
     prerequisites: ["rocker-002-1"],
     parentNodeId: "rocker-002",
-    position: { x: 600, y: 1150 },
+    position: { x: 600, y: 1250 },
     content: {
       description:
         "The upstroke is the downstroke's neglected partner. Most beginners practice downstrokes instinctively but never isolate the upstroke — the result is a 'flick' motion that produces a quieter, thinner sound that breaks the evenness of alternate picking. The upstroke is the same wrist rotation reversed: from below the string, the wrist rotates upward through the contact point. Equal volume and attack on both directions is the benchmark. Until the upstroke sounds indistinguishable from the downstroke in a recording, alternate picking will always be uneven.",
@@ -243,7 +243,7 @@ export const ROCKER_NODES: SkillNode[] = [
     xpReward: 25,
     prerequisites: ["rocker-002-1"],
     parentNodeId: "rocker-002",
-    position: { x: 780, y: 1150 },
+    position: { x: 780, y: 1250 },
     content: {
       description:
         "How the pick face contacts the string determines tone as much as amp settings do. A flat pick angle (face perpendicular to the string) produces a darker, rounder attack with a softer transient. An angled pick (30–45° tilt so the edge leads) produces a brighter, more articulate attack with a sharper transient — the sound most associated with classic rock clarity. A second variable is pick position over the body: playing near the bridge produces a tighter, brighter sound; near the neck pickup produces warmth and fullness. Knowing these relationships by ear — not just in theory — means reaching for them consciously when the song calls for it.",
@@ -290,7 +290,7 @@ export const ROCKER_NODES: SkillNode[] = [
     xpReward: 35,
     prerequisites: ["rocker-002-2", "rocker-002-3"],
     parentNodeId: "rocker-002",
-    position: { x: 510, y: 1300 },
+    position: { x: 510, y: 1100 },
     content: {
       description:
         "Alternate picking means every note receives a downstroke followed by an upstroke, strictly cycling, regardless of which string you're on or where the note falls in the beat. The key discipline: the pick always continues its down-up-down-up cycle even when a stroke doesn't hit a string. This 'ghost stroke' motion keeps the hand locked to the pulse. The failure mode is 'convenience picking' — taking extra downstrokes on beat one because it feels natural — which breaks the cycle and causes timing hesitations at faster tempos. Evenness in both volume and timing across both directions is the benchmark.",
@@ -339,7 +339,7 @@ export const ROCKER_NODES: SkillNode[] = [
     xpReward: 40,
     prerequisites: ["rocker-002-4", "rocker-002-5"],
     parentNodeId: "rocker-002",
-    position: { x: 645, y: 1450 },
+    position: { x: 645, y: 950 },
     content: {
       description:
         "The synthesis test for pick technique: can the pick travel between strings without tension, extra motion, or muted intermediary strings? Wrist economy means the pick traces the shortest path between contact points — no large arm arcs, no shoulder involvement. The moment the shoulder or elbow begins compensating for string changes, accuracy and endurance both drop. This node also introduces the outside vs. inside picking distinction: outside picking (moving from a lower string to a higher one using a downstroke, or vice versa) is mechanically easier; inside picking (crossing between strings with the pick trapped between them) is harder and requires deliberate practice. Knowing this distinction explains why certain licks feel natural and others feel awkward.",

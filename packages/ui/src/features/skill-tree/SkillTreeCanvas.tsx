@@ -122,8 +122,8 @@ export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClic
                 const isUnlocked = (nodeStatuses[parent.id] ?? 'locked') !== 'locked';
                 return renderEdge(
                   `parent-${parent.id}-${childId}`,
-                  { cx: parent.position.x + NODE_WIDTH / 2, cy: parent.position.y + NODE_HEIGHT },
-                  { cx: child.position.x + CHILD_NODE_WIDTH / 2, cy: child.position.y },
+                  { cx: parent.position.x + NODE_WIDTH / 2, cy: parent.position.y },
+                  { cx: child.position.x + CHILD_NODE_WIDTH / 2, cy: child.position.y + CHILD_NODE_HEIGHT },
                   isUnlocked,
                   true
                 );

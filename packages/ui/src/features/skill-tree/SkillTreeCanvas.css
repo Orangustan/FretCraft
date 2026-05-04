@@ -7,7 +7,7 @@
 .skill-tree-canvas {
   position: relative;
   min-width: 900px;
-  min-height: 900px;
+  min-height: 1800px;
 }
 
 .skill-tree-canvas__svg {
