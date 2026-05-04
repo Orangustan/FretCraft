@@ -161,3 +161,36 @@
   height: 18px;
   color: var(--color-locked-text);
 }
+
+.skill-node--parent {
+  border-style: dashed;
+  border-left-style: solid;
+}
+
+.skill-node--parent.skill-node--completed {
+  border-style: solid;
+}
+
+.skill-node--child {
+  width: 140px;
+  height: 72px;
+  font-size: 0.9em;
+}
+
+.skill-node--child .skill-node__label {
+  font-size: 11px;
+}
+
+.skill-node--child .skill-node__tier {
+  display: none;
+}
+
+.skill-node__children-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-accent-gold-deep);
+  letter-spacing: 0.05em;
+  margin-left: auto;
+  opacity: 0.8;
+}

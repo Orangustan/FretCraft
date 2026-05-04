@@ -40,6 +40,11 @@ export function getNodeStatus(
   const currentRank = getCurrentRank(player, tree.archetypeId);
   if (!isTierAccessible(node.tier, currentRank)) return "locked";
 
+  if (node.parentNodeId) {
+    const parentStatus = getNodeStatus(node.parentNodeId, tree, player);
+    if (parentStatus === "locked") return "locked";
+  }
+
   const prereqsMet = node.prerequisites.every(
     (prereqId) => player.nodeProgress[prereqId]?.status === "completed"
   );
@@ -126,6 +131,19 @@ export function completeNode(
   const nextRank = getNextRank(currentRank);
   if (nextRank && hasCompletedTier(rankToMinTier(currentRank), tree, updated)) {
     updated = advanceRank(updated, tree.archetypeId);
+  }
+
+  // Auto-complete parent node when all of its children are done
+  if (node.parentNodeId) {
+    const parentNode = tree.nodes.find((n) => n.id === node.parentNodeId);
+    if (parentNode?.childNodeIds) {
+      const allChildrenDone = parentNode.childNodeIds.every(
+        (childId) => updated.nodeProgress[childId]?.status === "completed"
+      );
+      if (allChildrenDone && updated.nodeProgress[parentNode.id]?.status !== "completed") {
+        updated = completeNode(parentNode.id, tree, updated, 1.0);
+      }
+    }
   }
 
   return updated;

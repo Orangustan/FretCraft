@@ -17,6 +17,8 @@ interface SkillNodeProps {
   isSelected: boolean;
   onClick: () => void;
   dimmed?: boolean;
+  isChild?: boolean;
+  childrenCompleted?: number;
 }
 
 function LockIcon() {
@@ -28,16 +30,20 @@ function LockIcon() {
   );
 }
 
-export function SkillNode({ node, status, isSelected, onClick, dimmed = false }: SkillNodeProps) {
+export function SkillNode({ node, status, isSelected, onClick, dimmed = false, isChild = false, childrenCompleted }: SkillNodeProps) {
   const pos = node.position ?? { x: 0, y: 0 };
   const isLocked = status === 'locked';
+  const isParent = !!node.childNodeIds?.length;
   const branchColor = node.branch ? (BRANCH_COLORS[node.branch] ?? 'var(--color-accent-gold-deep)') : 'var(--color-accent-gold-deep)';
+  const childrenTotal = node.childNodeIds?.length ?? 0;
 
   const classNames = [
     'skill-node',
     `skill-node--${status}`,
     isSelected ? 'skill-node--selected' : '',
     dimmed ? 'skill-node--dimmed' : '',
+    isParent ? 'skill-node--parent' : '',
+    isChild ? 'skill-node--child' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -62,7 +68,13 @@ export function SkillNode({ node, status, isSelected, onClick, dimmed = false }:
         {node.branch && (
           <span className="skill-node__branch-dot" />
         )}
-        <span className="skill-node__xp">+{node.xpReward} XP</span>
+        {isParent && childrenCompleted !== undefined ? (
+          <span className="skill-node__children-badge">
+            {childrenCompleted}/{childrenTotal}
+          </span>
+        ) : (
+          <span className="skill-node__xp">+{node.xpReward} XP</span>
+        )}
       </div>
 
       {isLocked && (

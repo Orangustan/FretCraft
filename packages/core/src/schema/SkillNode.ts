@@ -83,4 +83,6 @@ export interface SkillNode {
   position?: { x: number; y: number };
   icon?: string;
   color?: string;
+  childNodeIds?: string[];
+  parentNodeId?: string;
 }

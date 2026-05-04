@@ -118,6 +118,388 @@ export const VAIDEOLOGY_NODES: SkillNode[] = [
     ],
   },
 
+  // ── Tier 2 — Open Chords cluster (parent + 8 children) ─────────────────────
+  {
+    id: "vai-oc",
+    label: "Open Chords",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "harmony-chords",
+    xpReward: 0,
+    prerequisites: ["vai-001", "vai-002"],
+    position: { x: 980, y: 600 },
+    childNodeIds: ["vai-oc-1", "vai-oc-2", "vai-oc-3", "vai-oc-4", "vai-oc-5", "vai-oc-6", "vai-oc-7", "vai-oc-8"],
+    content: {
+      description:
+        "The five essential open chord shapes — G, C, D, Em, Am — studied from chord chart to diatonic function. Academic and experiential tracks converge here: you learn the shapes, clean them up, switch them, strum them in rhythm, and finally hear their harmonic role in a key. All eight sub-nodes must be completed to unlock this node.",
+      objectives: [
+        "Complete all 8 sub-nodes to unlock Open Chords",
+      ],
+    },
+  },
+
+  {
+    id: "vai-oc-1",
+    label: "Reading Chord Diagrams",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "fretboard-theory",
+    xpReward: 20,
+    prerequisites: [],
+    parentNodeId: "vai-oc",
+    position: { x: 980, y: 820 },
+    content: {
+      description:
+        "Chord diagrams use six vertical lines (strings, low E at left) and horizontal lines (frets) to show finger placement. Dots mark where to press; numbers inside dots indicate which finger to use (1=index, 2=middle, 3=ring, 4=pinky). An X above a string means don't play it; O means play it open. The nut is the thick line at the top.",
+      objectives: [
+        "Read any standard chord diagram and identify: which strings to play, which to mute, and which finger goes on each dot",
+        "Correctly place fingers for G, C, D, Em, and Am from diagrams only — no tab or verbal instruction",
+      ],
+      tips: [
+        "The nut line at the top tells you the diagram starts at the first fret; when the diagram shows a fret number at the side (e.g., '5fr'), it starts from that fret instead",
+        "X and O above the diagram are as important as the dots — muting the wrong string changes the chord",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-vai-oc-1-1",
+        type: "theory",
+        prompt:
+          "Draw chord diagrams from scratch for G, C, D, Em, and Am. Label every element: which strings are muted (X), which are open (O), and which finger number is on each dot. Check against a reference.",
+        durationSeconds: 90,
+        xpValue: 10,
+      },
+      {
+        id: "ex-vai-oc-1-2",
+        type: "technique",
+        prompt:
+          "Given five unlabeled chord diagrams in random order, form each chord without looking up its name. Strum once to check all strings ring (or are correctly muted). Identify the chord name after forming it.",
+        durationSeconds: 60,
+        xpValue: 10,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "chord diagram reading" },
+    ],
+  },
+
+  {
+    id: "vai-oc-2",
+    label: "Forming the Five Shapes",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "fretboard-theory",
+    xpReward: 30,
+    prerequisites: ["vai-oc-1"],
+    parentNodeId: "vai-oc",
+    position: { x: 800, y: 990 },
+    content: {
+      description:
+        "G, C, D, Em, and Am are the foundational open chord shapes. For each: arch the fretting fingers so they don't accidentally mute adjacent strings; keep the thumb on the back of the neck (not hooked over); press close to the fret, not in the middle of the fret space. These mechanics make the difference between a buzzing shape and a clean one.",
+      objectives: [
+        "Form G, C, D, Em, and Am from memory — no diagrams — with correct finger assignments",
+        "Strum each chord and verify every string that should ring does ring, every muted string is silent",
+      ],
+      tips: [
+        "C chord tip: the first-string open E can buzz if your ring finger (on the A string) leans back — keep it arched",
+        "G chord: some players use pinky on the high E, others use ring finger — pick one fingering and be consistent",
+        "Em and Am are almost identical in shape — notice what changes and what stays the same",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-vai-oc-2-1",
+        type: "technique",
+        prompt:
+          "For each of the five chords (G, C, D, Em, Am): form the shape, strum slowly string by string from low to high, and listen for any buzz or muted string. Adjust until all notes ring cleanly. Repeat until each chord is clean on the first attempt.",
+        durationSeconds: 180,
+        xpValue: 15,
+      },
+      {
+        id: "ex-vai-oc-2-2",
+        type: "technique",
+        prompt:
+          "Close your eyes, call out a chord name, form it without looking, then open your eyes and check. Repeat for all five chords in random order. Goal: correct shape on first attempt for all five.",
+        durationSeconds: 90,
+        xpValue: 15,
+      },
+    ],
+    musicElements: [
+      { type: "chord-type", value: "open chord" },
+      { type: "technique", value: "fretting hand position" },
+    ],
+  },
+
+  {
+    id: "vai-oc-3",
+    label: "Pressing Cleanly",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "fretboard-theory",
+    xpReward: 25,
+    prerequisites: ["vai-oc-2"],
+    parentNodeId: "vai-oc",
+    position: { x: 640, y: 1160 },
+    content: {
+      description:
+        "A chord that looks correct on paper can still buzz or mute if the fretting pressure, arch, or thumb position is off. This node is purely experiential: you develop the tactile sense of what 'enough pressure' and 'correct arch' feel like. Buzzing almost always comes from too little pressure, not enough arch, or pressing in the middle of the fret space instead of close to the fretwire.",
+      objectives: [
+        "Play G, C, D, Em, and Am with zero buzzing on any string that should ring",
+        "Describe what it feels like when the chord is clean vs. buzzing — build the tactile reference",
+      ],
+      tips: [
+        "Press close to the fretwire on the side toward the headstock — middle-of-fret pressing always causes more buzz",
+        "If a finger is buzzing: check arch first, then pressure, then whether the fingertip is accidentally touching an adjacent string",
+        "Don't press harder than needed — excess tension causes fatigue and inhibits switching speed",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-vai-oc-3-1",
+        type: "ear-training",
+        prompt:
+          "Form G major. Close your eyes. Pluck each string individually and listen — any buzz means something is wrong. Without looking, adjust only by feel until all strings ring cleanly. Open your eyes and check what you adjusted. Repeat for C, D, Em, Am.",
+        durationSeconds: 180,
+        xpValue: 25,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "fretting clarity" },
+    ],
+  },
+
+  {
+    id: "vai-oc-4",
+    label: "Strumming the Right Strings",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "rhythm-timing",
+    xpReward: 20,
+    prerequisites: ["vai-oc-2"],
+    parentNodeId: "vai-oc",
+    position: { x: 920, y: 1160 },
+    content: {
+      description:
+        "Not every chord uses all six strings. G uses all six; C skips the low E (5 strings); D skips low E and A (4 strings); Em uses all six; Am skips the low E (5 strings). Strumming the wrong strings changes the bass note and chord quality. The picking hand must develop string-range accuracy so the correct strings are struck without thinking.",
+      objectives: [
+        "Strum G, C, D, Em, and Am hitting only the correct strings for each chord — no accidental low E on C, Am, or D",
+        "Maintain consistent downstroke angle and wrist motion while controlling string range",
+      ],
+      tips: [
+        "For chords that skip the low E: aim your strum to start from the A string — practice with exaggerated motion first, then reduce",
+        "A consistent wrist rotation produces a better sound than an arm strum — the elbow stays relatively still",
+        "Speed of the strum affects the chord's feel: a slow deliberate strum emphasizes individual notes; a fast strum blends them",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-vai-oc-4-1",
+        type: "technique",
+        prompt:
+          "For each chord (G, C, D, Em, Am), practice 8 slow downstrokes hitting only the correct strings. Then alternate: one strum of G (6 strings), one strum of D (4 strings), back and forth 10 times. Focus entirely on string-range accuracy, not rhythm.",
+        durationSeconds: 120,
+        xpValue: 20,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "strumming accuracy" },
+    ],
+  },
+
+  {
+    id: "vai-oc-5",
+    label: "Chord Switching Mechanics",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "technique",
+    xpReward: 40,
+    prerequisites: ["vai-oc-3", "vai-oc-4"],
+    parentNodeId: "vai-oc",
+    position: { x: 760, y: 1330 },
+    content: {
+      description:
+        "Switching chords smoothly is the single most practiced skill at the beginner stage. Three techniques make switches faster: pivot fingers (a finger shared between two chords stays on the string and pivots), anchor fingers (a finger stays on the same string and fret), and guide fingers (a finger slides along a string to a new fret). The G→C→D→Em→Am cycle covers all five chords and exposes every common transition.",
+      objectives: [
+        "Switch between G, C, D, Em, and Am in any order within one beat at 60 bpm — chord rings cleanly on the downbeat",
+        "Identify and use at least one pivot or anchor finger in the G↔C and C↔Am transitions",
+      ],
+      tips: [
+        "G to C: the middle finger can stay anchored on the B string (2nd fret) as a pivot point",
+        "C to Am: the index and middle fingers stay; only the ring finger moves",
+        "Practice the transition slowly until clean, then increase tempo by 5 bpm increments — never practice the switch sloppy",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-vai-oc-5-1",
+        type: "technique",
+        prompt:
+          "Set a metronome to 50 bpm. Strum G once per beat for 4 beats, then switch to C and strum for 4 beats. Repeat the loop: G→C→G→C. The chord must be fully formed and ringing by beat 1 of each change. When clean at 50, increase by 4 bpm. Target: clean at 72 bpm.",
+        bpm: 50,
+        bpmGoal: 72,
+        durationSeconds: 180,
+        xpValue: 20,
+      },
+      {
+        id: "ex-vai-oc-5-2",
+        type: "technique",
+        prompt:
+          "Cycle through all five chords: G→C→D→Em→Am→G. One strum per chord, one chord per beat at 50 bpm. Focus on the weakest transitions (usually D→Em or Am→G). Isolate those pairs and drill them separately before returning to the full cycle.",
+        bpm: 50,
+        durationSeconds: 180,
+        xpValue: 20,
+      },
+    ],
+    musicElements: [
+      { type: "technique", value: "chord switching" },
+    ],
+  },
+
+  {
+    id: "vai-oc-6",
+    label: "Strumming in 4/4",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "rhythm-timing",
+    xpReward: 30,
+    prerequisites: ["vai-oc-4"],
+    parentNodeId: "vai-oc",
+    position: { x: 1200, y: 1160 },
+    content: {
+      description:
+        "A strumming pattern maps down and up strokes onto the beat subdivisions. In 4/4 with eighth-note subdivisions, each beat has a down-strum (on the beat) and optionally an up-strum (on the 'and'). The most common beginner pattern is D-DU-UDU (down on 1, down-up on 2, up-down-up on 3-and-4). The key discipline: the strumming hand keeps moving in a steady pendulum even when you choose not to hit the strings — the miss is what creates the rhythm.",
+      objectives: [
+        "Strum D-DU-UDU over any open chord at 70 bpm without losing the pulse",
+        "Keep the strumming hand in continuous motion — no pausing between strokes",
+      ],
+      tips: [
+        "The 'ghost strum' is when the hand moves through the strum but doesn't contact the strings — this keeps the pendulum motion even during up-strums that are skipped",
+        "Count aloud: '1 and 2 and 3 and 4 and' while strumming; down strokes fall on numbers, up strokes fall on 'and'",
+        "Start with all downstrokes first to build consistency, then add the up-strokes one at a time",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-vai-oc-6-1",
+        type: "technique",
+        prompt:
+          "Set a metronome to 60 bpm. Over G major, strum four downstrokes per beat (all down, no ups) for one minute — the hand moves like a pendulum. Then switch to D-DU-UDU at 60 bpm. When clean, increase to 70 bpm. Count aloud throughout.",
+        bpm: 60,
+        bpmGoal: 70,
+        durationSeconds: 120,
+        xpValue: 15,
+      },
+      {
+        id: "ex-vai-oc-6-2",
+        type: "technique",
+        prompt:
+          "Apply D-DU-UDU to the G→C→G→C switch (from Chord Switching Mechanics). Two bars per chord. The switch must happen without breaking the strumming motion — the hand keeps moving while the fretting hand changes. Start at 55 bpm.",
+        bpm: 55,
+        durationSeconds: 120,
+        xpValue: 15,
+      },
+    ],
+    musicElements: [
+      { type: "rhythm-pattern", value: "D-DU-UDU" },
+      { type: "time-signature", value: "4/4" },
+    ],
+  },
+
+  {
+    id: "vai-oc-7",
+    label: "Diatonic Open Chord Theory",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "harmony-chords",
+    xpReward: 35,
+    prerequisites: ["vai-oc-1"],
+    parentNodeId: "vai-oc",
+    position: { x: 1160, y: 990 },
+    content: {
+      description:
+        "In G major, the diatonic chords — built by stacking thirds on each scale degree — are: G (I), Am (ii), Bm (iii), C (IV), D (V), Em (vi), F♯dim (vii°). The five open chords you've learned (G, Am, C, D, Em) are the I, ii, IV, V, and vi of G major. These five chords account for an enormous percentage of popular music. The V→I (D→G) motion is the fundamental harmonic cadence: tension resolving to home.",
+      objectives: [
+        "Name the Roman numeral function (I, ii, IV, V, vi) of G, Am, C, D, and Em in the key of G major",
+        "Play a I–IV–V–I (G–C–D–G) and a I–V–vi–IV (G–D–Em–C) progression and identify the resolution moment",
+      ],
+      tips: [
+        "The major chords (I, IV, V) sound bright and stable; the minor chords (ii, vi) add color and tension",
+        "The V chord (D major) has a strong pull toward I (G) — this is the harmonic engine behind most songs you already know",
+        "Bm (iii) and F♯dim (vii°) are also diatonic to G major but require barre technique — they're out of scope here",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-vai-oc-7-1",
+        type: "theory",
+        prompt:
+          "Write the seven diatonic chords of G major with their Roman numerals: G(I), Am(ii), Bm(iii), C(IV), D(V), Em(vi), F♯dim(vii°). Circle the five you can play in open position. Identify the quality (major/minor/diminished) of each.",
+        durationSeconds: 60,
+        xpValue: 15,
+      },
+      {
+        id: "ex-vai-oc-7-2",
+        type: "performance",
+        prompt:
+          "Play I–V–vi–IV in G (G–D–Em–C) slowly. Listen for the moment the progression 'wants' to return to G. Then play V–I (D–G) in isolation five times and focus on the resolution feeling. Describe what you hear.",
+        durationSeconds: 90,
+        xpValue: 20,
+      },
+    ],
+    musicElements: [
+      { type: "chord-type", value: "diatonic chord" },
+      { type: "key", value: "G major" },
+    ],
+  },
+
+  {
+    id: "vai-oc-8",
+    label: "Hearing Chord Quality by Ear",
+    archetype: "vaideology",
+    tier: 2,
+    branch: "ear-training",
+    xpReward: 30,
+    prerequisites: ["vai-oc-3", "vai-oc-7"],
+    parentNodeId: "vai-oc",
+    position: { x: 1060, y: 1330 },
+    content: {
+      description:
+        "The experiential culmination of the Open Chords cluster. After knowing chord names, shapes, and theory, the ear must learn to hear chord quality — the emotional signature of major (bright, open) vs. minor (darker, more inward) — and harmonic function — tension (V) vs. rest (I). This is Vai's 'experiential knowing': not analyzing chords, but feeling them.",
+      objectives: [
+        "Distinguish a major chord from a minor chord by ear alone, without looking at the guitar or score — 8 of 10 correct",
+        "Hear the V→I resolution in G major (D→G) and describe what the ear experiences at the resolution moment",
+      ],
+      tips: [
+        "The major/minor distinction is the most important thing your ear can learn — every other harmonic perception builds from it",
+        "Don't think 'that's a G chord' — think 'that feels resolved' or 'that feels tense.' The feeling is the real skill",
+        "Reference songs help: the chorus of 'Knockin' on Heaven's Door' is I–V–vi–IV — you've heard resolution a thousand times without noticing it",
+      ],
+    },
+    exercises: [
+      {
+        id: "ex-vai-oc-8-1",
+        type: "ear-training",
+        prompt:
+          "Have a partner (or app) play a random chord — either a major or minor open chord. Without looking, identify: (1) major or minor, (2) tense or resolved. Do 10 rounds. Track your accuracy separately for quality and function. Spend extra time on whatever you miss most.",
+        durationSeconds: 120,
+        xpValue: 15,
+      },
+      {
+        id: "ex-vai-oc-8-2",
+        type: "performance",
+        prompt:
+          "Play G–D–Em–C slowly (I–V–vi–IV). After each chord, close your eyes and sit with the feeling for two seconds before moving on. After completing the loop three times, reverse it: C–Em–D–G. Notice how the reversed sequence changes the sense of arrival and departure.",
+        durationSeconds: 90,
+        xpValue: 15,
+      },
+    ],
+    musicElements: [
+      { type: "chord-type", value: "major" },
+      { type: "chord-type", value: "minor" },
+      { type: "technique", value: "ear training" },
+    ],
+  },
+
   // ── Tier 2 ──────────────────────────────────────────────────────────────────
   {
     id: "vai-003",
