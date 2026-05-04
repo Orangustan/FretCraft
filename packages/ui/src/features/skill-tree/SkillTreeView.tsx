@@ -1,8 +1,21 @@
 import { useState, useMemo } from 'react';
-import { ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE, VAIDEOLOGY_TREE, COUNTRY_TREE, ROCKER_TIER_TESTS, COUNTRY_TIER_TESTS } from '@guitar-st/core';
-import type { TierTestResult, BranchType } from '@guitar-st/core';
+import {
+  ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE, VAIDEOLOGY_TREE, COUNTRY_TREE,
+  ROCKER_TIER_TESTS, COUNTRY_TIER_TESTS,
+  getRankTestsForArchetype, getCurrentRank, canAdvanceRank, getNextRank,
+  ProgressionEngine,
+} from '@guitar-st/core';
+import type { TierTestResult, BranchType, PlayerRank, RankTest } from '@guitar-st/core';
 
 const BUILT_IN_TREES = [ROCKER_TREE, JAZZ_TREE, BLUES_TREE, CLASSICAL_TREE, METAL_TREE, VAIDEOLOGY_TREE, COUNTRY_TREE];
+
+const RANK_LABELS: Record<PlayerRank, string> = {
+  beginner: 'Beginner',
+  novice: 'Novice',
+  intermediate: 'Intermediate',
+  expert: 'Expert',
+  pro: 'Pro',
+};
 
 const BRANCHES: { id: BranchType; label: string; color: string }[] = [
   { id: 'technique',        label: 'Technique',         color: '#f87171' },
@@ -18,6 +31,7 @@ import { useSkillTree } from './useSkillTree';
 import { SkillTreeCanvas } from './SkillTreeCanvas';
 import { NodeDetailPanel } from './NodeDetailPanel';
 import { PracticeSession } from '../practice/PracticeSession';
+import { RankTestSession } from '../practice/RankTestSession';
 import { TierTestModal } from '../practice/TierTestModal';
 import './SkillTreeView.css';
 
@@ -28,6 +42,7 @@ export default function SkillTreeView() {
   const { nodeStatuses, handleNodeClick, selectedNodeId, resetSelection } = useSkillTree(activeTree);
   const [practiceNodeId, setPracticeNodeId] = useState<string | null>(null);
   const [activeTierTestId, setActiveTierTestId] = useState<string | null>(null);
+  const [activeRankTest, setActiveRankTest] = useState<RankTest | null>(null);
   const [activeBranch, setActiveBranch] = useState<BranchType | 'all'>('all');
 
   const selectedNode = selectedNodeId
@@ -40,6 +55,34 @@ export default function SkillTreeView() {
 
   const activeTierTest = activeTierTestId
     ? TIER_TEST_REGISTRY.find((t) => t.id === activeTierTestId) ?? null
+    : null;
+
+  // Rank info for active archetype
+  const corePlayerForRank = useMemo(() => ({
+    id: 'local',
+    name: player.name,
+    activeArchetypeId: activeTree.archetypeId,
+    xpTotal: player.xp,
+    level: player.level,
+    nodeProgress: Object.fromEntries(
+      Object.entries(player.nodeProgress).map(([id, s]) => [
+        id,
+        { nodeId: id, status: s === 'complete' ? 'completed' : s, xpEarned: 0, completedExercises: [] },
+      ])
+    ),
+    passedTierTests: player.passedTierTests ?? [],
+    passedRankTests: player.passedRankTests ?? [],
+    archetypeRanks: player.archetypeRanks ?? {},
+    unlockedAchievements: player.unlockedAchievements ?? [],
+  }), [player, activeTree.archetypeId]);
+
+  const currentRank = getCurrentRank(corePlayerForRank as Parameters<typeof getCurrentRank>[0], activeTree.archetypeId);
+  const nextRank = getNextRank(currentRank);
+  const rankTests = getRankTestsForArchetype(activeTree.archetypeId);
+  const canAdvance = canAdvanceRank(corePlayerForRank as Parameters<typeof canAdvanceRank>[0], activeTree, rankTests);
+
+  const gateTest = nextRank
+    ? rankTests.find((t) => t.fromRank === currentRank && t.toRank === nextRank) ?? null
     : null;
 
   // Determine if any tier test is available (all nodes in tier done, test not yet passed)
@@ -69,6 +112,15 @@ export default function SkillTreeView() {
     if (!practiceNodeId) return;
     dispatch({ type: 'COMPLETE_NODE', payload: { nodeId: practiceNodeId } });
     dispatch({ type: 'ADD_XP', payload: { amount: earnedXp } });
+    // Auto-advance rank if completing this node finishes the current tier
+    const { rankAdvanced, newRank } = ProgressionEngine.applyNodeCompletion(
+      practiceNodeId,
+      activeTree,
+      corePlayerForRank as Parameters<typeof ProgressionEngine.applyNodeCompletion>[2]
+    );
+    if (rankAdvanced && newRank) {
+      dispatch({ type: 'ADVANCE_RANK', payload: { archetypeId: activeTree.archetypeId, newRank: newRank as PlayerRank } });
+    }
     setPracticeNodeId(null);
   };
 
@@ -78,27 +130,79 @@ export default function SkillTreeView() {
     console.log('Tier test passed:', result);
   };
 
+  const handleRankTestPass = (newRank: PlayerRank) => {
+    if (!activeRankTest) return;
+    dispatch({
+      type: 'PASS_RANK_TEST',
+      payload: { testId: activeRankTest.id, archetypeId: activeTree.archetypeId, newRank },
+    });
+    setActiveRankTest(null);
+  };
+
   return (
     <div className="skill-tree-view">
       <div className="archetype-selector">
         <label htmlFor="archetype-select">Archetype</label>
-        <select
-          id="archetype-select"
-          value={activeTree.id}
-          onChange={(e) => handleTreeChange(e.target.value)}
-        >
-          {BUILT_IN_TREES.map((tree) => (
-            <option key={tree.id} value={tree.id}>{tree.name}</option>
-          ))}
-          {customTrees.length > 0 && (
-            <optgroup label="Custom">
-              {customTrees.map((tree) => (
-                <option key={tree.id} value={tree.id}>{tree.name}</option>
-              ))}
-            </optgroup>
-          )}
-        </select>
+        <div className="archetype-selector__row">
+          <select
+            id="archetype-select"
+            value={activeTree.id}
+            onChange={(e) => handleTreeChange(e.target.value)}
+          >
+            {BUILT_IN_TREES.map((tree) => (
+              <option key={tree.id} value={tree.id}>{tree.name}</option>
+            ))}
+            {customTrees.length > 0 && (
+              <optgroup label="Custom">
+                {customTrees.map((tree) => (
+                  <option key={tree.id} value={tree.id}>{tree.name}</option>
+                ))}
+              </optgroup>
+            )}
+          </select>
+          <span className={`rank-badge rank-badge--${currentRank}`}>
+            {RANK_LABELS[currentRank]}
+          </span>
+        </div>
       </div>
+
+      {/* Rank gate test banner — appears when tier completion unlocks advancement */}
+      {canAdvance && !activeRankTest && nextRank && (
+        <div className="rank-gate-banner">
+          <span className="rank-gate-banner__text">
+            Ready to advance to <strong>{RANK_LABELS[nextRank]}</strong>!
+          </span>
+          {gateTest && (
+            <button
+              className="rank-gate-banner__btn"
+              onClick={() => setActiveRankTest(gateTest)}
+            >
+              Take Rank Test
+            </button>
+          )}
+          <button
+            className="rank-gate-banner__btn rank-gate-banner__btn--secondary"
+            onClick={() => dispatch({ type: 'ADVANCE_RANK', payload: { archetypeId: activeTree.archetypeId, newRank: nextRank } })}
+          >
+            Advance (Skip Test)
+          </button>
+        </div>
+      )}
+
+      {/* Test-out banner — appears even if tier not complete */}
+      {!canAdvance && gateTest && nextRank && (
+        <div className="rank-gate-banner rank-gate-banner--testout">
+          <span className="rank-gate-banner__text">
+            Want to skip to <strong>{RANK_LABELS[nextRank]}</strong>?
+          </span>
+          <button
+            className="rank-gate-banner__btn"
+            onClick={() => setActiveRankTest(gateTest)}
+          >
+            Test Out
+          </button>
+        </div>
+      )}
 
       {availableTierTest && !activeTierTestId && (
         <div className="tier-test-banner">
@@ -161,6 +265,14 @@ export default function SkillTreeView() {
           onPass={handleTierTestPass}
           onFail={() => {}}
           onClose={() => setActiveTierTestId(null)}
+        />
+      )}
+      {activeRankTest && (
+        <RankTestSession
+          test={activeRankTest}
+          onPass={handleRankTestPass}
+          onFail={() => setActiveRankTest(null)}
+          onClose={() => setActiveRankTest(null)}
         />
       )}
     </div>

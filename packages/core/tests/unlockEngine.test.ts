@@ -16,6 +16,10 @@ function makePlayer(overrides: Partial<Player> = {}): Player {
     xpTotal: 0,
     level: 1,
     nodeProgress: {},
+    passedTierTests: [],
+    passedRankTests: [],
+    archetypeRanks: {},
+    unlockedAchievements: [],
     ...overrides,
   };
 }
@@ -74,9 +78,10 @@ describe("getNodeStatus", () => {
     expect(getNodeStatus("child", tree, makePlayer())).toBe("locked");
   });
 
-  it("node becomes available once all prerequisites are completed", () => {
+  it("node becomes available once all prerequisites are completed and player has rank", () => {
     const player = makePlayer({
       nodeProgress: { root: completedProgress("root", 100) },
+      archetypeRanks: { rocker: 'novice' },
     });
     expect(getNodeStatus("child", tree, player)).toBe("available");
   });
@@ -113,9 +118,10 @@ describe("getAvailableNodes", () => {
     expect(ids).not.toContain("child");
   });
 
-  it("includes child node once root is completed", () => {
+  it("includes child node once root is completed and player has novice rank", () => {
     const player = makePlayer({
       nodeProgress: { root: completedProgress("root", 100) },
+      archetypeRanks: { rocker: 'novice' },
     });
     const ids = getAvailableNodes(tree, player).map((n) => n.id);
     expect(ids).toContain("child");

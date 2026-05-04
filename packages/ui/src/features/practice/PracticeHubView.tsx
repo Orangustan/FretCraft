@@ -19,6 +19,8 @@ function adaptPlayerForEngine(player: ReturnType<typeof usePlayer>['player'], ac
     level: player.level,
     nodeProgress,
     passedTierTests: player.passedTierTests ?? [],
+    passedRankTests: player.passedRankTests ?? [],
+    archetypeRanks: player.archetypeRanks ?? {},
     unlockedAchievements: player.unlockedAchievements ?? [],
   };
 }
@@ -54,6 +56,11 @@ export default function PracticeHubView() {
     if (!practiceNode) return;
     dispatch({ type: 'COMPLETE_NODE', payload: { nodeId: practiceNode.node.id } });
     dispatch({ type: 'ADD_XP', payload: { amount: earnedXp } });
+    // Auto-advance rank if tier just completed
+    const result = ProgressionEngine.applyNodeCompletion(practiceNode.node.id, activeTree, corePlayer as Parameters<typeof ProgressionEngine.applyNodeCompletion>[2]);
+    if (result.rankAdvanced && result.newRank) {
+      dispatch({ type: 'ADVANCE_RANK', payload: { archetypeId: activeTree.archetypeId, newRank: result.newRank as import('@guitar-st/core').PlayerRank } });
+    }
     setPracticeNode(null);
   };
 

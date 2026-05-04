@@ -2,6 +2,7 @@ import type { Player, NodeStatus } from "../schema/Player";
 import type { SkillNode } from "../schema/SkillNode";
 import type { SkillTree } from "../schema/SkillTree";
 import { calculateLevel } from "./xpEngine";
+import { getCurrentRank, isTierAccessible, getNextRank, rankToMinTier, hasCompletedTier, advanceRank } from "./rankEngine";
 
 function isUnlockConditionSatisfied(node: SkillNode, player: Player): boolean {
   const cond = node.unlockCondition;
@@ -17,6 +18,8 @@ function isUnlockConditionSatisfied(node: SkillNode, player: Player): boolean {
     }
     case "time-played":
       return true;
+    case "tier-test-passed":
+      return player.passedTierTests.length >= cond.value;
     default:
       return false;
   }
@@ -33,6 +36,9 @@ export function getNodeStatus(
 
   const node = tree.nodes.find((n) => n.id === nodeId);
   if (!node) return "locked";
+
+  const currentRank = getCurrentRank(player, tree.archetypeId);
+  if (!isTierAccessible(node.tier, currentRank)) return "locked";
 
   const prereqsMet = node.prerequisites.every(
     (prereqId) => player.nodeProgress[prereqId]?.status === "completed"
@@ -99,7 +105,7 @@ export function completeNode(
 
   const earnedXp = Math.round(node.xpReward * accuracyMultiplier(accuracyScore));
   const newXpTotal = player.xpTotal + earnedXp;
-  return {
+  let updated: Player = {
     ...player,
     xpTotal: newXpTotal,
     level: calculateLevel(newXpTotal),
@@ -114,4 +120,13 @@ export function completeNode(
       },
     },
   };
+
+  // Auto-advance rank when the completed node finishes the current tier
+  const currentRank = getCurrentRank(updated, tree.archetypeId);
+  const nextRank = getNextRank(currentRank);
+  if (nextRank && hasCompletedTier(rankToMinTier(currentRank), tree, updated)) {
+    updated = advanceRank(updated, tree.archetypeId);
+  }
+
+  return updated;
 }

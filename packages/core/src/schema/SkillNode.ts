@@ -52,10 +52,14 @@ export interface Exercise {
   type: ExerciseType;
   prompt: string;
   bpm?: number;
+  bpmStart?: number;
+  bpmGoal?: number;
   durationSeconds?: number;
   xpValue: number;
   /** MIDI note name for pitch-detection exercises, e.g. "A4" or "E2" */
   targetNote?: string;
+  focusPoints?: string[];
+  selfAssessment?: boolean;
 }
 
 export interface UnlockCondition {

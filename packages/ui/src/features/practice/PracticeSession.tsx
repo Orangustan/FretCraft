@@ -9,6 +9,7 @@ interface PracticeSessionProps {
   tree: SkillTree;
   onComplete: (earnedXp: number, accuracyScore: number) => void;
   onClose: () => void;
+  onBpmGoalHit?: () => void;
 }
 
 type Phase = 'intro' | 'exercise' | 'summary';
@@ -27,7 +28,13 @@ function xpMultiplier(accuracy: number): number {
   return 0.25;
 }
 
-export function PracticeSession({ node, onComplete, onClose }: PracticeSessionProps) {
+function accuracyToStars(accuracy: number): number {
+  if (accuracy >= 0.9) return 3;
+  if (accuracy >= 0.7) return 2;
+  return 1;
+}
+
+export function PracticeSession({ node, onComplete, onClose, onBpmGoalHit }: PracticeSessionProps) {
   const exercises = node.exercises ?? [];
   const [phase, setPhase] = useState<Phase>('intro');
   const [exerciseIdx, setExerciseIdx] = useState(0);
@@ -41,7 +48,15 @@ export function PracticeSession({ node, onComplete, onClose }: PracticeSessionPr
   const pitchDetRef = useRef<PitchDetector | null>(null);
   const metronomeRef = useRef<Metronome | null>(null);
 
+  // BPM challenge state
   const currentExercise: Exercise | undefined = exercises[exerciseIdx];
+  const hasBpmChallenge = !!(currentExercise?.bpmStart && currentExercise?.bpmGoal);
+  const [currentBpm, setCurrentBpm] = useState<number>(0);
+  const [bpmGoalHit, setBpmGoalHit] = useState(false);
+
+  // Countdown timer state
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const stopAudio = useCallback(() => {
     pitchDetRef.current?.stop();
@@ -57,24 +72,69 @@ export function PracticeSession({ node, onComplete, onClose }: PracticeSessionPr
     setMetronomeRunning(false);
   }, []);
 
+  const stopTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
   useEffect(() => {
     return () => {
       stopAudio();
       stopMetronome();
+      stopTimer();
     };
-  }, [stopAudio, stopMetronome]);
+  }, [stopAudio, stopMetronome, stopTimer]);
 
-  // Auto-start metronome when entering an exercise that has BPM
+  // Reset BPM challenge and timer when exercise changes
   useEffect(() => {
     if (phase !== 'exercise' || !currentExercise) return;
+
     stopMetronome();
-    if (currentExercise.bpm) {
-      const m = new Metronome({ bpm: currentExercise.bpm, timeSignature: '4/4', onBeat: () => {} });
+    stopTimer();
+    setBpmGoalHit(false);
+
+    const startBpm = currentExercise.bpmStart ?? currentExercise.bpm ?? 0;
+    setCurrentBpm(startBpm);
+
+    if (startBpm > 0) {
+      const m = new Metronome({ bpm: startBpm, timeSignature: '4/4', onBeat: () => {} });
       m.start();
       metronomeRef.current = m;
       setMetronomeRunning(true);
     }
+
+    if (currentExercise.durationSeconds) {
+      setTimeLeft(currentExercise.durationSeconds);
+      timerRef.current = setInterval(() => {
+        setTimeLeft((prev) => {
+          if (prev === null || prev <= 1) {
+            stopTimer();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+    } else {
+      setTimeLeft(null);
+    }
   }, [phase, exerciseIdx]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleIncreaseBpm = () => {
+    if (!currentExercise?.bpmGoal) return;
+    const next = Math.min(currentBpm + 5, currentExercise.bpmGoal);
+    setCurrentBpm(next);
+    stopMetronome();
+    const m = new Metronome({ bpm: next, timeSignature: '4/4', onBeat: () => {} });
+    m.start();
+    metronomeRef.current = m;
+    setMetronomeRunning(true);
+    if (next >= currentExercise.bpmGoal && !bpmGoalHit) {
+      setBpmGoalHit(true);
+      onBpmGoalHit?.();
+    }
+  };
 
   const handleConnectAudio = async () => {
     try {
@@ -93,6 +153,7 @@ export function PracticeSession({ node, onComplete, onClose }: PracticeSessionPr
     const next = [...accuracies, accuracy];
     setAccuracies(next);
     stopMetronome();
+    stopTimer();
 
     if (exerciseIdx + 1 < exercises.length) {
       setExerciseIdx((i) => i + 1);
@@ -110,10 +171,13 @@ export function PracticeSession({ node, onComplete, onClose }: PracticeSessionPr
   };
 
   const usesAudio = currentExercise?.type === 'technique' || currentExercise?.type === 'performance';
+  const usesSelfAssessment = currentExercise?.selfAssessment || (!usesAudio && currentExercise?.type !== 'ear-training');
 
   const pitchAccentColor = pitchResult
     ? (Math.abs(pitchResult.cents) <= 15 ? '#50c878' : Math.abs(pitchResult.cents) <= 30 ? '#f5a623' : '#e05c5c')
     : undefined;
+
+  const formatTime = (s: number) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
 
   // ── Intro screen ─────────────────────────────────────────────────────────
   if (phase === 'intro') {
@@ -149,12 +213,20 @@ export function PracticeSession({ node, onComplete, onClose }: PracticeSessionPr
     const avg = accuracies.length > 0 ? accuracies.reduce((s, a) => s + a, 0) / accuracies.length : 1;
     const earned = Math.round(node.xpReward * xpMultiplier(avg));
     const pct = Math.round(avg * 100);
+    const stars = accuracyToStars(avg);
     return (
       <div className="practice-session__overlay">
         <div className="practice-session__modal">
           <div className="practice-session__summary">
             <p className="practice-session__kicker">Session Complete</p>
             <h2 className="practice-session__title">{node.label}</h2>
+            <div className="practice-session__stars">
+              {[1, 2, 3].map((s) => (
+                <span key={s} className={`practice-session__star ${s <= stars ? 'practice-session__star--filled' : 'practice-session__star--empty'}`}>
+                  ★
+                </span>
+              ))}
+            </div>
             <div className="practice-session__accuracy-ring" style={{ '--acc': `${pct}%` } as React.CSSProperties}>
               <span className="practice-session__accuracy-pct">{pct}%</span>
               <span className="practice-session__accuracy-label">Accuracy</span>
@@ -198,20 +270,56 @@ export function PracticeSession({ node, onComplete, onClose }: PracticeSessionPr
         {currentExercise && (
           <div className="practice-session__exercise">
             <div className="practice-session__exercise-header">
-              <span className="practice-session__type-badge practice-session__type-badge--{currentExercise.type}">
+              <span className={`practice-session__type-badge practice-session__type-badge--${currentExercise.type}`}>
                 {EXERCISE_TYPE_LABELS[currentExercise.type] ?? currentExercise.type}
               </span>
-              {currentExercise.bpm && (
+
+              {/* BPM challenge or static BPM */}
+              {hasBpmChallenge ? (
+                <div className="practice-session__bpm-challenge">
+                  <span className={['practice-session__bpm', metronomeRunning ? 'practice-session__bpm--active' : '', bpmGoalHit ? 'practice-session__bpm--goal' : ''].filter(Boolean).join(' ')}>
+                    {currentBpm} BPM
+                  </span>
+                  <span className="practice-session__bpm-goal-label">→ Goal: {currentExercise.bpmGoal}</span>
+                  {!bpmGoalHit && currentBpm < (currentExercise.bpmGoal ?? 0) && (
+                    <button className="practice-session__bpm-up" onClick={handleIncreaseBpm}>
+                      +5 BPM
+                    </button>
+                  )}
+                  {bpmGoalHit && <span className="practice-session__bpm-hit">Goal reached!</span>}
+                </div>
+              ) : currentExercise.bpm ? (
                 <span className={['practice-session__bpm', metronomeRunning ? 'practice-session__bpm--active' : ''].filter(Boolean).join(' ')}>
                   {currentExercise.bpm} BPM
                 </span>
+              ) : null}
+
+              {/* Countdown timer */}
+              {timeLeft !== null && (
+                <span className={['practice-session__timer', timeLeft <= 10 ? 'practice-session__timer--urgent' : ''].filter(Boolean).join(' ')}>
+                  {formatTime(timeLeft)}
+                </span>
               )}
+
               <span className="practice-session__exercise-xp">+{currentExercise.xpValue} XP</span>
             </div>
 
             <p className="practice-session__exercise-prompt">{currentExercise.prompt}</p>
 
-            {usesAudio && (
+            {/* Focus points */}
+            {currentExercise.focusPoints && currentExercise.focusPoints.length > 0 && (
+              <div className="practice-session__focus-panel">
+                <p className="practice-session__focus-label">Focus on:</p>
+                <ul className="practice-session__focus-list">
+                  {currentExercise.focusPoints.map((point, i) => (
+                    <li key={i} className="practice-session__focus-item">{point}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Audio pitch panel */}
+            {usesAudio && !usesSelfAssessment && (
               <div className="practice-session__audio-panel">
                 {!audioConnected ? (
                   <button className="practice-session__audio-btn" onClick={handleConnectAudio}>
@@ -244,10 +352,28 @@ export function PracticeSession({ node, onComplete, onClose }: PracticeSessionPr
           </div>
         )}
 
+        {/* Action buttons */}
         <div className="practice-session__actions">
-          <button className="practice-session__cta" onClick={() => markExerciseComplete(1.0)}>
-            Mark Complete
-          </button>
+          {usesSelfAssessment ? (
+            <div className="practice-session__self-assess">
+              <p className="practice-session__self-assess-label">How did that feel?</p>
+              <div className="practice-session__self-assess-buttons">
+                <button className="practice-session__assess-btn practice-session__assess-btn--struggled" onClick={() => markExerciseComplete(0.5)}>
+                  Struggled
+                </button>
+                <button className="practice-session__assess-btn practice-session__assess-btn--getting-there" onClick={() => markExerciseComplete(0.75)}>
+                  Getting There
+                </button>
+                <button className="practice-session__assess-btn practice-session__assess-btn--nailed-it" onClick={() => markExerciseComplete(1.0)}>
+                  Nailed It
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button className="practice-session__cta" onClick={() => markExerciseComplete(1.0)}>
+              Mark Complete
+            </button>
+          )}
         </div>
       </div>
     </div>

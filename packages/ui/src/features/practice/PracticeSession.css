@@ -345,3 +345,179 @@
   color: var(--color-text-muted);
   margin: 0;
 }
+
+/* ── Stars ── */
+.practice-session__stars {
+  display: flex;
+  gap: 6px;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.practice-session__star--filled {
+  color: var(--color-accent-amber);
+  text-shadow: 0 0 8px rgba(245, 166, 35, 0.6);
+}
+
+.practice-session__star--empty {
+  color: var(--color-bg-surface);
+  -webkit-text-stroke: 1px var(--color-border);
+}
+
+/* ── Focus Points ── */
+.practice-session__focus-panel {
+  background: rgba(245, 166, 35, 0.06);
+  border: 1px solid rgba(245, 166, 35, 0.2);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+}
+
+.practice-session__focus-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-amber);
+  margin: 0 0 var(--space-2) 0;
+}
+
+.practice-session__focus-list {
+  margin: 0;
+  padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.practice-session__focus-item {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* ── Countdown Timer ── */
+.practice-session__timer {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.practice-session__timer--urgent {
+  color: #e05c5c;
+  border-color: #e05c5c;
+  animation: timer-pulse 1s ease-in-out infinite;
+}
+
+@keyframes timer-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ── BPM Challenge ── */
+.practice-session__bpm-challenge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.practice-session__bpm--goal {
+  color: var(--color-success) !important;
+  border-color: var(--color-success) !important;
+}
+
+.practice-session__bpm-goal-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.practice-session__bpm-up {
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.practice-session__bpm-up:hover {
+  border-color: var(--color-accent-amber);
+  color: var(--color-accent-amber);
+}
+
+.practice-session__bpm-hit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+/* ── Self-Assessment ── */
+.practice-session__self-assess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+}
+
+.practice-session__self-assess-label {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.practice-session__self-assess-buttons {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.practice-session__assess-btn {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1.5px solid;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter var(--transition-base), transform 0.1s;
+}
+
+.practice-session__assess-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.practice-session__assess-btn--struggled {
+  background: rgba(224, 92, 92, 0.12);
+  border-color: #e05c5c;
+  color: #e05c5c;
+}
+
+.practice-session__assess-btn--getting-there {
+  background: rgba(245, 166, 35, 0.12);
+  border-color: var(--color-accent-amber);
+  color: var(--color-accent-amber);
+}
+
+.practice-session__assess-btn--nailed-it {
+  background: rgba(80, 200, 120, 0.12);
+  border-color: var(--color-success);
+  color: var(--color-success);
+}

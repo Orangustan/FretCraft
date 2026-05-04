@@ -3,6 +3,7 @@ import type { SkillNode } from "../schema/SkillNode";
 import type { SkillTree } from "../schema/SkillTree";
 import { xpProgressInLevel } from "./xpEngine";
 import { getNodeStatus, getAvailableNodes, completeNode } from "./unlockEngine";
+import { getCurrentRank } from "./rankEngine";
 
 export const ProgressionEngine = {
   getTreeStatus(tree: SkillTree, player: Player): Record<string, NodeStatus> {
@@ -49,11 +50,15 @@ export const ProgressionEngine = {
     newlyAvailableNodes: SkillNode[];
     leveledUp: boolean;
     newLevel?: number;
+    rankAdvanced?: boolean;
+    newRank?: string;
   } {
+    const rankBefore = getCurrentRank(player, tree.archetypeId);
     const availableBefore = new Set(
       getAvailableNodes(tree, player).map((n) => n.id)
     );
 
+    // completeNode now auto-advances rank when current tier is finished
     const updatedPlayer = completeNode(nodeId, tree, player);
 
     const availableAfter = getAvailableNodes(tree, updatedPlayer);
@@ -62,12 +67,16 @@ export const ProgressionEngine = {
     );
 
     const leveledUp = updatedPlayer.level > player.level;
+    const rankAfter = getCurrentRank(updatedPlayer, tree.archetypeId);
+    const rankAdvanced = rankAfter !== rankBefore;
 
     return {
       updatedPlayer,
       newlyAvailableNodes,
       leveledUp,
       ...(leveledUp ? { newLevel: updatedPlayer.level } : {}),
+      rankAdvanced,
+      ...(rankAdvanced ? { newRank: rankAfter } : {}),
     };
   },
 };

@@ -3,12 +3,18 @@ export type AchievementConditionType =
   | 'level-reached'
   | 'tier-test-passed'
   | 'xp-total'
-  | 'tree-completed';
+  | 'tree-completed'
+  | 'rank-achieved'
+  | 'rank-test-passed'
+  | 'archetypes-at-rank'
+  | 'bpm-goal-hit';
 
 export interface AchievementCondition {
   type: AchievementConditionType;
   value: number;
   archetypeId?: string;
+  /** For rank-achieved / archetypes-at-rank conditions */
+  rankValue?: string;
 }
 
 export interface Achievement {

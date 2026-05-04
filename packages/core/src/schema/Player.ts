@@ -1,5 +1,9 @@
 export type NodeStatus = "locked" | "available" | "in-progress" | "completed";
 
+export type PlayerRank = "beginner" | "novice" | "intermediate" | "expert" | "pro";
+
+export const RANK_ORDER: PlayerRank[] = ["beginner", "novice", "intermediate", "expert", "pro"];
+
 export interface NodeProgress {
   nodeId: string;
   status: NodeStatus;
@@ -16,5 +20,7 @@ export interface Player {
   level: number;
   nodeProgress: Record<string, NodeProgress>;
   passedTierTests: string[];
+  passedRankTests: string[];
   unlockedAchievements: string[];
+  archetypeRanks: Record<string, PlayerRank>;
 }

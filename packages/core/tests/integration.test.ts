@@ -13,6 +13,10 @@ function freshPlayer(): Player {
     xpTotal: 0,
     level: 1,
     nodeProgress: {},
+    passedTierTests: [],
+    passedRankTests: [],
+    archetypeRanks: {},
+    unlockedAchievements: [],
   };
 }
 
@@ -64,18 +68,23 @@ describe("Full Rocker Progression", () => {
     expect(getNodeStatus("rocker-005", tree, player)).toBe("available");
   });
 
-  it("completing rocker-003 alone does not unlock rocker-007; completing rocker-004 does", () => {
+  it("completing rocker-003 and rocker-004 does not unlock rocker-007 without intermediate rank", () => {
     const tree = ROCKER_TREE;
     let player = freshPlayer();
     player = completeNode("rocker-001", tree, player);
-    player = completeNode("rocker-002", tree, player);
+    player = completeNode("rocker-002", tree, player); // rank → novice
     player = completeNode("rocker-003", tree, player);
 
-    // rocker-007 needs both rocker-003 AND rocker-004
+    // rocker-007 is tier 3 — needs both prereqs AND intermediate rank
     expect(getNodeStatus("rocker-007", tree, player)).toBe("locked");
 
     player = completeNode("rocker-004", tree, player);
 
+    // Still locked: rocker-005 (tier 2) not yet complete, so rank stays novice
+    expect(getNodeStatus("rocker-007", tree, player)).toBe("locked");
+
+    // Complete rocker-005 to finish tier 2 → rank advances to intermediate
+    player = completeNode("rocker-005", tree, player);
     expect(getNodeStatus("rocker-007", tree, player)).toBe("available");
   });
 
@@ -107,34 +116,34 @@ describe("Full Rocker Progression", () => {
     expect(summary.xpTotal).toBe(0);
     expect(summary.level).toBe(1);
 
-    // Step 1 — complete rocker-001: 1 completed, 3 available (002, 003, 005), 8 locked
+    // Step 1 — complete rocker-001: 1 completed, 1 available (002 only), tier 2 still locked
     player = completeNode("rocker-001", tree, player);
     summary = ProgressionEngine.getPlayerSummary(tree, player);
     expect(summary.completedCount).toBe(1);
-    expect(summary.availableCount).toBe(3);
-    expect(summary.lockedCount).toBe(8);
+    expect(summary.availableCount).toBe(1);  // only 002; tier 2 needs novice rank
+    expect(summary.lockedCount).toBe(10);
     expect(summary.level).toBe(2);
 
-    // Step 2 — complete rocker-002: 2 completed, 3 available (003, 004, 005), 7 locked
+    // Step 2 — complete rocker-002: tier 1 done → rank advances to novice → tier 2 unlocks
     player = completeNode("rocker-002", tree, player);
     summary = ProgressionEngine.getPlayerSummary(tree, player);
     expect(summary.completedCount).toBe(2);
-    expect(summary.availableCount).toBe(3);
-    expect(summary.lockedCount).toBe(7);
+    expect(summary.availableCount).toBe(3);  // 003, 004, 005 all available
+    expect(summary.lockedCount).toBe(7);     // tier 3+4 still locked
 
-    // Step 3 — complete rocker-003: 3 completed, 3 available (004, 005, 006), 6 locked
+    // Step 3 — complete rocker-003: 3 completed, 2 available (004, 005), tier 3 still locked
     player = completeNode("rocker-003", tree, player);
     summary = ProgressionEngine.getPlayerSummary(tree, player);
     expect(summary.completedCount).toBe(3);
-    expect(summary.availableCount).toBe(3);
-    expect(summary.lockedCount).toBe(6);
+    expect(summary.availableCount).toBe(2);  // 004, 005; tier 3 needs intermediate
+    expect(summary.lockedCount).toBe(7);
 
-    // Step 4 — complete rocker-004: 4 completed, 3 available (005, 006, 007), 5 locked
+    // Step 4 — complete rocker-004: 4 completed, 1 available (005), tier 3 still locked
     player = completeNode("rocker-004", tree, player);
     summary = ProgressionEngine.getPlayerSummary(tree, player);
     expect(summary.completedCount).toBe(4);
-    expect(summary.availableCount).toBe(3);
-    expect(summary.lockedCount).toBe(5);
+    expect(summary.availableCount).toBe(1);  // 005; rank still novice (tier 2 not fully done)
+    expect(summary.lockedCount).toBe(7);
     expect(summary.percentComplete).toBeCloseTo(4 / 12);
   });
 });

@@ -1,6 +1,7 @@
 import type { Achievement } from '../schema/Achievement';
 import type { Player } from '../schema/Player';
 import type { SkillTree } from '../schema/SkillTree';
+import { RANK_ORDER } from '../schema/Player';
 import { ACHIEVEMENTS } from '../archetypes/achievements';
 
 export function checkAchievements(
@@ -14,6 +15,8 @@ export function checkAchievements(
   const treeCompleted = tree.nodes.every(
     (n) => player.nodeProgress[n.id]?.status === 'completed'
   );
+  const archetypeRanks = player.archetypeRanks ?? {};
+  const rankValues = Object.values(archetypeRanks);
 
   return ACHIEVEMENTS.filter((a) => {
     if (unlocked.has(a.id)) return false;
@@ -29,6 +32,17 @@ export function checkAchievements(
         return player.xpTotal >= condition.value;
       case 'tree-completed':
         return treeCompleted;
+      case 'rank-achieved': {
+        const targetRankIdx = RANK_ORDER.indexOf(condition.rankValue as typeof RANK_ORDER[number]);
+        return rankValues.some((r) => RANK_ORDER.indexOf(r) >= targetRankIdx);
+      }
+      case 'rank-test-passed':
+        return (player.passedRankTests ?? []).length >= condition.value;
+      case 'archetypes-at-rank': {
+        const targetRankIdx = RANK_ORDER.indexOf(condition.rankValue as typeof RANK_ORDER[number]);
+        const count = rankValues.filter((r) => RANK_ORDER.indexOf(r) >= targetRankIdx).length;
+        return count >= condition.value;
+      }
       default:
         return false;
     }

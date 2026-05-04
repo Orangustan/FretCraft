@@ -15,6 +15,84 @@
   flex-shrink: 0;
 }
 
+.archetype-selector__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── Rank Badge ── */
+.rank-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid;
+}
+
+.rank-badge--beginner  { color: #94a3b8; border-color: #94a3b8; background: rgba(148,163,184,0.1); }
+.rank-badge--novice    { color: #4ade80; border-color: #4ade80; background: rgba(74,222,128,0.1); }
+.rank-badge--intermediate { color: #60a5fa; border-color: #60a5fa; background: rgba(96,165,250,0.1); }
+.rank-badge--expert    { color: #c084fc; border-color: #c084fc; background: rgba(192,132,252,0.1); }
+.rank-badge--pro       { color: var(--color-accent-amber); border-color: var(--color-accent-amber); background: rgba(245,166,35,0.1); }
+
+/* ── Rank Gate Banner ── */
+.rank-gate-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 16px;
+  background: rgba(245, 166, 35, 0.08);
+  border-bottom: 1px solid rgba(245, 166, 35, 0.25);
+  font-family: var(--font-sub);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.rank-gate-banner--testout {
+  background: rgba(96, 165, 250, 0.06);
+  border-bottom-color: rgba(96, 165, 250, 0.2);
+}
+
+.rank-gate-banner__text strong {
+  color: var(--color-accent-amber);
+}
+
+.rank-gate-banner__btn {
+  padding: 4px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-accent-amber);
+  background: rgba(245, 166, 35, 0.12);
+  color: var(--color-accent-amber);
+  font-family: var(--font-sub);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.rank-gate-banner__btn:hover {
+  background: rgba(245, 166, 35, 0.22);
+}
+
+.rank-gate-banner__btn--secondary {
+  border-color: var(--color-border);
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.rank-gate-banner__btn--secondary:hover {
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+}
+
 .archetype-selector label {
   font-family: var(--font-sub);
   font-size: 10px;
