@@ -15,6 +15,7 @@
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
   position: relative;
+  animation: shellReveal 0.45s ease both;
 }
 
 /* Gold sheen engraved line */
@@ -75,6 +76,11 @@
   50%       { filter: drop-shadow(0 0 12px rgba(245, 192, 96, 0.5)) drop-shadow(0 0 24px rgba(200, 118, 42, 0.2)); }
 }
 
+@keyframes shellReveal {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .app-header__level {
   display: flex;
   align-items: center;
@@ -110,6 +116,7 @@
   background-color: var(--color-bg-secondary);
   border-bottom: 1px solid var(--color-border);
   flex-shrink: 0;
+  animation: shellReveal 0.45s 0.1s ease both;
 }
 
 .app-nav__tab {
@@ -150,6 +157,11 @@
 .app-content {
   flex: 1;
   overflow: auto;
+  background:
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(200, 118, 42, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 30% at 80% 100%, rgba(74, 158, 142, 0.04) 0%, transparent 60%),
+    var(--color-bg-primary);
+  animation: shellReveal 0.45s 0.22s ease both;
 }
 
 /* Loading Fallback */
