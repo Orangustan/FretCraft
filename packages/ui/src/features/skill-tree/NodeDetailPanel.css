@@ -324,3 +324,221 @@
   height: 14px;
   flex-shrink: 0;
 }
+
+/* ── Rank label in header ── */
+.node-detail-panel__rank-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 1px 6px;
+}
+
+/* ── Tabs ── */
+.node-detail-panel__tabs {
+  display: flex;
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.node-detail-panel__tab {
+  flex: 1;
+  padding: var(--space-3) var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color var(--transition-base), border-color var(--transition-base);
+}
+
+.node-detail-panel__tab:hover {
+  color: var(--color-text-secondary);
+}
+
+.node-detail-panel__tab--active {
+  color: var(--color-accent-gold);
+  border-bottom-color: var(--color-accent-gold);
+}
+
+/* ── Session Setup (Practice tab) ── */
+.node-detail-panel__session-setup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.node-detail-panel__setup-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.node-detail-panel__pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.node-detail-panel__pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: border-color var(--transition-base), color var(--transition-base), background var(--transition-base);
+  white-space: nowrap;
+}
+
+.node-detail-panel__pill:hover {
+  border-color: var(--color-accent-gold-deep);
+  color: var(--color-text-primary);
+}
+
+.node-detail-panel__pill--active {
+  border-color: var(--color-accent-gold);
+  color: var(--color-accent-gold);
+  background: rgba(200, 118, 42, 0.12);
+}
+
+.node-detail-panel__pill-hint {
+  font-size: 9px;
+  opacity: 0.75;
+  margin-left: 2px;
+}
+
+.node-detail-panel__optional {
+  font-family: var(--font-body);
+  font-size: 9px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.node-detail-panel__bpm-input {
+  width: 90px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: var(--space-2) var(--space-3);
+  outline: none;
+  transition: border-color var(--transition-base);
+}
+
+.node-detail-panel__bpm-input:focus {
+  border-color: var(--color-accent-gold-deep);
+}
+
+.node-detail-panel__xp-preview {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+}
+
+.node-detail-panel__xp-preview strong {
+  color: var(--color-accent-gold);
+}
+
+.node-detail-panel__exercise-preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.node-detail-panel__begin-row {
+  padding-top: var(--space-2);
+}
+
+/* ── Locked message (practice tab) ── */
+.node-detail-panel__locked-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.node-detail-panel__locked-icon {
+  width: 36px;
+  height: 36px;
+  opacity: 0.4;
+}
+
+/* ── Progress tab ── */
+.node-detail-panel__progress-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.node-detail-panel__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+}
+
+.node-detail-panel__stat-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.node-detail-panel__stat-value {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-accent-gold);
+}
+
+.node-detail-panel__completed-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-success);
+  background: rgba(74, 222, 128, 0.08);
+  border: 1px solid rgba(74, 222, 128, 0.25);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+}
+
+.node-detail-panel__check-icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--color-success);
+}

@@ -33,6 +33,8 @@ import { NodeDetailPanel } from './NodeDetailPanel';
 import { PracticeSession } from '../practice/PracticeSession';
 import { RankTestSession } from '../practice/RankTestSession';
 import { TierTestModal } from '../practice/TierTestModal';
+import type { SessionConfig } from '../practice/sessionConfig';
+import { DEFAULT_SESSION_CONFIG } from '../practice/sessionConfig';
 import './SkillTreeView.css';
 
 const TIER_TEST_REGISTRY = [...ROCKER_TIER_TESTS, ...COUNTRY_TIER_TESTS];
@@ -41,6 +43,7 @@ export default function SkillTreeView() {
   const { activeTree, customTrees, setActiveTree, dispatch, player } = usePlayer();
   const { nodeStatuses, handleNodeClick, selectedNodeId, resetSelection } = useSkillTree(activeTree);
   const [practiceNodeId, setPracticeNodeId] = useState<string | null>(null);
+  const [sessionConfig, setSessionConfig] = useState<SessionConfig>(DEFAULT_SESSION_CONFIG);
   const [activeTierTestId, setActiveTierTestId] = useState<string | null>(null);
   const [activeRankTest, setActiveRankTest] = useState<RankTest | null>(null);
   const [activeBranch, setActiveBranch] = useState<BranchType | 'all'>('all');
@@ -108,10 +111,20 @@ export default function SkillTreeView() {
     setActiveBranch('all');
   };
 
-  const handlePracticeComplete = (earnedXp: number) => {
+  const handlePracticeComplete = (earnedXp: number, accuracyScore: number) => {
     if (!practiceNodeId) return;
     dispatch({ type: 'COMPLETE_NODE', payload: { nodeId: practiceNodeId } });
     dispatch({ type: 'ADD_XP', payload: { amount: earnedXp } });
+    dispatch({
+      type: 'LOG_PRACTICE_SESSION',
+      payload: {
+        date: new Date().toISOString(),
+        durationSeconds: sessionConfig.durationMinutes * 60,
+        xpEarned: earnedXp,
+        nodesWorked: [practiceNodeId],
+        accuracyAvg: accuracyScore,
+      },
+    });
     // Auto-advance rank if completing this node finishes the current tier
     const { rankAdvanced, newRank } = ProgressionEngine.applyNodeCompletion(
       practiceNodeId,
@@ -206,7 +219,7 @@ export default function SkillTreeView() {
 
       {availableTierTest && !activeTierTestId && (
         <div className="tier-test-banner">
-          <span>Tier {availableTierTest.tierId} complete!</span>
+          <span>{RANK_LABELS[({ 1: 'beginner', 2: 'novice', 3: 'intermediate', 4: 'expert' } as Record<number, PlayerRank>)[availableTierTest.tierId] ?? 'beginner']} tier complete!</span>
           <button
             className="tier-test-banner__btn"
             onClick={() => setActiveTierTestId(availableTierTest.id)}
@@ -241,6 +254,7 @@ export default function SkillTreeView() {
         selectedNodeId={selectedNodeId}
         onNodeClick={handleNodeClick}
         activeBranch={activeBranch}
+        currentRank={currentRank}
       />
       {selectedNode && (
         <NodeDetailPanel
@@ -248,13 +262,14 @@ export default function SkillTreeView() {
           node={selectedNode}
           status={nodeStatuses[selectedNode.id] ?? 'locked'}
           tree={activeTree}
-          onBeginPractice={() => setPracticeNodeId(selectedNode.id)}
+          onBeginPractice={(config) => { setSessionConfig(config); setPracticeNodeId(selectedNode.id); }}
         />
       )}
       {practiceNode && (
         <PracticeSession
           node={practiceNode}
           tree={activeTree}
+          sessionConfig={sessionConfig}
           onComplete={handlePracticeComplete}
           onClose={() => setPracticeNodeId(null)}
         />

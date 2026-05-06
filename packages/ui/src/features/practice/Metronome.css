@@ -129,3 +129,33 @@
 .metronome__toggle--stop:hover {
   background: rgba(224, 92, 92, 0.2);
 }
+
+.metronome__sound-row {
+  display: flex;
+  gap: var(--space-1);
+  justify-content: center;
+}
+
+.metronome__sound-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-surface);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.metronome__sound-btn:hover {
+  border-color: var(--color-accent-amber);
+  color: var(--color-text-primary);
+}
+
+.metronome__sound-btn--active {
+  border-color: var(--color-accent-amber);
+  color: var(--color-accent-amber);
+  background: rgba(245, 166, 35, 0.1);
+}

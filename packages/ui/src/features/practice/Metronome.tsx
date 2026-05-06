@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Metronome as MetronomeEngine } from '@guitar-st/audio-lab';
-import type { TimeSignature } from '@guitar-st/audio-lab';
+import type { TimeSignature, SoundType } from '@guitar-st/audio-lab';
 import './Metronome.css';
 
 interface MetronomeProps {
@@ -9,6 +9,12 @@ interface MetronomeProps {
 }
 
 const TIME_SIGS: TimeSignature[] = ['4/4', '3/4', '6/8'];
+const SOUND_TYPES: { id: SoundType; label: string }[] = [
+  { id: 'click',    label: 'Click' },
+  { id: 'woodblock',label: 'Wood' },
+  { id: 'cowbell',  label: 'Bell' },
+  { id: 'rimshot',  label: 'Rim' },
+];
 
 function beatsPerBar(sig: TimeSignature): number {
   if (sig === '3/4') return 3;
@@ -19,6 +25,7 @@ function beatsPerBar(sig: TimeSignature): number {
 export function Metronome({ initialBpm = 120, initialTimeSig = '4/4' }: MetronomeProps) {
   const [bpm, setBpm] = useState(initialBpm);
   const [timeSig, setTimeSig] = useState<TimeSignature>(initialTimeSig);
+  const [soundType, setSoundType] = useState<SoundType>('click');
   const [running, setRunning] = useState(false);
   const [activeBeat, setActiveBeat] = useState<number | null>(null);
   const engineRef = useRef<MetronomeEngine | null>(null);
@@ -32,7 +39,7 @@ export function Metronome({ initialBpm = 120, initialTimeSig = '4/4' }: Metronom
 
   useEffect(() => {
     if (running) {
-      engineRef.current = new MetronomeEngine({ bpm, timeSignature: timeSig, onBeat: handleBeat });
+      engineRef.current = new MetronomeEngine({ bpm, timeSignature: timeSig, onBeat: handleBeat, soundType });
       engineRef.current.start();
     } else {
       engineRef.current?.stop();
@@ -52,6 +59,10 @@ export function Metronome({ initialBpm = 120, initialTimeSig = '4/4' }: Metronom
   useEffect(() => {
     engineRef.current?.setTimeSignature(timeSig);
   }, [timeSig]);
+
+  useEffect(() => {
+    engineRef.current?.setSoundType(soundType);
+  }, [soundType]);
 
   const handleBpmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBpm(Number(e.target.value));
@@ -94,6 +105,18 @@ export function Metronome({ initialBpm = 120, initialTimeSig = '4/4' }: Metronom
               onClick={() => setTimeSig(sig)}
             >
               {sig}
+            </button>
+          ))}
+        </div>
+
+        <div className="metronome__sound-row">
+          {SOUND_TYPES.map((s) => (
+            <button
+              key={s.id}
+              className={['metronome__sound-btn', soundType === s.id ? 'metronome__sound-btn--active' : ''].filter(Boolean).join(' ')}
+              onClick={() => setSoundType(s.id)}
+            >
+              {s.label}
             </button>
           ))}
         </div>

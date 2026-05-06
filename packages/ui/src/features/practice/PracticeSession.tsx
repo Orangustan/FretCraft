@@ -2,11 +2,14 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import type { SkillNode, SkillTree, Exercise } from '@guitar-st/core';
 import { AudioInputManager, PitchDetector, Metronome } from '@guitar-st/audio-lab';
 import type { PitchResult } from '@guitar-st/audio-lab';
+import type { SessionConfig } from './sessionConfig';
+import { DEFAULT_SESSION_CONFIG, FOCUS_XP_MULTIPLIER } from './sessionConfig';
 import './PracticeSession.css';
 
 interface PracticeSessionProps {
   node: SkillNode;
   tree: SkillTree;
+  sessionConfig?: SessionConfig;
   onComplete: (earnedXp: number, accuracyScore: number) => void;
   onClose: () => void;
   onBpmGoalHit?: () => void;
@@ -34,7 +37,7 @@ function accuracyToStars(accuracy: number): number {
   return 1;
 }
 
-export function PracticeSession({ node, onComplete, onClose, onBpmGoalHit }: PracticeSessionProps) {
+export function PracticeSession({ node, sessionConfig = DEFAULT_SESSION_CONFIG, onComplete, onClose, onBpmGoalHit }: PracticeSessionProps) {
   const exercises = node.exercises ?? [];
   const [phase, setPhase] = useState<Phase>('intro');
   const [exerciseIdx, setExerciseIdx] = useState(0);
@@ -165,8 +168,7 @@ export function PracticeSession({ node, onComplete, onClose, onBpmGoalHit }: Pra
 
   const handleFinish = () => {
     const avg = accuracies.length > 0 ? accuracies.reduce((s, a) => s + a, 0) / accuracies.length : 1;
-    const totalMaxXp = exercises.reduce((s, ex) => s + ex.xpValue, 0) + (node.xpReward - exercises.reduce((s, ex) => s + ex.xpValue, 0));
-    const earned = Math.round(totalMaxXp * xpMultiplier(avg));
+    const earned = Math.round(node.xpReward * xpMultiplier(avg) * FOCUS_XP_MULTIPLIER[sessionConfig.focusLevel]);
     onComplete(earned, avg);
   };
 
@@ -181,6 +183,7 @@ export function PracticeSession({ node, onComplete, onClose, onBpmGoalHit }: Pra
 
   // ── Intro screen ─────────────────────────────────────────────────────────
   if (phase === 'intro') {
+    const maxXp = Math.round(node.xpReward * FOCUS_XP_MULTIPLIER[sessionConfig.focusLevel]);
     return (
       <div className="practice-session__overlay">
         <div className="practice-session__modal">
@@ -189,13 +192,20 @@ export function PracticeSession({ node, onComplete, onClose, onBpmGoalHit }: Pra
             <p className="practice-session__kicker">Practice Session</p>
             <h2 className="practice-session__title">{node.label}</h2>
             <p className="practice-session__intro-desc">{node.content.description}</p>
+            <div className="practice-session__session-summary">
+              <span className="practice-session__session-pill">{sessionConfig.durationMinutes} min</span>
+              <span className="practice-session__session-pill practice-session__session-pill--focus">{sessionConfig.focusLevel}</span>
+              {sessionConfig.targetBpm && (
+                <span className="practice-session__session-pill">Target: {sessionConfig.targetBpm} BPM</span>
+              )}
+            </div>
             <div className="practice-session__stats">
               <div className="practice-session__stat">
                 <span className="practice-session__stat-value">{exercises.length}</span>
                 <span className="practice-session__stat-label">Exercises</span>
               </div>
               <div className="practice-session__stat">
-                <span className="practice-session__stat-value">+{node.xpReward}</span>
+                <span className="practice-session__stat-value">+{maxXp}</span>
                 <span className="practice-session__stat-label">XP Max</span>
               </div>
             </div>
@@ -211,7 +221,7 @@ export function PracticeSession({ node, onComplete, onClose, onBpmGoalHit }: Pra
   // ── Summary screen ────────────────────────────────────────────────────────
   if (phase === 'summary') {
     const avg = accuracies.length > 0 ? accuracies.reduce((s, a) => s + a, 0) / accuracies.length : 1;
-    const earned = Math.round(node.xpReward * xpMultiplier(avg));
+    const earned = Math.round(node.xpReward * xpMultiplier(avg) * FOCUS_XP_MULTIPLIER[sessionConfig.focusLevel]);
     const pct = Math.round(avg * 100);
     const stars = accuracyToStars(avg);
     return (

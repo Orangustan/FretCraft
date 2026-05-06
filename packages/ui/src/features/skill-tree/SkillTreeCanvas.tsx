@@ -1,4 +1,5 @@
-import type { SkillTree, NodeStatus, BranchType } from '@guitar-st/core';
+import type { SkillTree, NodeStatus, BranchType, PlayerRank } from '@guitar-st/core';
+import { isTierAccessible } from '@guitar-st/core';
 import { SkillNode } from './SkillNode';
 import './SkillTreeCanvas.css';
 
@@ -18,15 +19,29 @@ function elbowPath(
   return `M ${from.cx} ${from.cy} L ${from.cx} ${midY} L ${to.cx} ${midY} L ${to.cx} ${to.cy}`;
 }
 
+interface TierGateDef {
+  toTier: number;
+  toRank: PlayerRank;
+  label: string;
+  y: number;
+}
+
+const TIER_GATES: TierGateDef[] = [
+  { toTier: 2, toRank: 'novice',       label: 'Novice',       y: 780 },
+  { toTier: 3, toRank: 'intermediate', label: 'Intermediate', y: 500 },
+  { toTier: 4, toRank: 'expert',       label: 'Expert',       y: 300 },
+];
+
 interface SkillTreeCanvasProps {
   tree: SkillTree;
   nodeStatuses: Record<string, NodeStatus>;
   selectedNodeId: string | null;
   onNodeClick: (nodeId: string) => void;
   activeBranch?: BranchType | 'all';
+  currentRank?: PlayerRank;
 }
 
-export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClick, activeBranch = 'all' }: SkillTreeCanvasProps) {
+export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClick, activeBranch = 'all', currentRank = 'beginner' }: SkillTreeCanvasProps) {
   const nodeMap = new Map(tree.nodes.map((n) => [n.id, n]));
 
   // Separate child nodes from main tree nodes
@@ -150,6 +165,35 @@ export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClic
               })
             )}
         </svg>
+
+        {/* Tier gate dividers */}
+        {TIER_GATES.map((gate) => {
+          const unlocked = isTierAccessible(gate.toTier, currentRank);
+          return (
+            <div
+              key={gate.toTier}
+              className={`tier-gate ${unlocked ? 'tier-gate--unlocked' : 'tier-gate--locked'}`}
+              style={{ top: gate.y - 20 }}
+            >
+              <div className="tier-gate__line" />
+              <div className="tier-gate__badge">
+                {unlocked ? (
+                  <svg className="tier-gate__icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <circle cx="6" cy="6" r="5" />
+                    <path d="M3.5 6.5l1.5 1.5 3.5-4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                ) : (
+                  <svg className="tier-gate__icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <rect x="2" y="5.5" width="8" height="5.5" rx="1.5" />
+                    <path d="M4 5.5V4a2 2 0 0 1 4 0v1.5" strokeLinecap="round" />
+                  </svg>
+                )}
+                <span>{gate.label.toUpperCase()} {unlocked ? 'UNLOCKED' : 'REQUIRED'}</span>
+              </div>
+              <div className="tier-gate__line" />
+            </div>
+          );
+        })}
 
         {/* Main tree nodes */}
         {mainNodes.map((node) => {

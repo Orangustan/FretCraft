@@ -1,9 +1,13 @@
 export type TimeSignature = '4/4' | '3/4' | '6/8';
 
+// Future sound types: 'drum-machine' | 'band-in-a-box'
+export type SoundType = 'click' | 'woodblock' | 'cowbell' | 'rimshot';
+
 export interface MetronomeOptions {
   bpm: number;
   timeSignature: TimeSignature;
   onBeat: (beat: number, isDownbeat: boolean) => void;
+  soundType?: SoundType;
 }
 
 const LOOKAHEAD_MS = 25;
@@ -23,10 +27,10 @@ export class Metronome {
   private schedulerTimer: ReturnType<typeof setInterval> | null = null;
   private nextBeatTime = 0;
   private currentBeat = 0;
-  private options: MetronomeOptions;
+  private options: Required<MetronomeOptions>;
 
   constructor(options: MetronomeOptions) {
-    this.options = { ...options };
+    this.options = { soundType: 'click', ...options };
   }
 
   get isRunning(): boolean {
@@ -59,6 +63,10 @@ export class Metronome {
     this.currentBeat = 0;
   }
 
+  setSoundType(sound: SoundType): void {
+    this.options.soundType = sound;
+  }
+
   private schedule(): void {
     if (!this.ctx) return;
     const secondsPerBeat = 60 / this.options.bpm;
@@ -79,18 +87,97 @@ export class Metronome {
   }
 
   private scheduleClick(time: number, isDownbeat: boolean): void {
+    switch (this.options.soundType) {
+      case 'woodblock': return this.scheduleWoodblock(time, isDownbeat);
+      case 'cowbell':   return this.scheduleCowbell(time, isDownbeat);
+      case 'rimshot':   return this.scheduleRimshot(time, isDownbeat);
+      default:          return this.scheduleOscillatorClick(time, isDownbeat);
+    }
+  }
+
+  private scheduleOscillatorClick(time: number, isDownbeat: boolean): void {
     if (!this.ctx) return;
     const osc = this.ctx.createOscillator();
     const gain = this.ctx.createGain();
-
     osc.frequency.value = isDownbeat ? CLICK_FREQ_DOWNBEAT : CLICK_FREQ_BEAT;
     gain.gain.setValueAtTime(isDownbeat ? 0.8 : 0.5, time);
     gain.gain.exponentialRampToValueAtTime(0.001, time + CLICK_DURATION);
-
     osc.connect(gain);
     gain.connect(this.ctx.destination);
-
     osc.start(time);
     osc.stop(time + CLICK_DURATION);
+  }
+
+  private scheduleWoodblock(time: number, isDownbeat: boolean): void {
+    if (!this.ctx) return;
+    const dur = 0.03;
+    const vol = isDownbeat ? 0.9 : 0.6;
+    for (const freq of [800, 1200]) {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.frequency.value = freq + (isDownbeat ? 0 : -80);
+      osc.type = 'sine';
+      gain.gain.setValueAtTime(vol * 0.5, time);
+      gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(time);
+      osc.stop(time + dur);
+    }
+  }
+
+  private scheduleCowbell(time: number, isDownbeat: boolean): void {
+    if (!this.ctx) return;
+    const dur = isDownbeat ? 0.1 : 0.07;
+    const vol = isDownbeat ? 0.7 : 0.5;
+    for (const freq of [587, 845]) {
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(vol * 0.4, time);
+      gain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(time);
+      osc.stop(time + dur);
+    }
+  }
+
+  private scheduleRimshot(time: number, isDownbeat: boolean): void {
+    if (!this.ctx) return;
+    const dur = 0.05;
+    const vol = isDownbeat ? 0.9 : 0.6;
+
+    // Noise burst
+    const bufSize = this.ctx.sampleRate * dur;
+    const buffer = this.ctx.createBuffer(1, bufSize, this.ctx.sampleRate);
+    const data = buffer.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+
+    const noise = this.ctx.createBufferSource();
+    noise.buffer = buffer;
+    const noiseFilter = this.ctx.createBiquadFilter();
+    noiseFilter.type = 'highpass';
+    noiseFilter.frequency.value = 1000;
+    const noiseGain = this.ctx.createGain();
+    noiseGain.gain.setValueAtTime(vol * 0.6, time);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, time + dur);
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(this.ctx.destination);
+    noise.start(time);
+    noise.stop(time + dur);
+
+    // Sine body
+    const osc = this.ctx.createOscillator();
+    const oscGain = this.ctx.createGain();
+    osc.frequency.value = 200;
+    oscGain.gain.setValueAtTime(vol * 0.4, time);
+    oscGain.gain.exponentialRampToValueAtTime(0.001, time + dur * 0.6);
+    osc.connect(oscGain);
+    oscGain.connect(this.ctx.destination);
+    osc.start(time);
+    osc.stop(time + dur);
   }
 }

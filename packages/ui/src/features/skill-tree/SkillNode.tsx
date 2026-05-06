@@ -61,7 +61,6 @@ export function SkillNode({ node, status, isSelected, onClick, dimmed = false, i
 
       <div className="skill-node__header">
         <span className="skill-node__label">{node.label}</span>
-        <span className="skill-node__tier">{node.tier}</span>
       </div>
 
       <div className="skill-node__footer">

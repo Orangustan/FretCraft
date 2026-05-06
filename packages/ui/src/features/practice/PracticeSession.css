@@ -102,6 +102,32 @@
   letter-spacing: 0.08em;
 }
 
+/* ── Session config summary (intro) ── */
+.practice-session__session-summary {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.practice-session__session-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+}
+
+.practice-session__session-pill--focus {
+  border-color: var(--color-accent-gold-deep);
+  color: var(--color-accent-gold);
+  background: rgba(200, 118, 42, 0.1);
+}
+
 /* ── Progress pips ── */
 .practice-session__progress {
   display: flex;

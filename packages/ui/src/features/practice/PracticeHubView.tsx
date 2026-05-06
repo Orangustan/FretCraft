@@ -118,7 +118,7 @@ export default function PracticeHubView() {
                   <div className="practice-hub__node-meta">
                     <span className="practice-hub__xp">+{node.xpReward} XP</span>
                     <span className="practice-hub__exercises">{node.exercises?.length ?? 0} exercises</span>
-                    <span className="practice-hub__tier">Tier {node.tier}</span>
+                    <span className="practice-hub__tier">{{ 1: 'Beginner', 2: 'Novice', 3: 'Intermediate', 4: 'Expert', 5: 'Pro' }[node.tier] ?? `Tier ${node.tier}`}</span>
                   </div>
                 </div>
                 <button
