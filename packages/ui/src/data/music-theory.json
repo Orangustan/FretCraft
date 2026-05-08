@@ -1,0 +1,156 @@
+[
+  {
+    "id": "mt-001",
+    "title": "The Musical Alphabet",
+    "branch": "music-theory",
+    "tier": 1,
+    "isAnchor": true,
+    "prerequisites": [],
+    "description": "The 12 notes of Western music — 7 natural names (A through G) and 5 sharps/flats. Everything in music theory is built on this foundation.",
+    "practice": [
+      "Say the note names forward and backward without hesitation.",
+      "Name every sharp and its enharmonic flat equivalent.",
+      "Pick a random note and name the note one half-step above, then one below."
+    ],
+    "resources": [
+      { "kind": "book", "title": "Vaideology, Ch. 1 — The Musical Alphabet", "source": "Vaideology by Steve Vai" }
+    ],
+    "estimatedHours": 1
+  },
+  {
+    "id": "mt-002",
+    "title": "Half Steps & Whole Steps",
+    "branch": "music-theory",
+    "tier": 1,
+    "isAnchor": false,
+    "prerequisites": [],
+    "description": "A half step is the smallest interval in Western music — one fret on guitar. A whole step is two half steps. These two building blocks define every scale formula.",
+    "practice": [
+      "On the low E string, move up in half steps naming each note as you go.",
+      "On the A string, move up in whole steps only. Name each note.",
+      "Describe the interval between C and E, then between E and G."
+    ],
+    "resources": [
+      { "kind": "book", "title": "Vaideology — Half/Whole Steps", "source": "Vaideology by Steve Vai" }
+    ],
+    "estimatedHours": 1
+  },
+  {
+    "id": "mt-003",
+    "title": "The Major Scale Formula",
+    "branch": "music-theory",
+    "tier": 2,
+    "isAnchor": true,
+    "prerequisites": ["mt-001", "mt-002"],
+    "description": "The major scale follows the interval formula W-W-H-W-W-W-H. Knowing this formula lets you build any major scale from any root — without memorizing 12 separate scales.",
+    "practice": [
+      "Build a C major scale from memory using the W-W-H formula.",
+      "Build G major, D major, and F major scales — write out each note.",
+      "Sing the major scale syllables (do-re-mi) while playing up the neck."
+    ],
+    "resources": [
+      { "kind": "book", "title": "Vaideology — Major Scale Construction", "source": "Vaideology by Steve Vai" }
+    ],
+    "estimatedHours": 2
+  },
+  {
+    "id": "mt-004",
+    "title": "Intervals — Numeric Distance",
+    "branch": "music-theory",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["mt-001"],
+    "description": "An interval is the distance between two notes, named by counting scale steps. From C to E is a third; C to G is a fifth. Intervals are the vocabulary of melody and harmony.",
+    "practice": [
+      "Name the interval between every pair of natural notes in C major.",
+      "Sing a perfect fifth above any note you play.",
+      "Find a major third and minor third on the same pair of strings in two different positions."
+    ],
+    "resources": [
+      { "kind": "book", "title": "Vaideology — Intervals", "source": "Vaideology by Steve Vai" }
+    ],
+    "estimatedHours": 2
+  },
+  {
+    "id": "mt-005",
+    "title": "The Circle of Fifths",
+    "branch": "music-theory",
+    "tier": 2,
+    "isAnchor": true,
+    "prerequisites": ["mt-003"],
+    "description": "The circle of fifths organizes all 12 keys by their relationship. Moving clockwise adds a sharp; counterclockwise adds a flat. It predicts key signatures and common chord progressions.",
+    "practice": [
+      "Draw the circle of fifths from memory, placing all 12 keys.",
+      "Name the key signature (how many sharps or flats) for any key in under 5 seconds.",
+      "Find the three most common chord relationships (I, IV, V) for the key of G using the circle."
+    ],
+    "resources": [
+      { "kind": "book", "title": "Vaideology — Circle of Fifths", "source": "Vaideology by Steve Vai" }
+    ],
+    "estimatedHours": 3
+  },
+  {
+    "id": "mt-006",
+    "title": "Diatonic Chords",
+    "branch": "music-theory",
+    "tier": 3,
+    "isAnchor": false,
+    "prerequisites": ["mt-003", "mt-004"],
+    "description": "Every major key contains seven diatonic chords — one built on each scale degree. In C major: C major, D minor, E minor, F major, G major, A minor, B diminished. The pattern is the same in every key.",
+    "practice": [
+      "Write out all seven diatonic chords for the key of G major.",
+      "On guitar, play a I–IV–V–I progression in the key of A using open chords.",
+      "Name the diatonic chord quality (major/minor/diminished) for each scale degree without looking."
+    ],
+    "resources": [],
+    "estimatedHours": 3
+  },
+  {
+    "id": "mt-007",
+    "title": "Modes — Names & Order",
+    "branch": "music-theory",
+    "tier": 3,
+    "isAnchor": false,
+    "prerequisites": ["mt-003"],
+    "description": "The seven modes are rotations of the major scale, each starting on a different degree: Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian. Knowing their order and character is the first step toward using them musically.",
+    "practice": [
+      "Recite the seven mode names in order from memory.",
+      "Identify whether each mode is major-flavored or minor-flavored.",
+      "Play the Dorian mode starting on D using the same notes as C major."
+    ],
+    "resources": [],
+    "estimatedHours": 2
+  },
+  {
+    "id": "mt-008",
+    "title": "Time Signatures",
+    "branch": "music-theory",
+    "tier": 1,
+    "isAnchor": false,
+    "prerequisites": [],
+    "description": "A time signature tells you how many beats are in a measure (top number) and what note value gets one beat (bottom number). 4/4 is the most common; 3/4 gives a waltz feel.",
+    "practice": [
+      "Clap and count aloud in 4/4 for 8 measures — emphasis on beat 1.",
+      "Clap in 3/4 for 8 measures. Feel the difference from 4/4.",
+      "Find and listen to two songs in 3/4 and identify where beat 1 falls."
+    ],
+    "resources": [],
+    "estimatedHours": 1
+  },
+  {
+    "id": "mt-009",
+    "title": "Reading Rhythm Notation",
+    "branch": "music-theory",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["mt-008"],
+    "description": "Standard rhythm notation uses stems, flags, and beams to show note duration. Being able to read even simple rhythms unlocks printed music, charts, and exercises.",
+    "practice": [
+      "Clap the rhythms in any beginner exercise book for 10 minutes.",
+      "Write out the rhythm of a melody you know from memory using note values.",
+      "Sight-read a one-bar rhythm pattern cold — no counting in advance."
+    ],
+    "resources": [],
+    "estimatedHours": 3
+  }
+]

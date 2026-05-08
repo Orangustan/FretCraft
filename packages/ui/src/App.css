@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: var(--color-bg-primary);
+  background-color: var(--sky-deep);
 }
 
 /* Header */
@@ -11,14 +11,14 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-3) var(--space-6);
-  background: linear-gradient(180deg, #0d0905 0%, rgba(11, 7, 4, 0.97) 100%);
-  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(180deg, var(--sky-deep) 0%, rgba(10, 14, 26, 0.97) 100%);
+  border-bottom: 1px solid rgba(111, 181, 216, 0.12);
   flex-shrink: 0;
   position: relative;
   animation: shellReveal 0.45s ease both;
 }
 
-/* Gold sheen engraved line */
+/* Aurora shimmer line at header bottom */
 .app-header::after {
   content: '';
   position: absolute;
@@ -28,52 +28,41 @@
   height: 1px;
   background: linear-gradient(90deg,
     transparent 0%,
-    var(--color-accent-gold-deep) 20%,
-    var(--color-accent-gold) 50%,
-    var(--color-accent-gold-deep) 80%,
+    rgba(111, 181, 216, 0.08) 10%,
+    rgba(111, 181, 216, 0.35) 30%,
+    rgba(224, 164, 88, 0.5) 50%,
+    rgba(111, 181, 216, 0.35) 70%,
+    rgba(111, 181, 216, 0.08) 90%,
     transparent 100%
-  );
-}
-
-/* Woodgrain texture overlay */
-.app-header::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    92deg,
-    transparent 0px, rgba(200, 118, 42, 0.012) 1px,
-    transparent 2px, rgba(200, 118, 42, 0.008) 3px,
-    transparent 5px
   );
 }
 
 .app-header__title {
   font-family: var(--font-display);
   font-size: 20px;
-  font-weight: 900;
-  letter-spacing: 0.18em;
+  font-weight: 300;
+  font-optical-sizing: auto;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   background: linear-gradient(
-    160deg,
-    var(--color-accent-gold-deep) 0%,
-    var(--color-accent-gold) 35%,
-    var(--color-accent-gold-highlight) 55%,
-    var(--color-accent-gold-bright) 75%,
-    var(--color-accent-gold-deep) 100%
+    135deg,
+    var(--fretboard-shadow) 0%,
+    var(--fretboard-primary) 30%,
+    var(--fretboard-glow) 55%,
+    var(--theory-glow) 75%,
+    var(--fretboard-primary) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: ember 4s ease-in-out infinite;
+  animation: auroraEmber 5s ease-in-out infinite;
   position: relative;
   z-index: 1;
 }
 
-@keyframes ember {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(200, 118, 42, 0.3)); }
-  50%       { filter: drop-shadow(0 0 12px rgba(245, 192, 96, 0.5)) drop-shadow(0 0 24px rgba(200, 118, 42, 0.2)); }
+@keyframes auroraEmber {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(224, 164, 88, 0.25)); }
+  50%       { filter: drop-shadow(0 0 14px rgba(244, 204, 138, 0.45)) drop-shadow(0 0 28px rgba(168, 218, 242, 0.15)); }
 }
 
 @keyframes shellReveal {
@@ -86,38 +75,31 @@
   align-items: center;
   gap: var(--space-2);
   padding: var(--space-1) var(--space-3);
-  background: linear-gradient(135deg, var(--color-bg-hover), var(--color-bg-elevated));
-  border: 1px solid var(--color-border);
+  background: rgba(111, 181, 216, 0.06);
+  border: 1px solid rgba(111, 181, 216, 0.18);
   border-radius: var(--radius-sm);
-  font-family: var(--font-sub);
+  font-family: var(--font-mono);
   font-size: 11px;
-  font-weight: 600;
-  color: var(--color-accent-gold);
-  letter-spacing: 0.1em;
+  font-weight: 400;
+  color: var(--theory-primary);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   position: relative;
-  overflow: hidden;
   z-index: 1;
-}
-
-.app-header__level::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(200, 118, 42, 0.3), transparent);
 }
 
 /* Tab Navigation */
 .app-nav {
   display: flex;
-  background-color: var(--color-bg-secondary);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--sky-mid);
+  border-bottom: 1px solid rgba(111, 181, 216, 0.1);
   flex-shrink: 0;
   animation: shellReveal 0.45s 0.1s ease both;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+
+.app-nav::-webkit-scrollbar { display: none; }
 
 .app-nav__tab {
   display: flex;
@@ -127,24 +109,26 @@
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
-  color: var(--color-text-muted);
-  font-family: var(--font-sub);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  color: var(--sky-text-dim);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   cursor: pointer;
   transition: color var(--transition-fast), border-color var(--transition-fast);
   margin-bottom: -1px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .app-nav__tab:hover {
-  color: var(--color-text-secondary);
+  color: var(--sky-text);
 }
 
 .app-nav__tab--active {
-  color: var(--color-accent-gold);
-  border-bottom-color: var(--color-accent-gold);
+  color: var(--fretboard-primary);
+  border-bottom-color: var(--fretboard-primary);
 }
 
 .app-nav__tab svg {
@@ -157,10 +141,11 @@
 .app-content {
   flex: 1;
   overflow: auto;
+  position: relative;
   background:
-    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(200, 118, 42, 0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 30% at 80% 100%, rgba(74, 158, 142, 0.04) 0%, transparent 60%),
-    var(--color-bg-primary);
+    radial-gradient(ellipse 70% 35% at 50% 0%, rgba(111, 181, 216, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 25% at 85% 100%, rgba(126, 90, 168, 0.04) 0%, transparent 60%),
+    var(--sky-deep);
   animation: shellReveal 0.45s 0.22s ease both;
 }
 
@@ -177,20 +162,22 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: var(--color-accent-gold);
-  animation: pulse-gold 1.2s ease-in-out infinite;
+  background-color: var(--fretboard-primary);
+  animation: pulse-aurora 1.2s ease-in-out infinite;
 }
 
 .app-loading__dot:nth-child(2) {
   animation-delay: 0.2s;
   margin: 0 var(--space-2);
+  background-color: var(--theory-primary);
 }
 
 .app-loading__dot:nth-child(3) {
   animation-delay: 0.4s;
+  background-color: var(--harmony-primary);
 }
 
-@keyframes pulse-gold {
+@keyframes pulse-aurora {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.3; transform: scale(0.75); }
 }

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "ft-001",
+    "title": "Open Strings",
+    "branch": "fretboard-theory",
+    "tier": 1,
+    "isAnchor": true,
+    "prerequisites": [],
+    "description": "The six open strings — E, A, D, G, B, E (low to high). This is the anchor from which every fretboard landmark is measured. Know them cold and know how they tune relative to each other.",
+    "practice": [
+      "Name all six strings from memory, low to high and high to low.",
+      "Use the mnemonic 'Eddie Ate Dynamite, Good Bye Eddie' until it's automatic.",
+      "Pluck each string and listen for the pitch difference between adjacent strings."
+    ],
+    "resources": [],
+    "estimatedHours": 0.5
+  },
+  {
+    "id": "ft-002",
+    "title": "The Fret as a Half Step",
+    "branch": "fretboard-theory",
+    "tier": 1,
+    "isAnchor": false,
+    "prerequisites": ["ft-001"],
+    "description": "Each fret raises the pitch of a string by exactly one half step. Twelve frets = one octave. This is the entire logic of fret numbering — everything else follows from it.",
+    "practice": [
+      "Starting on the open A string, name every note up to the 12th fret.",
+      "Pick a fret at random — name the note on strings E, A, and D at that fret.",
+      "Find three different places on the neck where you can play the note C."
+    ],
+    "resources": [],
+    "estimatedHours": 1
+  },
+  {
+    "id": "ft-003",
+    "title": "Low E String — All 12 Notes",
+    "branch": "fretboard-theory",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["ft-001", "mt-002"],
+    "description": "The low E string contains all 12 chromatic notes within the first 12 frets. Mastering this single string gives you a mental map for the entire neck — every other string pattern mirrors this one.",
+    "practice": [
+      "Name every note on the low E string from open to the 12th fret without looking at a chart.",
+      "Find the note F on the low E string, then find F# and Gb and confirm they're the same fret.",
+      "Play the low E string ascending at 60 BPM, saying each note name aloud."
+    ],
+    "resources": [],
+    "estimatedHours": 2
+  },
+  {
+    "id": "ft-004",
+    "title": "Octave Shapes",
+    "branch": "fretboard-theory",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["ft-003"],
+    "description": "Octave shapes are fixed fingering patterns that locate the same note one octave up, skipping one or two strings. The two most useful shapes: skip one string (2 frets up), skip two strings (same fret or 3 frets up).",
+    "practice": [
+      "Find every G on the neck using only octave shapes starting from the low E string.",
+      "Play a slow melody using octave doubles — same melody note played in two octaves simultaneously.",
+      "Start on any note and chain three octave shapes to find that note in three regions of the neck."
+    ],
+    "resources": [],
+    "estimatedHours": 2
+  },
+  {
+    "id": "ft-005",
+    "title": "The CAGED System — Introduction",
+    "branch": "fretboard-theory",
+    "tier": 3,
+    "isAnchor": true,
+    "prerequisites": ["ft-003", "ft-004"],
+    "description": "CAGED breaks the fretboard into five overlapping chord shapes (C, A, G, E, D), each of which maps a chord voicing, a scale pattern, and an arpeggio pattern to the same region of the neck. Understanding CAGED ties chord and scale knowledge together.",
+    "practice": [
+      "Play a G major chord in all five CAGED positions up the neck.",
+      "For the E shape, name which fingers correspond to root, 3rd, and 5th.",
+      "Improvise in G major over a backing track, staying within one CAGED shape per 4 bars."
+    ],
+    "resources": [],
+    "estimatedHours": 6
+  },
+  {
+    "id": "ft-006",
+    "title": "All Strings — Natural Notes",
+    "branch": "fretboard-theory",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["ft-003"],
+    "description": "The natural notes (A through G, no sharps or flats) are the landmarks of the fretboard. Knowing where every natural note falls on every string is the foundation of real-time fretboard navigation.",
+    "practice": [
+      "Play through every natural note on one string per day until all six are memorized.",
+      "Find the note E on all six strings without a reference chart.",
+      "For any fret 1–12 called out by a partner, name the natural note nearest to it on any string."
+    ],
+    "resources": [],
+    "estimatedHours": 4
+  },
+  {
+    "id": "ft-007",
+    "title": "Position Playing",
+    "branch": "fretboard-theory",
+    "tier": 3,
+    "isAnchor": false,
+    "prerequisites": ["ft-006"],
+    "description": "A position is defined by where your index finger sits — in 5th position, your index covers fret 5, your ring covers 7. Learning to stay in a position and shift deliberately is the key to fluid neck navigation.",
+    "practice": [
+      "Play a two-octave C major scale entirely in 2nd position without open strings.",
+      "Play the same scale in 5th position.",
+      "Shift from 2nd to 5th position mid-scale fluidly — no pause or fumble."
+    ],
+    "resources": [],
+    "estimatedHours": 4
+  }
+]

@@ -1,0 +1,146 @@
+[
+  {
+    "id": "rt-001",
+    "title": "Quarter Notes",
+    "branch": "rhythm-timing",
+    "tier": 1,
+    "isAnchor": true,
+    "prerequisites": [],
+    "description": "The quarter note is the rhythmic pulse that most music is organized around. In 4/4 time, four quarter notes fill one measure. Everything else in rhythm is defined relative to the quarter note.",
+    "practice": [
+      "Set a metronome to 70 BPM. Clap on every click for 4 measures.",
+      "Strum open strings on quarter notes for 8 measures — let the click drive you, not your body.",
+      "Tap your foot on quarter notes while playing a chord. Maintain both independently."
+    ],
+    "resources": [],
+    "estimatedHours": 1
+  },
+  {
+    "id": "rt-002",
+    "title": "Eighth Notes",
+    "branch": "rhythm-timing",
+    "tier": 1,
+    "isAnchor": false,
+    "prerequisites": ["rt-001"],
+    "description": "Eighth notes divide each quarter note beat into two equal parts, counted '1 and 2 and 3 and 4 and.' They form the basis of strumming patterns and most rock and pop rhythms.",
+    "practice": [
+      "Count '1 and 2 and 3 and 4 and' aloud at 70 BPM for 4 measures, clapping on every syllable.",
+      "Strum eighth notes (all down-strokes) on an open chord for 8 measures.",
+      "Alternate down and up strokes on eighth notes — down on the number, up on the 'and.'"
+    ],
+    "resources": [],
+    "estimatedHours": 1
+  },
+  {
+    "id": "rt-003",
+    "title": "Half Notes & Whole Notes",
+    "branch": "rhythm-timing",
+    "tier": 1,
+    "isAnchor": false,
+    "prerequisites": ["rt-001"],
+    "description": "A half note lasts two beats; a whole note lasts four beats (a full measure in 4/4). Playing these long values teaches you to trust the space between notes — one of the most underrated rhythm skills.",
+    "practice": [
+      "Play half notes at 70 BPM — count '1-2, 1-2' and let each strum ring for both beats.",
+      "Play a whole note — one strum per measure. Hold it for the full four beats without re-strumming.",
+      "Alternate: one measure of whole notes, one measure of quarter notes. Keep the pulse steady through both."
+    ],
+    "resources": [],
+    "estimatedHours": 1
+  },
+  {
+    "id": "rt-004",
+    "title": "Rests",
+    "branch": "rhythm-timing",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["rt-001"],
+    "description": "A rest is silence with a specific duration. Quarter rests, eighth rests, and half rests are the most common. The silence in music is just as important as the sound — rests define rhythm as much as notes do.",
+    "practice": [
+      "Play: strum beats 1, 2, 3 — rest beat 4. Mute cleanly on beat 4.",
+      "Play: rest beat 1, strum beats 2, 3, 4. The silence on 1 should feel deliberate.",
+      "Write a one-bar pattern using two quarter notes and two quarter rests in different positions."
+    ],
+    "resources": [],
+    "estimatedHours": 1
+  },
+  {
+    "id": "rt-005",
+    "title": "Dotted Notes",
+    "branch": "rhythm-timing",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["rt-002"],
+    "description": "A dot after a note adds half of its value. A dotted quarter note = 1.5 beats; a dotted eighth = 3/4 of a beat. Dotted rhythms create the long-short swing feel heard in hundreds of iconic guitar riffs.",
+    "practice": [
+      "Clap a dotted quarter + eighth pattern: long-short, long-short, long-short, long-short.",
+      "Play the Smoke on the Water rhythm slowly — identify which beats use dotted notes.",
+      "Set a metronome to 60 BPM and play dotted quarter rhythms for one full minute."
+    ],
+    "resources": [],
+    "estimatedHours": 2
+  },
+  {
+    "id": "rt-006",
+    "title": "Metronome Practice",
+    "branch": "rhythm-timing",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["rt-001"],
+    "description": "The metronome is not a crutch — it's the most honest feedback device a guitarist has. Learning to lock in with a click at different tempos, and to practice the metronome on beats 2 and 4, develops real groove.",
+    "practice": [
+      "Set the metronome to 80 BPM. Play quarter notes for 4 minutes without drifting.",
+      "Set it to 40 BPM and treat each click as beat 2 and 4 of a 4/4 bar. This gives you a 80 BPM feel with half the clicks.",
+      "Record yourself playing to a click. Listen back for where you push or drag."
+    ],
+    "resources": [],
+    "estimatedHours": 5
+  },
+  {
+    "id": "rt-007",
+    "title": "Sixteenth Notes",
+    "branch": "rhythm-timing",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["rt-002"],
+    "description": "Sixteenth notes divide each quarter beat into four equal parts, counted '1-e-and-a, 2-e-and-a.' They underlie funk strumming, fast riffs, and most lead guitar. Counting them out loud before playing is essential.",
+    "practice": [
+      "Count '1-e-and-a' aloud at 60 BPM for two minutes. Keep each subdivision equal.",
+      "Play all down-strokes on sixteenth notes at 70 BPM on a single string.",
+      "Strum a chord on the '1' and 'and' of each beat — those are the first and third sixteenth notes per beat."
+    ],
+    "resources": [],
+    "estimatedHours": 3
+  },
+  {
+    "id": "rt-008",
+    "title": "Basic Syncopation",
+    "branch": "rhythm-timing",
+    "tier": 3,
+    "isAnchor": false,
+    "prerequisites": ["rt-004", "rt-005"],
+    "description": "Syncopation places accents on weak beats or between beats, creating rhythmic tension that drives grooves and hooks. The Smoke on the Water riff, Johnny B. Goode intro, and virtually every funk pattern are syncopated.",
+    "practice": [
+      "Clap the Smoke on the Water rhythm from memory. Identify the off-beat entry.",
+      "Play a pattern that accents the 'and' of beat 2 — strum there, rest on beats 1, 2, 3, 4.",
+      "Play a one-bar pattern where you never land on a downbeat. Tap your foot on the quarter notes throughout."
+    ],
+    "resources": [],
+    "estimatedHours": 4
+  },
+  {
+    "id": "rt-009",
+    "title": "Triplets",
+    "branch": "rhythm-timing",
+    "tier": 3,
+    "isAnchor": false,
+    "prerequisites": ["rt-002"],
+    "description": "A triplet fits three equal notes into the space of two. Quarter-note triplets put three notes in two beats; eighth-note triplets put three in one beat. Triplets are foundational to blues, shuffle, and 12/8 feels.",
+    "practice": [
+      "Count '1-trip-let, 2-trip-let, 3-trip-let, 4-trip-let' aloud at 60 BPM for one minute.",
+      "Strum down-down-up in a triplet feel at 70 BPM for 4 minutes.",
+      "Play a blues shuffle using eighth-note triplets on a single string."
+    ],
+    "resources": [],
+    "estimatedHours": 3
+  }
+]

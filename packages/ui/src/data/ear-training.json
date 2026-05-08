@@ -1,0 +1,114 @@
+[
+  {
+    "id": "et-001",
+    "title": "Matching Pitch",
+    "branch": "ear-training",
+    "tier": 1,
+    "isAnchor": true,
+    "prerequisites": [],
+    "description": "Matching pitch is the foundation of all ear training — hearing a note and producing the same note. Before you can recognize intervals or chords, your voice and instrument must be able to find any pitch you hear.",
+    "practice": [
+      "Play a note on any string. Sing that pitch back without the guitar as a reference.",
+      "Play a note, walk away, hum the pitch, then return and check.",
+      "Use an ear training app to practice pitch matching for 10 minutes daily."
+    ],
+    "resources": [],
+    "estimatedHours": 3
+  },
+  {
+    "id": "et-002",
+    "title": "Intervals — Unison & Octave",
+    "branch": "ear-training",
+    "tier": 1,
+    "isAnchor": false,
+    "prerequisites": ["et-001"],
+    "description": "The unison (same pitch) and octave (12 half steps apart) are the two most recognizable intervals. The octave has the same note name but a higher pitch — recognizing it is the starting point of melodic dictation.",
+    "practice": [
+      "Play two strings in unison (same note, different strings). Tune them to perfect unison by ear — no electronic tuner.",
+      "Sing a note, then sing the octave above it.",
+      "Play a melody note, then play the same melody one octave higher. Verify the octave sounds 'the same but higher.'"
+    ],
+    "resources": [],
+    "estimatedHours": 1
+  },
+  {
+    "id": "et-003",
+    "title": "Major vs Minor Sound",
+    "branch": "ear-training",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["et-001"],
+    "description": "Before naming intervals and chords, develop a felt sense of major (bright, resolved) vs minor (darker, tense). This binary is the single most useful ear-training skill for a guitarist.",
+    "practice": [
+      "Play a major chord and describe how it feels (without using 'happy/sad').",
+      "Play a minor chord. Notice the difference in your body's response.",
+      "Listen to 10 random song intros and decide major or minor before the lyrics start."
+    ],
+    "resources": [],
+    "estimatedHours": 2
+  },
+  {
+    "id": "et-004",
+    "title": "Interval — Perfect Fifth",
+    "branch": "ear-training",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["et-002"],
+    "description": "The perfect fifth is the most naturally resonant interval after the octave and unison. It's the interval of power chords, the first jump in the Star Wars theme, and the Circle of Fifths' namesake. Learn to recognize it instantly.",
+    "practice": [
+      "Sing 'Star Wars theme' — the first two notes are a perfect fifth. Use this as your reference.",
+      "Play all 12 perfect fifths starting from each chromatic note. Name the top note each time.",
+      "Identify perfect fifths in 3 songs by ear."
+    ],
+    "resources": [],
+    "estimatedHours": 2
+  },
+  {
+    "id": "et-005",
+    "title": "Chord Quality by Ear",
+    "branch": "ear-training",
+    "tier": 3,
+    "isAnchor": false,
+    "prerequisites": ["et-003", "et-004"],
+    "description": "Beyond major/minor, chords have further quality distinctions: dominant seventh, minor seventh, major seventh, suspended, diminished. Recognizing these by ear allows you to transcribe chord progressions and communicate with other musicians.",
+    "practice": [
+      "Have a partner play random major, minor, and dominant 7th chords. Identify each by ear.",
+      "Transcribe the chord progression of a simple song you already know. Verify with a chart.",
+      "Listen to a 12-bar blues and call out each chord change as it happens."
+    ],
+    "resources": [],
+    "estimatedHours": 8
+  },
+  {
+    "id": "et-006",
+    "title": "Melodic Dictation — Basics",
+    "branch": "ear-training",
+    "tier": 3,
+    "isAnchor": false,
+    "prerequisites": ["et-003"],
+    "description": "Melodic dictation is hearing a melody and notating or playing it back. Starting with short (2–4 note) motifs in a single key, this skill eventually enables transcription of complete solos by ear.",
+    "practice": [
+      "Transcribe a 4-note nursery rhyme melody by ear. Play it back on guitar.",
+      "Listen to a lead guitar lick and find the notes on guitar without tab.",
+      "Dictate 3-note motifs using only the pentatonic scale — have a partner play them randomly."
+    ],
+    "resources": [],
+    "estimatedHours": 10
+  },
+  {
+    "id": "et-007",
+    "title": "Recognizing Root Motion",
+    "branch": "ear-training",
+    "tier": 2,
+    "isAnchor": false,
+    "prerequisites": ["et-001"],
+    "description": "Root motion is the movement of the bass note from chord to chord. Hearing whether the root moves up, down, by step, or by leap is the first layer of transcribing chord progressions.",
+    "practice": [
+      "Listen to a chord progression and tap your foot every time the chord changes.",
+      "Identify whether the bass moves up or down at each change.",
+      "Find a song where the bass moves by step (each chord one note away) and one where it moves by larger leaps."
+    ],
+    "resources": [],
+    "estimatedHours": 3
+  }
+]

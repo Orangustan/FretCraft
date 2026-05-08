@@ -8,10 +8,28 @@ const TunerView = lazy(() => import('./features/tuner/TunerView'));
 const ScoreUploadView = lazy(() => import('./features/score-upload/ScoreUploadView'));
 const PlayerView = lazy(() => import('./features/player/PlayerView'));
 const WikiView = lazy(() => import('./features/wiki/WikiView'));
+const ConstellationView = lazy(() => import('./features/constellation/ConstellationView'));
 
-type TabId = 'skill-tree' | 'practice' | 'tuner' | 'score-upload' | 'player' | 'wiki';
+type TabId = 'constellation' | 'skill-tree' | 'practice' | 'tuner' | 'score-upload' | 'player' | 'wiki';
 
 const TABS: { id: TabId; label: string; icon: JSX.Element }[] = [
+  {
+    id: 'constellation',
+    label: 'Constellation',
+    icon: (
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="4"  cy="4"  r="1.2" fill="currentColor" stroke="none" />
+        <circle cx="12" cy="3"  r="1.2" fill="currentColor" stroke="none" />
+        <circle cx="8"  cy="9"  r="1.2" fill="currentColor" stroke="none" />
+        <circle cx="3"  cy="13" r="1.2" fill="currentColor" stroke="none" />
+        <circle cx="13" cy="12" r="1.2" fill="currentColor" stroke="none" />
+        <line x1="4"  y1="4"  x2="12" y2="3"  />
+        <line x1="12" y1="3"  x2="8"  y2="9"  />
+        <line x1="8"  y1="9"  x2="3"  y2="13" />
+        <line x1="8"  y1="9"  x2="13" y2="12" />
+      </svg>
+    ),
+  },
   {
     id: 'skill-tree',
     label: 'Skill Tree',
@@ -93,7 +111,7 @@ function LoadingFallback() {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabId>('skill-tree');
+  const [activeTab, setActiveTab] = useState<TabId>('constellation');
   const { player } = usePlayer();
 
   return (
@@ -118,6 +136,7 @@ export default function App() {
 
       <main className="app-content">
         <Suspense fallback={<LoadingFallback />}>
+          {activeTab === 'constellation' && <ConstellationView />}
           {activeTab === 'skill-tree' && <SkillTreeView />}
           {activeTab === 'practice' && <PracticeHubView />}
           {activeTab === 'tuner' && <TunerView />}

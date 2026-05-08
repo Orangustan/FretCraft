@@ -1,0 +1,68 @@
+.filter-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  pointer-events: all;
+}
+
+.filter-chips__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.filter-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid rgba(111, 181, 216, 0.18);
+  background: rgba(19, 24, 38, 0.75);
+  color: var(--sky-text-dim);
+  font-family: var(--font-body-sky);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  backdrop-filter: blur(6px);
+}
+
+.filter-chip:hover {
+  border-color: rgba(111, 181, 216, 0.4);
+  color: var(--sky-text);
+}
+
+.filter-chip--active {
+  border-color: var(--chip-color, var(--theory-primary));
+  color: var(--chip-color, var(--theory-primary));
+  background: rgba(111, 181, 216, 0.08);
+}
+
+.filter-chip--branch.filter-chip--active {
+  border-color: var(--chip-color);
+  color: var(--chip-color);
+  background: color-mix(in srgb, var(--chip-color) 10%, transparent);
+}
+
+.filter-chip__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--chip-color, var(--sky-text-dim));
+  flex-shrink: 0;
+}
+
+.filter-chip--active .filter-chip__dot {
+  background: var(--chip-color);
+  box-shadow: 0 0 4px var(--chip-color);
+}
+
+.filter-chip--clear {
+  color: var(--rhythm-glow);
+  border-color: rgba(200, 62, 84, 0.3);
+}
+
+.filter-chip--clear:hover {
+  border-color: var(--rhythm-primary);
+  color: var(--rhythm-glow);
+}

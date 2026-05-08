@@ -1,39 +1,91 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Spectral:ital,wght@0,300;0,400;0,600;1,400&family=Fragment+Mono&display=swap');
 
 :root {
-  /* Typography */
-  --font-display: 'Cinzel Decorative', 'Cinzel', Georgia, serif;
-  --font-sub:     'Cinzel', Georgia, serif;
-  --font-body:    'Cormorant Garamond', Garamond, Georgia, serif;
-  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+  /* ── Aurora Sky palette ──────────────────────────────────── */
+  --sky-deep:  #0A0E1A;
+  --sky-mid:   #131826;
+  --sky-haze:  #1B2236;
+  --sky-text:  #D8E4F0;
+  --sky-text-dim: #8A9EC0;
 
-  /* Background — luthier's workshop */
-  --color-bg-primary:   #0b0704;
-  --color-bg-secondary: #100c08;
-  --color-bg-surface:   #160f0a;
-  --color-bg-elevated:  #1e1510;
-  --color-bg-hover:     #261a12;
+  /* Branch: Music Theory — Frost Codex */
+  --theory-shadow:    #2E5C7A;
+  --theory-primary:   #6FB5D8;
+  --theory-glow:      #A8DAF2;
 
-  /* Gold — aged brass, not chrome */
-  --color-accent-gold:           #c8762a;
-  --color-accent-gold-bright:    #e8943a;
-  --color-accent-gold-highlight: #f5c060;
-  --color-accent-gold-deep:      #6b3d12;
-  --color-accent-gold-glow:      rgba(200, 118, 42, 0.25);
+  /* Branch: Fretboard & Theory — Amber Atlas */
+  --fretboard-shadow: #8A5A1F;
+  --fretboard-primary:#E0A458;
+  --fretboard-glow:   #F4CC8A;
 
-  /* Verdigris — sharp accent */
-  --color-accent-verd:       #4a9e8e;
-  --color-accent-verd-bright: #5dbdaa;
-  --color-accent-verd-glow:  rgba(74, 158, 142, 0.2);
+  /* Branch: Technique — Forge Bronze */
+  --technique-shadow: #6B3220;
+  --technique-primary:#C97B5C;
+  --technique-glow:   #E8A586;
 
-  /* Parchment text */
-  --color-text-primary:   #f2e8d5;
-  --color-text-secondary: #c9b898;
-  --color-text-muted:     #7a6648;
+  /* Branch: Rhythm & Timing — Heart Crimson */
+  --rhythm-shadow:    #5C1A2A;
+  --rhythm-primary:   #C23E54;
+  --rhythm-glow:      #E87088;
 
-  /* Borders — gold-tinted */
-  --color-border:      rgba(200, 118, 42, 0.18);
-  --color-border-gold: rgba(200, 118, 42, 0.4);
+  /* Branch: Harmony & Chords — Cathedral Violet */
+  --harmony-shadow:   #3F2A5C;
+  --harmony-primary:  #7E5AA8;
+  --harmony-glow:     #B68FDC;
+
+  /* Branch: Ear Training — Moonlight Silver */
+  --ear-shadow:       #3A4754;
+  --ear-primary:      #B8C7D3;
+  --ear-glow:         #E0EAF2;
+
+  /* Branch: Lead & Improv — Phoenix Ember */
+  --lead-shadow:      #6B2818;
+  --lead-primary:     #E6633D;
+  --lead-glow:        #FF9670;
+
+  /* Song anchors — Aurion Gold */
+  --song-shadow:      #6B5318;
+  --song-primary:     #D4AF37;
+  --song-glow:        #F5DC7A;
+
+  /* ── Aurora Sky fonts ────────────────────────────────────── */
+  --font-display-sky: 'Fraunces', Georgia, serif;
+  --font-body-sky:    'Spectral', Georgia, serif;
+  --font-code-sky:    'Fragment Mono', monospace;
+
+  /* Typography — mapped to Aurora Sky */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sub:     'Fraunces', Georgia, serif;
+  --font-body:    'Spectral', Georgia, serif;
+  --font-mono:    'Fragment Mono', monospace;
+
+  /* Background — Aurora Sky */
+  --color-bg-primary:   var(--sky-deep);
+  --color-bg-secondary: var(--sky-mid);
+  --color-bg-surface:   var(--sky-haze);
+  --color-bg-elevated:  #1f2840;
+  --color-bg-hover:     #263050;
+
+  /* Gold — Aurion (song/milestone) */
+  --color-accent-gold:           var(--song-primary);
+  --color-accent-gold-bright:    var(--fretboard-glow);
+  --color-accent-gold-highlight: var(--song-glow);
+  --color-accent-gold-deep:      var(--song-shadow);
+  --color-accent-gold-glow:      rgba(212, 175, 55, 0.25);
+
+  /* Verdigris → Frost Codex teal */
+  --color-accent-verd:       var(--theory-primary);
+  --color-accent-verd-bright: var(--theory-glow);
+  --color-accent-verd-glow:  rgba(111, 181, 216, 0.2);
+
+  /* Aurora text */
+  --color-text-primary:   var(--sky-text);
+  --color-text-secondary: #a8b8d0;
+  --color-text-muted:     var(--sky-text-dim);
+
+  /* Borders — aurora-tinted */
+  --color-border:      rgba(111, 181, 216, 0.15);
+  --color-border-gold: rgba(212, 175, 55, 0.35);
 
   /* Status */
   --color-success:      #3ddc84;
@@ -41,13 +93,15 @@
   --color-locked:       rgba(200, 118, 42, 0.12);
   --color-locked-text:  #5a4030;
 
-  /* Branch colors */
-  --color-branch-rhythm:    #60a5fa;
-  --color-branch-technique: #34d399;
-  --color-branch-fretboard: #fbbf24;
-  --color-branch-harmony:   #f87171;
-  --color-branch-lead:      #c084fc;
-  --color-branch-gates:     #f0c060;
+  /* Branch colors — Aurora Sky */
+  --color-branch-rhythm:       var(--rhythm-primary);
+  --color-branch-technique:    var(--technique-primary);
+  --color-branch-fretboard:    var(--fretboard-primary);
+  --color-branch-harmony:      var(--harmony-primary);
+  --color-branch-lead:         var(--lead-primary);
+  --color-branch-gates:        var(--song-primary);
+  --color-branch-music-theory: var(--theory-primary);
+  --color-branch-ear-training: var(--ear-primary);
 
   /* Spacing */
   --space-1:  4px;

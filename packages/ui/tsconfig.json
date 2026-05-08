@@ -4,6 +4,7 @@
     "jsx": "react-jsx",
     "outDir": "dist",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
       "@/": ["./src/"],
       "@guitar-st/core": ["../core/src/index.ts"],
