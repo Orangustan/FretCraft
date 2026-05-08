@@ -57,16 +57,11 @@ export function SkillNode({ node, status, isSelected, onClick, dimmed = false, i
       tabIndex={isLocked ? -1 : 0}
       onKeyDown={(e) => { if (!isLocked && (e.key === 'Enter' || e.key === ' ')) onClick(); }}
     >
-      <div className="skill-node__accent" />
-
       <div className="skill-node__header">
         <span className="skill-node__label">{node.label}</span>
       </div>
 
       <div className="skill-node__footer">
-        {node.branch && (
-          <span className="skill-node__branch-dot" />
-        )}
         {isParent && childrenCompleted !== undefined ? (
           <span className="skill-node__children-badge">
             {childrenCompleted}/{childrenTotal}

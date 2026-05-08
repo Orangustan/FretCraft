@@ -3,20 +3,24 @@ import { isTierAccessible } from '@guitar-st/core';
 import { SkillNode } from './SkillNode';
 import './SkillTreeCanvas.css';
 
-const NODE_WIDTH = 160;
-const NODE_HEIGHT = 80;
-const CHILD_NODE_WIDTH = 140;
-const CHILD_NODE_HEIGHT = 72;
+const NODE_WIDTH = 96;
+const NODE_HEIGHT = 96;
+const CHILD_NODE_WIDTH = 80;
+const CHILD_NODE_HEIGHT = 80;
 
-function elbowPath(
-  from: { cx: number; cy: number },
-  to: { cx: number; cy: number }
+function straightPath(
+  sx: number, sy: number,
+  tx: number, ty: number,
+  srcRadius: number,
+  dstRadius: number
 ): string {
-  if (Math.abs(from.cx - to.cx) < 2) {
-    return `M ${from.cx} ${from.cy} L ${to.cx} ${to.cy}`;
-  }
-  const midY = (from.cy + to.cy) / 2;
-  return `M ${from.cx} ${from.cy} L ${from.cx} ${midY} L ${to.cx} ${midY} L ${to.cx} ${to.cy}`;
+  const dx = tx - sx;
+  const dy = ty - sy;
+  const len = Math.sqrt(dx * dx + dy * dy);
+  if (len < 1) return `M ${sx} ${sy}`;
+  const nx = dx / len;
+  const ny = dy / len;
+  return `M ${sx + nx * srcRadius} ${sy + ny * srcRadius} L ${tx - nx * dstRadius} ${ty - ny * dstRadius}`;
 }
 
 interface TierGateDef {
@@ -69,8 +73,8 @@ export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClic
     }
   }
 
-  function renderEdge(key: string, from: { cx: number; cy: number }, to: { cx: number; cy: number }, isUnlocked: boolean, isCluster = false) {
-    const d = elbowPath(from, to);
+  function renderEdge(key: string, from: { cx: number; cy: number }, to: { cx: number; cy: number }, isUnlocked: boolean, isCluster = false, srcRadius = NODE_WIDTH / 2, dstRadius = NODE_WIDTH / 2) {
+    const d = straightPath(from.cx, from.cy, to.cx, to.cy, srcRadius, dstRadius);
     if (isUnlocked) {
       const strokeColor = isCluster ? 'rgba(74, 222, 128, 0.8)' : 'rgba(200, 118, 42, 0.85)';
       const glowColor = isCluster ? 'rgba(74, 222, 128, 0.2)' : 'rgba(200, 118, 42, 0.25)';
@@ -117,8 +121,8 @@ export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClic
               const isUnlocked = (nodeStatuses[prereqId] ?? 'locked') !== 'locked' && (nodeStatuses[node.id] ?? 'locked') !== 'locked';
               return renderEdge(
                 `${prereqId}-${node.id}`,
-                { cx: prereq.position.x + NODE_WIDTH / 2, cy: prereq.position.y },
-                { cx: node.position.x + NODE_WIDTH / 2, cy: node.position.y + NODE_HEIGHT },
+                { cx: prereq.position.x + NODE_WIDTH / 2, cy: prereq.position.y + NODE_HEIGHT / 2 },
+                { cx: node.position.x + NODE_WIDTH / 2, cy: node.position.y + NODE_HEIGHT / 2 },
                 isUnlocked
               );
             })
@@ -137,10 +141,12 @@ export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClic
                 const isUnlocked = (nodeStatuses[parent.id] ?? 'locked') !== 'locked';
                 return renderEdge(
                   `parent-${parent.id}-${childId}`,
-                  { cx: parent.position.x + NODE_WIDTH / 2, cy: parent.position.y },
-                  { cx: child.position.x + CHILD_NODE_WIDTH / 2, cy: child.position.y + CHILD_NODE_HEIGHT },
+                  { cx: parent.position.x + NODE_WIDTH / 2, cy: parent.position.y + NODE_HEIGHT / 2 },
+                  { cx: child.position.x + CHILD_NODE_WIDTH / 2, cy: child.position.y + CHILD_NODE_HEIGHT / 2 },
                   isUnlocked,
-                  true
+                  true,
+                  NODE_WIDTH / 2,
+                  CHILD_NODE_WIDTH / 2
                 );
               })
           )}
@@ -157,10 +163,12 @@ export function SkillTreeCanvas({ tree, nodeStatuses, selectedNodeId, onNodeClic
                 const isUnlocked = (nodeStatuses[prereqId] ?? 'locked') !== 'locked' && (nodeStatuses[node.id] ?? 'locked') !== 'locked';
                 return renderEdge(
                   `cluster-${prereqId}-${node.id}`,
-                  { cx: prereq.position.x + CHILD_NODE_WIDTH / 2, cy: prereq.position.y + CHILD_NODE_HEIGHT },
-                  { cx: node.position.x + CHILD_NODE_WIDTH / 2, cy: node.position.y },
+                  { cx: prereq.position.x + CHILD_NODE_WIDTH / 2, cy: prereq.position.y + CHILD_NODE_HEIGHT / 2 },
+                  { cx: node.position.x + CHILD_NODE_WIDTH / 2, cy: node.position.y + CHILD_NODE_HEIGHT / 2 },
                   isUnlocked,
-                  true
+                  true,
+                  CHILD_NODE_WIDTH / 2,
+                  CHILD_NODE_WIDTH / 2
                 );
               })
             )}
