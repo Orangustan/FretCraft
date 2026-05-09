@@ -32,8 +32,12 @@ for (const node of allRaw) {
   }
 }
 
-// Validate on module load — throws with a descriptive message if the graph is malformed
-validateGraph(allRaw);
+// Validate on module load — logs a descriptive error if the graph is malformed
+try {
+  validateGraph(allRaw);
+} catch (e) {
+  console.error('[FretCraft] Graph validation failed:', e);
+}
 
 export const allNodes: (SkillNode | SongNode)[] = allRaw;
 

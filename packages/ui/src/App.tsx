@@ -1,6 +1,43 @@
-import { lazy, Suspense, useState } from 'react';
+import { Component, lazy, Suspense, useState, type ReactNode, type ErrorInfo } from 'react';
 import { usePlayer } from './store/playerStore';
 import './App.css';
+
+class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { error: null };
+  }
+  static getDerivedStateFromError(error: Error) {
+    return { error };
+  }
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[FretCraft] Render error:', error, info);
+  }
+  render() {
+    if (this.state.error) {
+      return (
+        <div style={{
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          height: '100vh', background: '#0A0E1A', color: '#D8E4F0', padding: '40px', textAlign: 'center',
+          fontFamily: 'Fragment Mono, monospace',
+        }}>
+          <div style={{ color: '#E87088', fontSize: '1.1rem', marginBottom: '16px', letterSpacing: '0.12em' }}>
+            RENDER ERROR
+          </div>
+          <div style={{ color: '#E0A458', fontSize: '0.9rem', maxWidth: '700px', wordBreak: 'break-word', marginBottom: '12px' }}>
+            {this.state.error.message}
+          </div>
+          <pre style={{ color: '#8A9EC0', fontSize: '0.72rem', maxWidth: '700px', textAlign: 'left', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+            {this.state.error.stack}
+          </pre>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+export { ErrorBoundary };
 
 const SkillTreeView = lazy(() => import('./features/skill-tree/SkillTreeView'));
 const PracticeHubView = lazy(() => import('./features/practice/PracticeHubView'));
