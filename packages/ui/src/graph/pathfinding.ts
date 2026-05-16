@@ -1,8 +1,8 @@
-import type { SkillNode, SongNode, NodeStatus } from '../data/types';
+import type { NodeLike } from './layout';
+import type { NodeStatus } from '../data/types';
 
-type NodeMap = Map<string, SkillNode | SongNode>;
+type NodeMap = Map<string, NodeLike>;
 
-// How many currently-locked nodes would be transitively unblocked by learning `nodeId`
 function countDownstreamUnlocks(
   nodeId: string,
   nodeMap: NodeMap,
@@ -28,7 +28,6 @@ function countDownstreamUnlocks(
   return count;
 }
 
-// Returns the top `limit` available nodes with the most downstream unlocks
 export function findNextUp(
   nodeMap: NodeMap,
   nodeStatuses: Record<string, NodeStatus>,
@@ -47,8 +46,6 @@ export function findNextUp(
   return available.slice(0, limit).map(a => a.id);
 }
 
-// Returns the ordered list of node IDs that need to be completed to unlock `targetId`
-// from the current state. Result is ordered: first unlockable node first.
 export function getPrereqPath(
   nodeMap: NodeMap,
   nodeStatuses: Record<string, NodeStatus>,
@@ -65,14 +62,11 @@ export function getPrereqPath(
     if (!node) return false;
 
     const status = nodeStatuses[id] ?? 'locked';
+    if (status === 'mastered') return true;
 
-    // Already done — no need to include
-    if (status === 'learned' || status === 'mastered') return true;
-
-    // Recursively resolve prerequisites first
     for (const prereqId of node.prerequisites) {
       const prereqStatus = nodeStatuses[prereqId] ?? 'locked';
-      if (prereqStatus !== 'learned' && prereqStatus !== 'mastered') {
+      if (prereqStatus !== 'mastered') {
         dfs(prereqId);
       }
     }

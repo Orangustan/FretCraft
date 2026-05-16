@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { useUIStore } from '../store/uiStore';
 
 const ZOOM_MIN = 4;
-const ZOOM_MAX = 22;
+const ZOOM_MAX = 32;
 const PAN_SPEED = 0.018;
 const MOMENTUM_DECAY = 0.92;
 const LERP_FACTOR = 5;
@@ -21,7 +21,7 @@ export function Camera() {
 
   // Apply initial camera position
   useEffect(() => {
-    camera.position.set(2, 0, 12);
+    camera.position.set(0, -4, 16);
     (camera as THREE.PerspectiveCamera).fov = 60;
     camera.updateProjectionMatrix();
   }, [camera]);

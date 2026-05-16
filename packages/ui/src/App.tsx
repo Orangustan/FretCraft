@@ -1,4 +1,4 @@
-import { Component, lazy, Suspense, useState, type ReactNode, type ErrorInfo } from 'react';
+import { Component, lazy, Suspense, useState, type ReactNode, type ErrorInfo, type JSX } from 'react';
 import { usePlayer } from './store/playerStore';
 import './App.css';
 
@@ -39,15 +39,13 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | 
 
 export { ErrorBoundary };
 
-const SkillTreeView = lazy(() => import('./features/skill-tree/SkillTreeView'));
-const PracticeHubView = lazy(() => import('./features/practice/PracticeHubView'));
 const TunerView = lazy(() => import('./features/tuner/TunerView'));
 const ScoreUploadView = lazy(() => import('./features/score-upload/ScoreUploadView'));
 const PlayerView = lazy(() => import('./features/player/PlayerView'));
 const WikiView = lazy(() => import('./features/wiki/WikiView'));
 const ConstellationView = lazy(() => import('./features/constellation/ConstellationView'));
 
-type TabId = 'constellation' | 'skill-tree' | 'practice' | 'tuner' | 'score-upload' | 'player' | 'wiki';
+type TabId = 'constellation' | 'tuner' | 'score-upload' | 'player' | 'wiki';
 
 const TABS: { id: TabId; label: string; icon: JSX.Element }[] = [
   {
@@ -64,29 +62,6 @@ const TABS: { id: TabId; label: string; icon: JSX.Element }[] = [
         <line x1="12" y1="3"  x2="8"  y2="9"  />
         <line x1="8"  y1="9"  x2="3"  y2="13" />
         <line x1="8"  y1="9"  x2="13" y2="12" />
-      </svg>
-    ),
-  },
-  {
-    id: 'skill-tree',
-    label: 'Skill Tree',
-    icon: (
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="8" cy="2" r="1.5" />
-        <circle cx="3" cy="11" r="1.5" />
-        <circle cx="13" cy="11" r="1.5" />
-        <line x1="8" y1="3.5" x2="3" y2="9.5" />
-        <line x1="8" y1="3.5" x2="13" y2="9.5" />
-      </svg>
-    ),
-  },
-  {
-    id: 'practice',
-    label: 'Practice',
-    icon: (
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <circle cx="8" cy="8" r="6" />
-        <polygon points="6.5,5.5 11,8 6.5,10.5" fill="currentColor" stroke="none" />
       </svg>
     ),
   },
@@ -174,8 +149,7 @@ export default function App() {
       <main className="app-content">
         <Suspense fallback={<LoadingFallback />}>
           {activeTab === 'constellation' && <ConstellationView />}
-          {activeTab === 'skill-tree' && <SkillTreeView />}
-          {activeTab === 'practice' && <PracticeHubView />}
+
           {activeTab === 'tuner' && <TunerView />}
           {activeTab === 'score-upload' && <ScoreUploadView />}
           {activeTab === 'player' && <PlayerView />}

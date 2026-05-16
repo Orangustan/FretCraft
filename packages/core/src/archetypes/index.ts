@@ -14,6 +14,7 @@ import { CLASSICAL_RANK_TESTS } from "./classical/rankTests";
 import { METAL_RANK_TESTS } from "./metal/rankTests";
 import { VAIDEOLOGY_RANK_TESTS } from "./vaideology/rankTests";
 import { COUNTRY_RANK_TESTS } from "./country/rankTests";
+import { UNIVERSAL_TREE } from "./universal/tree";
 
 export { ROCKER_TREE } from "./rocker/tree";
 export { ROCKER_TIER_TESTS } from "./rocker/tests";
@@ -32,8 +33,10 @@ export { COUNTRY_TREE } from "./country/tree";
 export { COUNTRY_TIER_TESTS } from "./country/tests";
 export { COUNTRY_RANK_TESTS } from "./country/rankTests";
 export { ACHIEVEMENTS } from "./achievements";
+export { UNIVERSAL_TREE } from "./universal/tree";
 
 export const ARCHETYPE_REGISTRY: Record<string, SkillTree> = {
+  universal: UNIVERSAL_TREE,
   rocker: ROCKER_TREE,
   jazz: JAZZ_TREE,
   blues: BLUES_TREE,

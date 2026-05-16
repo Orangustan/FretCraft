@@ -542,3 +542,26 @@
   flex-shrink: 0;
   color: var(--color-success);
 }
+
+.node-detail-panel__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: rgba(255,255,255,0.06);
+  border-radius: 50%;
+  color: var(--sky-text-dim);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.node-detail-panel__close:hover {
+  background: rgba(255,255,255,0.12);
+  color: var(--sky-text);
+}

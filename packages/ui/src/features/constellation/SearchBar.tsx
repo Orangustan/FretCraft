@@ -1,18 +1,18 @@
 import { useEffect, useMemo, useRef } from 'react';
 import Fuse from 'fuse.js';
-import { allNodes } from '../../data/index';
 import { useUIStore } from '../../store/uiStore';
+import type { ConstellationNode } from './coreAdapter';
 import './SearchBar.css';
 
-const fuse = new Fuse(allNodes, {
-  keys: ['title', 'description', 'practice'],
-  threshold: 0.35,
-  includeScore: true,
-});
-
-export function SearchBar() {
+export function SearchBar({ nodes }: { nodes: ConstellationNode[] }) {
   const { searchQuery, setSearchQuery, setSearchResults } = useUIStore();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const fuse = useMemo(() => new Fuse(nodes, {
+    keys: ['title', 'coreNode.content.description'],
+    threshold: 0.35,
+    includeScore: true,
+  }), [nodes]);
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -21,7 +21,7 @@ export function SearchBar() {
     }
     const results = fuse.search(searchQuery);
     setSearchResults(new Set(results.map(r => r.item.id)));
-  }, [searchQuery, setSearchResults]);
+  }, [searchQuery, fuse, setSearchResults]);
 
   return (
     <div className="search-bar">

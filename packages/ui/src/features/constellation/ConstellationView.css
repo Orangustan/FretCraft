@@ -27,3 +27,59 @@
   left: 16px;
   pointer-events: none;
 }
+
+.constellation-panel-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  z-index: 20;
+  pointer-events: all;
+}
+
+.constellation-banner {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  z-index: 15;
+  pointer-events: all;
+  white-space: nowrap;
+}
+
+.constellation-banner--tier {
+  background: rgba(74, 158, 142, 0.18);
+  border: 1px solid rgba(74, 158, 142, 0.45);
+  color: var(--technique-glow);
+}
+
+.constellation-banner--rank {
+  background: rgba(200, 118, 42, 0.18);
+  border: 1px solid rgba(200, 118, 42, 0.45);
+  color: var(--fretboard-glow);
+}
+
+.constellation-banner button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 4px 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.constellation-banner button:hover {
+  background: rgba(255, 255, 255, 0.18);
+}

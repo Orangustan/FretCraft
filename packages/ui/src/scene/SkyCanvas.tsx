@@ -39,7 +39,7 @@ export function SkyCanvas({ children }: Props) {
     <CanvasErrorBoundary>
       <Canvas
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
-        camera={{ position: [2, 0, 12], fov: 60, near: 0.1, far: 500 }}
+        camera={{ position: [0, -4, 16], fov: 60, near: 0.1, far: 500 }}
         style={{ width: '100%', height: '100%' }}
         onPointerMissed={() => {
           import('../store/uiStore').then(m => m.useUIStore.getState().closePanel());

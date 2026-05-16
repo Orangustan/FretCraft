@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { allNodes } from '../../data/index';
 import { useUIStore } from '../../store/uiStore';
+import type { ConstellationNode } from './coreAdapter';
 import './LoadingSequence.css';
 
 const TIER_ORDER: (1 | 2 | 3 | 4 | 5)[] = [1, 2, 3, 4, 5];
@@ -15,7 +15,7 @@ const PHASE_DELAYS = {
   uiIn: 3900,
 };
 
-export function LoadingSequence({ onDone }: { onDone: () => void }) {
+export function LoadingSequence({ nodes, onDone }: { nodes: ConstellationNode[]; onDone: () => void }) {
   const [overlayVisible, setOverlayVisible] = useState(true);
   const [showTitle, setShowTitle] = useState(false);
   const { revealNode, setLoadSequenceDone } = useUIStore();
@@ -25,7 +25,7 @@ export function LoadingSequence({ onDone }: { onDone: () => void }) {
     if (skipped.current) return;
     skipped.current = true;
     // Reveal everything immediately
-    for (const node of allNodes) revealNode(node.id);
+    for (const node of nodes) revealNode(node.id);
     setLoadSequenceDone();
     onDone();
   };
@@ -38,7 +38,7 @@ export function LoadingSequence({ onDone }: { onDone: () => void }) {
     // Reveal nodes tier-by-tier
     let delay = PHASE_DELAYS.nodesStart;
     for (const tier of TIER_ORDER) {
-      const tierNodes = allNodes.filter(n => n.tier === tier);
+      const tierNodes = nodes.filter(n => n.tier === tier);
       for (const node of tierNodes) {
         const t = delay;
         timers.push(
@@ -48,18 +48,7 @@ export function LoadingSequence({ onDone }: { onDone: () => void }) {
         );
         delay += NODE_STAGGER_MS;
       }
-      delay += 120; // extra pause between tiers
-    }
-    // Song nodes come after all skill nodes
-    const songs = allNodes.filter(n => n.branch === 'song');
-    for (const song of songs) {
-      const t = delay;
-      timers.push(
-        setTimeout(() => {
-          if (!skipped.current) revealNode(song.id);
-        }, t)
-      );
-      delay += NODE_STAGGER_MS;
+      delay += 120;
     }
 
     timers.push(setTimeout(() => { if (!skipped.current) setShowTitle(true); }, PHASE_DELAYS.titleIn));

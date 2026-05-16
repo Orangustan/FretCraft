@@ -1,24 +1,29 @@
 import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { allNodes, nodeMap } from '../../data/index';
 import { findNextUp } from '../../graph/pathfinding';
-import { useProgressStore } from '../../store/progressStore';
 import { useUIStore } from '../../store/uiStore';
 import { BRANCH_LABELS, BRANCH_HEX } from '../../data/types';
+import type { ConstellationNode } from './coreAdapter';
+import type { NodeStatus } from '../../data/types';
 import './NextUpPanel.css';
 
-export function NextUpPanel() {
-  const nodeStatuses = useProgressStore(s => s.nodeStatuses);
-  const { nextUpPanelOpen, toggleNextUpPanel, selectNode, setCameraTarget } = useUIStore();
+interface Props {
+  nodes: ConstellationNode[];
+  nodeMap: Map<string, ConstellationNode>;
+  nodeStatuses: Record<string, NodeStatus>;
+}
+
+export function NextUpPanel({ nodes: _nodes, nodeMap, nodeStatuses }: Props) {
+  const { nextUpPanelOpen, toggleNextUpPanel, selectNode } = useUIStore();
 
   const nextUpIds = useMemo(
     () => findNextUp(nodeMap, nodeStatuses, 3),
-    [nodeStatuses]
+    [nodeMap, nodeStatuses]
   );
 
   const nextUpNodes = nextUpIds
     .map(id => nodeMap.get(id))
-    .filter(Boolean);
+    .filter(Boolean) as ConstellationNode[];
 
   return (
     <div className="next-up">
@@ -44,19 +49,13 @@ export function NextUpPanel() {
             ) : (
               <ul className="next-up__list">
                 {nextUpNodes.map(node => {
-                  if (!node) return null;
                   const color = BRANCH_HEX[node.branch].primary;
                   return (
                     <li
                       key={node.id}
                       className="next-up__item"
                       style={{ '--item-color': color } as React.CSSProperties}
-                      onClick={() => {
-                        // Locate the node in the layout to focus camera on it
-                        selectNode(node.id);
-                        // Camera target will be set by the node click handler when the user clicks the node
-                        // For now, just open the panel with the selected node
-                      }}
+                      onClick={() => selectNode(node.id)}
                     >
                       <span className="next-up__item-dot" />
                       <div className="next-up__item-body">

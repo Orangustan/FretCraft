@@ -56,7 +56,7 @@ export const BRANCHES: Exclude<Branch, 'song'>[] = [
 
 export const BRANCH_LABELS: Record<Branch, string> = {
   'music-theory':    'Music Theory',
-  'fretboard-theory':'Fretboard & Theory',
+  'fretboard-theory':'Fretboard Logic',
   'technique':       'Technique',
   'rhythm-timing':   'Rhythm & Timing',
   'harmony-chords':  'Harmony & Chords',
@@ -66,15 +66,16 @@ export const BRANCH_LABELS: Record<Branch, string> = {
 };
 
 // X-axis sector center for each branch in 3D world units.
-// Range: -7 to +11. Songs use Y=-6 bottom band and this X for centroid only.
+// Technique and Rhythm are the foundation at center (±4).
+// Branches fan outward as they unlock at higher tiers.
 export const BRANCH_SECTORS: Record<Branch, number> = {
-  'music-theory':    -7,
-  'fretboard-theory':-4,
-  'technique':       -1,
-  'rhythm-timing':    2,
-  'harmony-chords':   5,
-  'ear-training':     8,
-  'lead-improv':     11,
+  'technique':       -4,
+  'rhythm-timing':    4,
+  'fretboard-theory':-8,
+  'harmony-chords':   8,
+  'ear-training':   -12,
+  'music-theory':    12,
+  'lead-improv':      0,
   'song':             0,
 };
 
@@ -102,13 +103,14 @@ export const BRANCH_HEX: Record<Branch, { primary: string; glow: string; shadow:
   'song':            { primary: '#D4AF37', glow: '#F5DC7A', shadow: '#6B5318' },
 };
 
-// Tier Y positions in 3D world units (tier 1 = top, tier 5 = bottom above song band)
+// Tier Y positions in 3D world units.
+// Tier 1 is at the bottom (foundation), tree grows upward toward tier 5.
 export const TIER_Y: Record<1 | 2 | 3 | 4 | 5, number> = {
-  1:  4,
-  2:  2,
+  1: -5,
+  2: -2.5,
   3:  0,
-  4: -2,
-  5: -4,
+  4:  2.5,
+  5:  5,
 };
 
 export const SONG_BAND_Y = -6;

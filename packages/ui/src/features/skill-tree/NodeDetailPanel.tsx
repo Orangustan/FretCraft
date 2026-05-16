@@ -179,9 +179,10 @@ interface NodeDetailPanelProps {
   status: NodeStatus;
   tree: SkillTree;
   onBeginPractice: (config: SessionConfig) => void;
+  onClose?: () => void;
 }
 
-export function NodeDetailPanel({ node, status, onBeginPractice }: NodeDetailPanelProps) {
+export function NodeDetailPanel({ node, status, onBeginPractice, onClose }: NodeDetailPanelProps) {
   const [activeTab, setActiveTab] = useState<PanelTab>('about');
   const [duration, setDuration] = useState<SessionDuration>(DEFAULT_SESSION_CONFIG.durationMinutes);
   const [focus, setFocus] = useState<FocusLevel>(DEFAULT_SESSION_CONFIG.focusLevel);
@@ -207,6 +208,9 @@ export function NodeDetailPanel({ node, status, onBeginPractice }: NodeDetailPan
           <span className="node-detail-panel__rank-label">{rankLabel}</span>
           <span className="node-detail-panel__xp">+{node.xpReward} XP</span>
         </div>
+        {onClose && (
+          <button className="node-detail-panel__close" onClick={onClose} aria-label="Close">×</button>
+        )}
       </div>
 
       {/* Tab bar */}

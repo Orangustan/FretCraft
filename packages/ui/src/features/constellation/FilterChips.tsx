@@ -5,8 +5,7 @@ import './FilterChips.css';
 const STATUS_OPTIONS: { value: NodeStatus; label: string }[] = [
   { value: 'available',   label: 'Available' },
   { value: 'in_progress', label: 'In Progress' },
-  { value: 'learned',     label: 'Learned' },
-  { value: 'mastered',    label: 'Mastered' },
+  { value: 'mastered',    label: 'Completed' },
 ];
 
 const TIER_OPTIONS = [1, 2, 3, 4, 5] as const;

@@ -2,11 +2,11 @@ import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Line } from '@react-three/drei';
 import * as THREE from 'three';
-import type { SkillNode, SongNode, NodeStatus } from '../data/types';
+import type { NodeStatus } from '../data/types';
 import { BRANCH_HEX } from '../data/types';
 import { useUIStore } from '../store/uiStore';
-import { useProgressStore } from '../store/progressStore';
 import type { NodePosition3D } from '../graph/layout';
+import type { ConstellationNode } from '../features/constellation/coreAdapter';
 
 interface EdgeProps {
   sourceId: string;
@@ -30,8 +30,8 @@ function SkillEdge({ sourceId, targetId, sourceBranch, targetBranch, sourceStatu
   const pulseRef = useRef<THREE.Mesh>(null!);
 
   const isOnPath = highlightPath.includes(sourceId) && highlightPath.includes(targetId);
-  const isSourceDone = sourceStatus === 'learned' || sourceStatus === 'mastered';
-  const isTargetDone = targetStatus === 'learned' || targetStatus === 'mastered';
+  const isSourceDone = sourceStatus === 'mastered';
+  const isTargetDone = targetStatus === 'mastered';
   const bothDone = isSourceDone && isTargetDone;
   const eitherDone = isSourceDone || isTargetDone;
 
@@ -54,7 +54,6 @@ function SkillEdge({ sourceId, targetId, sourceBranch, targetBranch, sourceStatu
     new THREE.Vector3(targetPos.x, targetPos.y, targetPos.z),
   ], [sourcePos, targetPos]);
 
-  // Traveling pulse along learned/mastered edges
   useFrame(() => {
     if (!pulseRef.current || !isSourceDone) return;
     const t = ((Date.now() * 0.0004) % 1);
@@ -77,7 +76,6 @@ function SkillEdge({ sourceId, targetId, sourceBranch, targetBranch, sourceStatu
         dashSize={0.15}
         gapSize={0.1}
       />
-      {/* Traveling pulse — only for edges where source is done */}
       {isSourceDone && (
         <mesh ref={pulseRef} visible={false}>
           <sphereGeometry args={[0.045, 6, 4]} />
@@ -95,12 +93,12 @@ function SkillEdge({ sourceId, targetId, sourceBranch, targetBranch, sourceStatu
 export function Edges({
   nodes,
   positions,
+  nodeStatuses,
 }: {
-  nodes: (SkillNode | SongNode)[];
+  nodes: ConstellationNode[];
   positions: Record<string, NodePosition3D>;
+  nodeStatuses: Record<string, NodeStatus>;
 }) {
-  const nodeStatuses = useProgressStore(s => s.nodeStatuses);
-
   const nodeMap = useMemo(
     () => new Map(nodes.map(n => [n.id, n])),
     [nodes]

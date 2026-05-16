@@ -65,7 +65,7 @@ const DEFAULT_STORE: PlayerStoreState = {
     practiceSessions: [],
   },
   customTrees: [],
-  activeTreeId: 'rocker',
+  activeTreeId: 'universal',
 };
 
 function storeReducer(state: PlayerStoreState, action: Action): PlayerStoreState {
